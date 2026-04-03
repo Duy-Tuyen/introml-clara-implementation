@@ -1,0 +1,24 @@
+# Local clones (do not commit)
+ml-clara/
+2WikiMultihopQA/
+CLaRa-7B-Instruct/
+
+# Generated artifacts
+results/
+
+# Notebook artifacts
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Optional large data files
+*.parquet
+*.jsonl
+*.bin
+*.safetensors
+
+docs/
+
+.specstory/
