@@ -41,8 +41,11 @@ def setup_kaggle_env() -> None:
         f.write('# stub\n__version__ = "0.0.0"\n')
 
     print(f'Torch: {torch.__version__} | CUDA: {torch.version.cuda}')
-    print(f'GPU: {torch.cuda.get_device_name(0)}')
-    print('✅ Môi trường Kaggle đã sẵn sàng. Hãy RESTART KERNEL rồi chạy tiếp.')
+    if torch.cuda.is_available():
+        print(f'GPU: {torch.cuda.get_device_name(0)}')
+        print('Môi trường Kaggle đã sẵn sàng. Hãy RESTART KERNEL rồi chạy tiếp.')
+    else:
+        print('Không tìm thấy GPU. Hãy vào Notebook settings → Accelerator → chọn GPU T4 x2, rồi chạy lại.')
 
 
 if __name__ == "__main__":
