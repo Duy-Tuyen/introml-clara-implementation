@@ -24,13 +24,6 @@ import torch
 # split_map renames canonical splits so every dataset exposes 'train'/'validation'.
 
 _DATASET_REGISTRY: Dict[str, Dict] = {
-    'triviaqa': {
-        'hf_path':   'trivia_qa',
-        'hf_config': 'rc.nocontext',
-        # TriviaQA already uses 'train' / 'validation'
-        'split_map': {'train': 'train', 'validation': 'validation'},
-        'filter':    lambda x: len(x['answer']['aliases']) > 0,
-    },
     '2wikimultihop': {
         'hf_path':   '2wikimultihop',
         'hf_config': None,
@@ -50,20 +43,22 @@ _DATASET_REGISTRY: Dict[str, Dict] = {
         'split_map': {'train': 'train', 'validation': 'validation'},
         'filter':    None,
     },
+
     # ── Novel / custom datasets ────────────────────────────────────────────
     # These are placeholders — replace hf_path with your actual HF dataset id
     # or load from a local JSON/CSV file inside _load_raw() below.
-    'medical_novel': {
-        'hf_path':   'medmcqa',          # placeholder — swap as needed
+    'squad': {
+        'hf_path':   'rajpurkar/squad',
         'hf_config': None,
         'split_map': {'train': 'train', 'validation': 'validation'},
-        'filter':    None,
+        'filter':    lambda x: len(x['answers']['text']) > 0,
     },
-    'legal_novel': {
-        'hf_path':   'nguyen-brat/legal_qa',  # placeholder
-        'hf_config': None,
+    'triviaqa': {
+        'hf_path':   'trivia_qa',
+        'hf_config': 'rc.nocontext',
+        # TriviaQA already uses 'train' / 'validation'
         'split_map': {'train': 'train', 'validation': 'validation'},
-        'filter':    None,
+        'filter':    lambda x: len(x['answer']['aliases']) > 0,
     },
 }
 
@@ -82,6 +77,16 @@ def _parse_triviaqa(row: dict, eval_mode: str) -> Tuple[str, str, str]:
         # 'normal' mode: caller should supply a retrieved passage.
         # Fallback to the same synthetic doc until a retriever is wired in.
         doc = f"Trivia context: {question} The correct answer is: {answer}."
+    return doc, question, answer
+
+
+def _parse_squad(row: dict, eval_mode: str) -> Tuple[str, str, str]:
+    question = row['question']
+    answer   = row['answers']['text'][0] if row['answers']['text'] else ''
+    if eval_mode == 'oracle':
+        doc = row['context']   # SQuAD có sẵn passage rất chuẩn
+    else:
+        doc = row['context']   # dùng luôn vì SQuAD luôn có context
     return doc, question, answer
 
 
@@ -164,6 +169,7 @@ _PARSERS: Dict[str, Callable] = {
     '2wikimultihop':  _parse_2wikimultihop,
     'hotpotqa':       _parse_hotpotqa,
     'nq':             _parse_nq,
+    'squad':          _parse_squad,        # ← thêm
     'medical_novel':  _parse_medical_novel,
     'legal_novel':    _parse_legal_novel,
 }
