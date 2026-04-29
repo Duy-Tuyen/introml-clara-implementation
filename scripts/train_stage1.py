@@ -125,6 +125,8 @@ if __name__ == "__main__":
         cfg.n_val = int(os.environ['CLARA_N_VAL'])
     if os.environ.get('CLARA_GRAD_ACC'):
         cfg.grad_accum = int(os.environ['CLARA_GRAD_ACC'])
+    if os.environ.get('CLARA_OUTPUT_DIR'):
+        cfg.output_dir = os.environ['CLARA_OUTPUT_DIR']
 
     model, tokenizer = build_clara_model(cfg)
     train_dl, val_dl = get_dataloaders(tokenizer, cfg)

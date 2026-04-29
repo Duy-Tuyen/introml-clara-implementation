@@ -61,6 +61,27 @@ def _load_stage1(model, stage1_dir: str) -> None:
         print("Initialized query adapter from compressor weights")
 
 
+def _load_stage2_init(model, stage2_dir: str) -> None:
+    query_dir = os.path.join(stage2_dir, 'adapters', 'query')
+    gen_dir = os.path.join(stage2_dir, 'adapters', 'generator')
+    extra_path = os.path.join(stage2_dir, 'clara_stage2_extra.pth')
+
+    if os.path.isdir(query_dir):
+        q_weights = load_peft_weights(query_dir)
+        set_peft_model_state_dict(model.backbone, q_weights, adapter_name='query')
+        print(f"Loaded query adapter from: {query_dir}")
+
+    if os.path.isdir(gen_dir):
+        g_weights = load_peft_weights(gen_dir)
+        set_peft_model_state_dict(model.backbone, g_weights, adapter_name='generator')
+        print(f"Loaded generator adapter from: {gen_dir}")
+
+    if os.path.exists(extra_path):
+        saved = torch.load(extra_path, map_location='cuda')
+        model.mem_token_embed.data = saved['mem_token_embed']
+        print(f"Loaded mem_token_embed from: {extra_path}")
+
+
 def _validate(model, dl, max_b: int = 40) -> float:
     model.eval()
     total, n = 0.0, 0
@@ -153,9 +174,15 @@ def main() -> None:
         cfg.grad_accum = int(os.environ['CLARA_GRAD_ACC'])
     if os.environ.get('CLARA_STAGE1_DIR'):
         cfg.stage1_ckpt_dir = os.environ['CLARA_STAGE1_DIR']
+    if os.environ.get('CLARA_OUTPUT_DIR'):
+        cfg.output_dir = os.environ['CLARA_OUTPUT_DIR']
+
+    stage2_init = os.environ.get('CLARA_STAGE2_INIT')
 
     model, tokenizer = build_clara_model(cfg)
     _load_stage1(model, cfg.stage1_ckpt_dir)
+    if stage2_init:
+        _load_stage2_init(model, stage2_init)
     train_dl, val_dl = get_retrieval_dataloaders(tokenizer, cfg)
     train_stage2(model, train_dl, val_dl, cfg)
 
