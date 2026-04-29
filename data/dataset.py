@@ -118,6 +118,24 @@ def _parse_hotpotqa(row: dict, eval_mode: str) -> Tuple[str, str, str]:
     return doc, question, answer
 
 
+def _hotpotqa_candidates(row: dict, max_docs: int) -> Tuple[list, list]:
+    titles = row.get('context', {}).get('title', [])
+    sents = row.get('context', {}).get('sentences', [])
+    docs = []
+    for title, sent_list in zip(titles, sents):
+        doc = f"{title}: " + " ".join(sent_list)
+        docs.append(doc)
+
+    sf_titles = set(row.get('supporting_facts', {}).get('title', []))
+    oracle_idx = [i for i, title in enumerate(titles) if title in sf_titles]
+
+    if len(docs) > max_docs:
+        docs = docs[:max_docs]
+        oracle_idx = [i for i in oracle_idx if i < max_docs]
+
+    return docs, oracle_idx
+
+
 def _parse_nq(row: dict, eval_mode: str) -> Tuple[str, str, str]:
     question = row['question']
     answer   = row['answer'][0] if row['answer'] else ''
@@ -256,6 +274,150 @@ class CLaRaDataset(Dataset):
         )
 
 
+class CLaRaRetrievalDataset(Dataset):
+    """
+    Dataset cho Stage II (End-to-End) với candidate documents.
+
+    Mỗi sample trả về:
+      - question, answer
+      - candidates: list[str]
+      - oracle_idx: list[int] (chỉ dùng khi eval_mode='oracle')
+    """
+
+    def __init__(self, split: str, tok, cfg, n: Optional[int] = None):
+        self.tok = tok
+        self.cfg = cfg
+        self.split = split
+        self.parser = _PARSERS[cfg.dataset_name]
+        self.eval_mode = cfg.eval_mode
+
+        raw = self._load_raw(cfg.dataset_name, split)
+        if n:
+            raw = raw.select(range(min(n, len(raw))))
+        self.data = raw
+        print(f"[{cfg.dataset_name}|{split}] {len(self.data)} samples  "
+              f"(eval_mode={cfg.eval_mode})")
+
+    def _load_raw(self, name: str, canonical_split: str) -> HFDataset:
+        reg = _DATASET_REGISTRY[name]
+        split = reg['split_map'].get(canonical_split, canonical_split)
+        ds = load_dataset(reg['hf_path'], reg['hf_config'], split=split)
+        if reg['filter'] is not None:
+            ds = ds.filter(reg['filter'])
+        return ds
+
+    def __len__(self) -> int:
+        return len(self.data)
+
+    def __getitem__(self, i: int) -> dict:
+        row = self.data[i]
+        doc, question, answer = self.parser(row, self.eval_mode)
+
+        if self.cfg.dataset_name == 'hotpotqa':
+            candidates, oracle_idx = _hotpotqa_candidates(row, self.cfg.num_candidates)
+        else:
+            candidates, oracle_idx = [doc], [0]
+
+        return {
+            "question": question,
+            "answer": answer,
+            "candidates": candidates,
+            "oracle_idx": oracle_idx,
+        }
+
+    def _pad_candidates(self, candidates: list) -> Tuple[list, list]:
+        cand = candidates[: self.cfg.num_candidates]
+        mask = [1] * len(cand)
+        if len(cand) < self.cfg.num_candidates:
+            pad_n = self.cfg.num_candidates - len(cand)
+            cand += [""] * pad_n
+            mask += [0] * pad_n
+        return cand, mask
+
+    def collate_retrieval_train(self, batch: list) -> dict:
+        qs = [b['question'] for b in batch]
+        ans = [b['answer'] for b in batch]
+
+        cand_text, cand_mask = [], []
+        for b in batch:
+            c, m = self._pad_candidates(b['candidates'])
+            cand_text.append(c)
+            cand_mask.append(m)
+
+        B, C = len(batch), self.cfg.num_candidates
+        flat_docs = [doc for sample in cand_text for doc in sample]
+
+        doc_enc = self.tok(
+            flat_docs,
+            max_length=self.cfg.doc_max_length,
+            padding='max_length',
+            truncation=True,
+            return_tensors='pt',
+        )
+        doc_input_ids = doc_enc['input_ids'].view(B, C, -1)
+        doc_attention_mask = doc_enc['attention_mask'].view(B, C, -1)
+
+        qa_enc = self.tok(
+            [f"[INST] {q} [/INST] {a}" for q, a in zip(qs, ans)],
+            max_length=self.cfg.max_qa_len,
+            padding='max_length',
+            truncation=True,
+            return_tensors='pt',
+        )
+
+        labels = qa_enc['input_ids'].clone()
+        labels[labels == self.tok.pad_token_id] = -100
+
+        return dict(
+            candidate_doc_input_ids=doc_input_ids,
+            candidate_doc_attention_mask=doc_attention_mask,
+            candidate_mask=torch.tensor(cand_mask, dtype=torch.long),
+            question_input_ids=qa_enc['input_ids'],
+            question_attention_mask=qa_enc['attention_mask'],
+            labels=labels,
+        )
+
+    def collate_retrieval_eval(self, batch: list) -> dict:
+        qs = [b['question'] for b in batch]
+        ans = [b['answer'] for b in batch]
+
+        cand_text, cand_mask = [], []
+        for b in batch:
+            c, m = self._pad_candidates(b['candidates'])
+            cand_text.append(c)
+            cand_mask.append(m)
+
+        B, C = len(batch), self.cfg.num_candidates
+        flat_docs = [doc for sample in cand_text for doc in sample]
+
+        doc_enc = self.tok(
+            flat_docs,
+            max_length=self.cfg.doc_max_length,
+            padding='max_length',
+            truncation=True,
+            return_tensors='pt',
+        )
+        doc_input_ids = doc_enc['input_ids'].view(B, C, -1)
+        doc_attention_mask = doc_enc['attention_mask'].view(B, C, -1)
+
+        q_enc = self.tok(
+            [f"[INST] {q} [/INST]" for q in qs],
+            max_length=self.cfg.max_qa_len,
+            padding='max_length',
+            truncation=True,
+            return_tensors='pt',
+        )
+
+        return dict(
+            candidate_doc_input_ids=doc_input_ids,
+            candidate_doc_attention_mask=doc_attention_mask,
+            candidate_mask=torch.tensor(cand_mask, dtype=torch.long),
+            question_input_ids=q_enc['input_ids'],
+            question_attention_mask=q_enc['attention_mask'],
+            answers=ans,
+        )
+
+
 # ── DataLoader factory ────────────────────────────────────────────────────────
 
 def get_dataloaders(tokenizer, cfg) -> Tuple[DataLoader, DataLoader]:
@@ -301,6 +463,41 @@ def get_eval_loader(tokenizer, cfg, split: str = 'validation') -> DataLoader:
         batch_size=cfg.eval_batch_size,
         shuffle=False,
         collate_fn=ds.collate_eval,   # ← đúng, chỉ dùng ở đây
+        num_workers=2,
+        pin_memory=True,
+    )
+
+
+def get_retrieval_dataloaders(tokenizer, cfg) -> Tuple[DataLoader, DataLoader]:
+    train_ds = CLaRaRetrievalDataset('train', tokenizer, cfg, cfg.n_train)
+    val_ds = CLaRaRetrievalDataset('validation', tokenizer, cfg, cfg.n_val)
+
+    train_dl = DataLoader(
+        train_ds,
+        batch_size=cfg.batch_size,
+        shuffle=True,
+        collate_fn=train_ds.collate_retrieval_train,
+        num_workers=2,
+        pin_memory=True,
+    )
+    val_dl = DataLoader(
+        val_ds,
+        batch_size=cfg.eval_batch_size,
+        shuffle=False,
+        collate_fn=val_ds.collate_retrieval_train,
+        num_workers=2,
+        pin_memory=True,
+    )
+    return train_dl, val_dl
+
+
+def get_retrieval_eval_loader(tokenizer, cfg, split: str = 'validation') -> DataLoader:
+    ds = CLaRaRetrievalDataset(split, tokenizer, cfg, cfg.n_val)
+    return DataLoader(
+        ds,
+        batch_size=cfg.eval_batch_size,
+        shuffle=False,
+        collate_fn=ds.collate_retrieval_eval,
         num_workers=2,
         pin_memory=True,
     )

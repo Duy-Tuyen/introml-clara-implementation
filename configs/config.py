@@ -11,6 +11,7 @@ class CLaRaConfig:
     compr_rate: int         = 16
     doc_max_length: int     = 256   # Reduce to 128 if OOM
     n_memory_tokens: int    = 16    # Must equal doc_max_length // compr_rate
+    use_memory_tokens: bool = True  # Paper: append memory tokens to inputs
 
     # ── LoRA ──────────────────────────────────────────────────────────────────
     lora_r: int             = 16
@@ -19,7 +20,12 @@ class CLaRaConfig:
     lora_targets: List[str] = field(
         default_factory=lambda: ['q_proj', 'v_proj', 'k_proj', 'o_proj'])
 
-    # ── Training ──────────────────────────────────────────────────────────────
+    # ── Training (Stage I: SCP) ───────────────────────────────────────────────
+    stage1_lr: float        = 2e-4
+    stage1_epochs: int      = 1
+    stage1_mse_lambda: float = 0.1
+
+    # ── Training (Stage II: End-to-End) ───────────────────────────────────────
     batch_size: int         = 1
     grad_accum: int         = 8
     # FIX: lr=5e-6 theo paper B.4 (end-to-end learning rate)
@@ -35,6 +41,14 @@ class CLaRaConfig:
     n_val: int              = 500
     output_dir: str         = './clara-ckpts'
 
+    # ── Retrieval (Stage II) ─────────────────────────────────────────────────-
+    num_candidates: int     = 8     # candidates per question (paper uses larger)
+    top_k: int              = 2     # selected documents (paper uses 5)
+    st_tau: float           = 0.7   # temperature for ST estimator
+
+    # Stage I checkpoint (used to init Stage II)
+    stage1_ckpt_dir: str    = './clara-ckpts/stage1_ep1'
+
     # ── Dataset selection ─────────────────────────────────────────────────────
     # Supported: 'triviaqa' | '2wikimultihop' | 'hotpotqa' | 'nq' | 'squad'
     # Novel/custom: 'medical_novel' | 'legal_novel'
@@ -48,8 +62,8 @@ class CLaRaConfig:
     # Batch size riêng cho eval — có thể lớn hơn train vì không cần gradient
     eval_batch_size: int    = 4
 
-    # Path đến pretrained CLaRa checkpoint (Apple SCP weights, compression-16)
-    pretrained_ckpt_dir: str = './clara-ckpts/pretrained'
+    # Path đến pretrained CLaRa checkpoint (Apple E2E weights)
+    pretrained_ckpt_dir: str = './clara-ckpts/pretrained-e2e'
 
     def __post_init__(self):
         assert self.doc_max_length // self.compr_rate == self.n_memory_tokens, (
@@ -67,4 +81,7 @@ class CLaRaConfig:
         )
         assert self.eval_mode in ('oracle', 'normal'), (
             f"eval_mode must be 'oracle' or 'normal', got '{self.eval_mode}'"
+        )
+        assert 1 <= self.top_k <= self.num_candidates, (
+            f"top_k ({self.top_k}) must be between 1 and num_candidates ({self.num_candidates})"
         )

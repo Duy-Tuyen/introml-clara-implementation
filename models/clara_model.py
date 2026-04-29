@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import LoraConfig, get_peft_model, TaskType, prepare_model_for_kbit_training
 
@@ -8,80 +9,172 @@ class CLaRaModel(nn.Module):
     def __init__(self, backbone, tok, cfg):
         super().__init__()
         self.cfg, self.tok = cfg, tok
-        H = backbone.config.hidden_size
+        self.H = backbone.config.hidden_size
 
         backbone = prepare_model_for_kbit_training(
             backbone, use_gradient_checkpointing=cfg.grad_ckpt)
 
-        self.backbone = get_peft_model(backbone, LoraConfig(
-            r=cfg.lora_r, lora_alpha=cfg.lora_alpha,
+        lora_cfg = LoraConfig(
+            r=cfg.lora_r,
+            lora_alpha=cfg.lora_alpha,
             lora_dropout=cfg.lora_dropout,
             target_modules=cfg.lora_targets,
-            bias='none', task_type=TaskType.CAUSAL_LM))
+            bias='none',
+            task_type=TaskType.CAUSAL_LM,
+        )
 
-        self.proj = nn.Sequential(
-            nn.Linear(H, H, bias=False),
-            nn.GELU(),
-            nn.Linear(H, H * cfg.n_memory_tokens, bias=False),
-            nn.LayerNorm(H * cfg.n_memory_tokens),
-        ).to(dtype=torch.bfloat16, device='cuda')
+        self.backbone = get_peft_model(backbone, lora_cfg, adapter_name='compressor')
+        self.backbone.add_adapter('query', lora_cfg)
+        self.backbone.add_adapter('generator', lora_cfg)
+        self.backbone.set_adapter('compressor')
 
-        self.mem_bias = nn.Parameter(
-            torch.zeros(cfg.n_memory_tokens, H, dtype=torch.bfloat16, device='cuda'))
+        self.mem_token_embed = nn.Parameter(
+            torch.zeros(cfg.n_memory_tokens, self.H, dtype=torch.bfloat16, device='cuda'))
 
     @property
     def _embed(self):
         return self.backbone.base_model.model.model.embed_tokens
 
-    def _compress(self, doc_ids, doc_mask):
-        with torch.no_grad():
-            hs = self.backbone.base_model(
-                input_ids=doc_ids, attention_mask=doc_mask,
-                output_hidden_states=True, return_dict=True,
-            ).hidden_states[-1]
+    def _run_with_memory_tokens(self, adapter: str, input_ids, attention_mask):
+        self.backbone.set_adapter(adapter)
+        tok_emb = self._embed(input_ids)
+        B = tok_emb.size(0)
+        mem = self.mem_token_embed.unsqueeze(0).expand(B, -1, -1)
+        emb = torch.cat([tok_emb, mem], dim=1)
+        mm = torch.ones(B, mem.size(1), device=attention_mask.device, dtype=attention_mask.dtype)
+        mask = torch.cat([attention_mask, mm], dim=1)
+        out = self.backbone(
+            inputs_embeds=emb,
+            attention_mask=mask,
+            output_hidden_states=True,
+            return_dict=True,
+        )
+        hs = out.hidden_states[-1]
+        doc_h = hs[:, :tok_emb.size(1)]
+        mem_h = hs[:, tok_emb.size(1):]
+        return doc_h, mem_h, mask
 
-        mask = doc_mask.unsqueeze(-1).to(hs.dtype)
-        pooled = (hs * mask).sum(1) / mask.sum(1).clamp(1)
-        B, H = pooled.shape
+    def _compress_docs(self, doc_ids, doc_mask, track_grad: bool = False):
+        if track_grad:
+            doc_h, mem_h, _ = self._run_with_memory_tokens('compressor', doc_ids, doc_mask)
+        else:
+            with torch.no_grad():
+                doc_h, mem_h, _ = self._run_with_memory_tokens('compressor', doc_ids, doc_mask)
+        return doc_h, mem_h
 
-        target_device = next(self.proj.parameters()).device
-        pooled = pooled.to(target_device)
-        mem = self.proj(pooled.to(torch.bfloat16)).view(B, self.cfg.n_memory_tokens, H)
-        return mem + self.mem_bias.to(target_device).unsqueeze(0)
+    def _encode_query(self, question_ids, question_mask):
+        _, mem_h, _ = self._run_with_memory_tokens('query', question_ids, question_mask)
+        return mem_h
 
-    def forward(self, doc_input_ids, doc_attention_mask,
-                question_input_ids, question_attention_mask, labels=None):
-        B, K = doc_input_ids.size(0), self.cfg.n_memory_tokens
-        dev = question_attention_mask.device
-        mem = self._compress(doc_input_ids, doc_attention_mask).to(dev)
-        q_e = self._embed(question_input_ids).to(dev)
+    def _mse_alignment(self, doc_h, mem_h, doc_mask):
+        mask = doc_mask.unsqueeze(-1).to(doc_h.dtype)
+        doc_avg = (doc_h * mask).sum(1) / mask.sum(1).clamp(1)
+        mem_avg = mem_h.mean(1)
+        return F.mse_loss(mem_avg, doc_avg)
+
+    def forward_scp(self, doc_input_ids, doc_attention_mask,
+                    question_input_ids, question_attention_mask, labels):
+        doc_h, mem_h = self._compress_docs(doc_input_ids, doc_attention_mask, track_grad=True)
+        mse_loss = self._mse_alignment(doc_h, mem_h, doc_attention_mask)
+
+        self.backbone.set_adapter('generator')
+        mem = mem_h.to(question_attention_mask.device)
+        q_e = self._embed(question_input_ids).to(question_attention_mask.device)
         emb = torch.cat([mem, q_e], dim=1)
-        mm = torch.ones(B, K, device=dev, dtype=question_attention_mask.dtype)
+        mm = torch.ones(mem.size(0), mem.size(1), device=question_attention_mask.device,
+                        dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
+        pl = torch.full((mem.size(0), mem.size(1)), -100,
+                        device=question_attention_mask.device, dtype=labels.dtype)
+        labels = torch.cat([pl, labels], dim=1)
 
-        if labels is not None:
-            pl = torch.full((B, K), -100, device=dev, dtype=labels.dtype)
-            labels = torch.cat([pl, labels], dim=1)
+        out = self.backbone(inputs_embeds=emb, attention_mask=mask,
+                            labels=labels, return_dict=True)
+        return out.loss, mse_loss
+
+    def _st_topk(self, scores, k: int, tau: float):
+        z_soft = F.softmax(scores / tau, dim=-1)
+        topk_idx = torch.topk(scores, k=k, dim=-1).indices
+        z_hard = torch.zeros(scores.size(0), k, scores.size(1), device=scores.device)
+        for i in range(k):
+            z_hard.scatter_(2, topk_idx[:, i].unsqueeze(-1), 1.0)
+        z = z_hard + (z_soft.unsqueeze(1) - z_soft.unsqueeze(1).detach())
+        return z
+
+    def forward_e2e(self, candidate_doc_ids, candidate_doc_mask, candidate_mask,
+                    question_input_ids, question_attention_mask, labels):
+        B, C, L = candidate_doc_ids.shape
+        flat_ids = candidate_doc_ids.view(B * C, L)
+        flat_mask = candidate_doc_mask.view(B * C, L)
+
+        doc_h, mem_h = self._compress_docs(flat_ids, flat_mask, track_grad=False)
+        mem_h = mem_h.view(B, C, self.cfg.n_memory_tokens, self.H)
+
+        q_mem = self._encode_query(question_input_ids, question_attention_mask)
+        q_vec = q_mem.mean(1)
+        d_vec = mem_h.mean(2)
+        scores = F.cosine_similarity(q_vec.unsqueeze(1), d_vec, dim=-1)
+        if candidate_mask is not None:
+            scores = scores.masked_fill(candidate_mask == 0, -1e9)
+
+        z = self._st_topk(scores, self.cfg.top_k, self.cfg.st_tau)
+        selected = torch.einsum('bkc,bcmd->bkmd', z, mem_h)
+        selected = selected.reshape(B, self.cfg.top_k * self.cfg.n_memory_tokens, self.H)
+
+        self.backbone.set_adapter('generator')
+        q_e = self._embed(question_input_ids).to(question_attention_mask.device)
+        emb = torch.cat([selected, q_e], dim=1)
+        mm = torch.ones(B, selected.size(1), device=question_attention_mask.device,
+                        dtype=question_attention_mask.dtype)
+        mask = torch.cat([mm, question_attention_mask], dim=1)
+        pl = torch.full((B, selected.size(1)), -100,
+                        device=question_attention_mask.device, dtype=labels.dtype)
+        labels = torch.cat([pl, labels], dim=1)
 
         return self.backbone(inputs_embeds=emb, attention_mask=mask,
                              labels=labels, return_dict=True)
 
     @torch.no_grad()
-    def generate_answer(self, doc_input_ids, doc_attention_mask,
-                        question_input_ids, question_attention_mask, max_new_tokens=64):
+    def generate_answer_e2e(self, candidate_doc_ids, candidate_doc_mask, candidate_mask,
+                            question_input_ids, question_attention_mask, max_new_tokens=64):
         self.eval()
-        B, K = doc_input_ids.size(0), self.cfg.n_memory_tokens
-        dev = question_attention_mask.device
-        mem = self._compress(doc_input_ids, doc_attention_mask).to(dev)
-        q_e = self._embed(question_input_ids).to(dev)
-        emb = torch.cat([mem, q_e], dim=1)
-        mm = torch.ones(B, K, device=dev, dtype=question_attention_mask.dtype)
+        B, C, L = candidate_doc_ids.shape
+        flat_ids = candidate_doc_ids.view(B * C, L)
+        flat_mask = candidate_doc_mask.view(B * C, L)
+
+        _, mem_h = self._compress_docs(flat_ids, flat_mask, track_grad=False)
+        mem_h = mem_h.view(B, C, self.cfg.n_memory_tokens, self.H)
+
+        q_mem = self._encode_query(question_input_ids, question_attention_mask)
+        q_vec = q_mem.mean(1)
+        d_vec = mem_h.mean(2)
+        scores = F.cosine_similarity(q_vec.unsqueeze(1), d_vec, dim=-1)
+        if candidate_mask is not None:
+            scores = scores.masked_fill(candidate_mask == 0, -1e9)
+
+        topk_idx = torch.topk(scores, k=self.cfg.top_k, dim=-1).indices
+        selected = mem_h.gather(
+            1,
+            topk_idx.unsqueeze(-1).unsqueeze(-1).expand(
+                B, self.cfg.top_k, self.cfg.n_memory_tokens, self.H
+            ),
+        )
+        selected = selected.reshape(B, self.cfg.top_k * self.cfg.n_memory_tokens, self.H)
+
+        self.backbone.set_adapter('generator')
+        q_e = self._embed(question_input_ids)
+        emb = torch.cat([selected, q_e], dim=1)
+        mm = torch.ones(B, selected.size(1), device=question_attention_mask.device,
+                        dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
 
         ids = self.backbone.generate(
-            inputs_embeds=emb, attention_mask=mask,
-            max_new_tokens=max_new_tokens, do_sample=False,
-            pad_token_id=self.tok.eos_token_id)
+            inputs_embeds=emb,
+            attention_mask=mask,
+            max_new_tokens=max_new_tokens,
+            do_sample=False,
+            pad_token_id=self.tok.eos_token_id,
+        )
 
         return self.tok.batch_decode(ids, skip_special_tokens=True)
 
@@ -110,6 +203,6 @@ def build_clara_model(cfg):
 
     for name, p in model.named_parameters():
         if p.is_floating_point():
-            p.requires_grad_(any(k in name for k in ('lora_', 'proj.', 'mem_bias')))
+            p.requires_grad_(False)
 
     return model, tokenizer
