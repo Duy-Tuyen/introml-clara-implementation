@@ -86,38 +86,56 @@ def score_batch(
 
 def load_checkpoint(model, ckpt_dir: str) -> None:
     """
-    Load projector weights, mem_bias, và LoRA adapters từ ckpt_dir.
-
-    Expected layout:
-        ckpt_dir/
-        ├── clara_extra.pth   # projector state_dict + mem_bias
-        └── lora/             # HuggingFace PEFT LoRA adapter
+    Hỗ trợ 2 layout:
+    1. Apple pretrained: adapters.pth + decoder_first_last_layers.pth
+    2. Self-trained:     clara_extra.pth + lora/
     """
+    # ── Layout 1: Apple pretrained weights ──────────────────────────
+    apple_adapter = os.path.join(ckpt_dir, 'adapters.pth')
+    apple_decoder = os.path.join(ckpt_dir, 'decoder_first_last_layers.pth')
+
+    if os.path.exists(apple_adapter):
+        print("  [Apple format] Loading pretrained weights...")
+
+        # Load LoRA adapters
+        adapter_weights = torch.load(apple_adapter, map_location='cuda')
+        model.backbone.load_state_dict(adapter_weights, strict=False)
+        print(f"  ✓ LoRA adapters ← {apple_adapter}")
+
+        # Load projector + mem_bias
+        if os.path.exists(apple_decoder):
+            decoder_weights = torch.load(apple_decoder, map_location='cuda')
+            # proj và mem_bias nằm trong decoder_first_last_layers
+            if 'proj' in decoder_weights:
+                model.proj.load_state_dict(decoder_weights['proj'])
+            if 'mem_bias' in decoder_weights:
+                model.mem_bias.data = decoder_weights['mem_bias']
+            print(f"  ✓ Decoder layers ← {apple_decoder}")
+        return
+
+    # ── Layout 2: Self-trained checkpoint ───────────────────────────
     extra_path = os.path.join(ckpt_dir, 'clara_extra.pth')
     lora_dir   = os.path.join(ckpt_dir, 'lora')
 
     if not os.path.exists(extra_path) and not os.path.exists(lora_dir):
         raise FileNotFoundError(
-            f"No checkpoint found at '{ckpt_dir}'. "
-            "Make sure you have trained the model or downloaded the pretrained weights."
+            f"No checkpoint found at '{ckpt_dir}'.\n"
+            f"Expected either:\n"
+            f"  Apple format : {apple_adapter}\n"
+            f"  Self-trained : {extra_path} hoặc {lora_dir}"
         )
 
     if os.path.exists(extra_path):
         saved = torch.load(extra_path, map_location='cuda')
         model.proj.load_state_dict(saved['proj'])
         model.mem_bias.data = saved['mem_bias']
-        print(f"  ✓ Projector & MemBias  ← {extra_path}  "
-              f"(epoch={saved.get('epoch','?')}, val_loss={saved.get('val_loss','?')})")
-    else:
-        print(f"  ⚠ clara_extra.pth not found — skipping projector weights.")
+        print(f"  ✓ Projector & MemBias ← {extra_path}")
 
     if os.path.exists(lora_dir):
+        from peft import load_peft_weights, set_peft_model_state_dict
         lora_weights = load_peft_weights(lora_dir)
         set_peft_model_state_dict(model.backbone, lora_weights)
-        print(f"  ✓ LoRA adapter         ← {lora_dir}")
-    else:
-        print(f"  ⚠ lora/ directory not found — using base LoRA weights.")
-
+        print(f"  ✓ LoRA adapter ← {lora_dir}")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 4. EVALUATION LOOP
