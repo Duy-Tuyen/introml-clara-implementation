@@ -40,6 +40,7 @@ class CLaRaModel(nn.Module):
         tok_emb = self._embed(input_ids)
         B = tok_emb.size(0)
         mem = self.mem_token_embed.unsqueeze(0).expand(B, -1, -1)
+        mem = mem.to(tok_emb.device)
         emb = torch.cat([tok_emb, mem], dim=1)
         mm = torch.ones(B, mem.size(1), device=attention_mask.device, dtype=attention_mask.dtype)
         mask = torch.cat([attention_mask, mm], dim=1)
