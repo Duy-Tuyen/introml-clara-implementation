@@ -19,7 +19,25 @@ def _validate(model, dl, max_b: int = 40) -> float:
         for i, batch in enumerate(dl):
             if i >= max_b:
                 break
-            batch = {k: v.cuda() for k, v in batch.items()}
+            
+            # FIX 1: filter như train_pipeline
+            tensor_batch = {k: v for k, v in batch.items() 
+                           if isinstance(v, torch.Tensor)}
+            
+            # FIX 2: sanity check batch không rỗng
+            if not tensor_batch:
+                raise ValueError(
+                    f"Batch {i} rỗng sau filter!\n"
+                    f"Keys & types: { {k: type(v).__name__ for k, v in batch.items()} }"
+                )
+            
+            # FIX 3: log batch đầu để verify
+            if i == 0:
+                print(f"[Validate] Keys kept: {list(tensor_batch.keys())}")
+                print(f"[Validate] Keys dropped: "
+                      f"{[k for k in batch if k not in tensor_batch]}")
+            
+            batch = {k: v.cuda() for k, v in tensor_batch.items()}
             total += model(**batch).loss.item()
             n += 1
     model.train()
