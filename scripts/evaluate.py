@@ -29,7 +29,7 @@ from tqdm import tqdm
 from configs.config import CLaRaConfig
 from models.clara_model import build_clara_model
 from models.utils import print_vram_usage
-from data.dataset import get_eval_loader
+from data.dataset import get_retrieval_eval_loader
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -85,57 +85,30 @@ def score_batch(
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def load_checkpoint(model, ckpt_dir: str) -> None:
-    """
-    Hỗ trợ 2 layout:
-    1. Apple pretrained: adapters.pth + decoder_first_last_layers.pth
-    2. Self-trained:     clara_extra.pth + lora/
-    """
-    # ── Layout 1: Apple pretrained weights ──────────────────────────
-    apple_adapter = os.path.join(ckpt_dir, 'adapters.pth')
-    apple_decoder = os.path.join(ckpt_dir, 'decoder_first_last_layers.pth')
+    query_dir = os.path.join(ckpt_dir, 'adapters', 'query')
+    gen_dir = os.path.join(ckpt_dir, 'adapters', 'generator')
+    extra_path = os.path.join(ckpt_dir, 'clara_stage2_extra.pth')
 
-    if os.path.exists(apple_adapter):
-        print("  [Apple format] Loading pretrained weights...")
-
-        # Load LoRA adapters
-        adapter_weights = torch.load(apple_adapter, map_location='cuda')
-        model.backbone.load_state_dict(adapter_weights, strict=False)
-        print(f"  ✓ LoRA adapters ← {apple_adapter}")
-
-        # Load projector + mem_bias
-        if os.path.exists(apple_decoder):
-            decoder_weights = torch.load(apple_decoder, map_location='cuda')
-            # proj và mem_bias nằm trong decoder_first_last_layers
-            if 'proj' in decoder_weights:
-                model.proj.load_state_dict(decoder_weights['proj'])
-            if 'mem_bias' in decoder_weights:
-                model.mem_bias.data = decoder_weights['mem_bias']
-            print(f"  ✓ Decoder layers ← {apple_decoder}")
-        return
-
-    # ── Layout 2: Self-trained checkpoint ───────────────────────────
-    extra_path = os.path.join(ckpt_dir, 'clara_extra.pth')
-    lora_dir   = os.path.join(ckpt_dir, 'lora')
-
-    if not os.path.exists(extra_path) and not os.path.exists(lora_dir):
+    if not os.path.isdir(query_dir) and not os.path.isdir(gen_dir):
         raise FileNotFoundError(
-            f"No checkpoint found at '{ckpt_dir}'.\n"
-            f"Expected either:\n"
-            f"  Apple format : {apple_adapter}\n"
-            f"  Self-trained : {extra_path} hoặc {lora_dir}"
+            f"No Stage II checkpoint found at '{ckpt_dir}'.\n"
+            f"Expected: {query_dir} and {gen_dir}"
         )
+
+    if os.path.isdir(query_dir):
+        q_weights = load_peft_weights(query_dir)
+        set_peft_model_state_dict(model.backbone, q_weights, adapter_name='query')
+        print(f"  ✓ Query adapter ← {query_dir}")
+
+    if os.path.isdir(gen_dir):
+        g_weights = load_peft_weights(gen_dir)
+        set_peft_model_state_dict(model.backbone, g_weights, adapter_name='generator')
+        print(f"  ✓ Generator adapter ← {gen_dir}")
 
     if os.path.exists(extra_path):
         saved = torch.load(extra_path, map_location='cuda')
-        model.proj.load_state_dict(saved['proj'])
-        model.mem_bias.data = saved['mem_bias']
-        print(f"  ✓ Projector & MemBias ← {extra_path}")
-
-    if os.path.exists(lora_dir):
-        from peft import load_peft_weights, set_peft_model_state_dict
-        lora_weights = load_peft_weights(lora_dir)
-        set_peft_model_state_dict(model.backbone, lora_weights)
-        print(f"  ✓ LoRA adapter ← {lora_dir}")
+        model.mem_token_embed.data = saved['mem_token_embed']
+        print(f"  ✓ Memory tokens ← {extra_path}")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 4. EVALUATION LOOP
@@ -156,9 +129,10 @@ def evaluate(model, val_loader, cfg, max_new_tokens: int = 32) -> dict:
                             if isinstance(v, torch.Tensor)}
             tensor_batch = {k: v.cuda() for k, v in tensor_batch.items()}
 
-            predictions: List[str] = model.generate_answer(
-                tensor_batch['doc_input_ids'],
-                tensor_batch['doc_attention_mask'],
+            predictions: List[str] = model.generate_answer_e2e(
+                tensor_batch['candidate_doc_input_ids'],
+                tensor_batch['candidate_doc_attention_mask'],
+                tensor_batch['candidate_mask'],
                 tensor_batch['question_input_ids'],
                 tensor_batch['question_attention_mask'],
                 max_new_tokens=max_new_tokens,
@@ -203,10 +177,9 @@ def main():
     # FIX: ưu tiên CLARA_CKPT_DIR (pretrained Apple weights) trước
     # sau đó mới fallback về CLARA_CKPT_EPOCH (checkpoint tự train)
     ckpt_dir = (
-        os.environ.get('CLARA_CKPT_DIR')                                           # pretrained Apple weights
-        or (os.path.join(cfg.output_dir, f"best_ep{os.environ['CLARA_CKPT_EPOCH']}")
-            if os.environ.get('CLARA_CKPT_EPOCH') else None)                       # checkpoint epoch cụ thể
-        or cfg.pretrained_ckpt_dir                                                 # fallback từ config
+        os.environ.get('CLARA_STAGE2_DIR')
+        or os.environ.get('CLARA_CKPT_DIR')
+        or cfg.pretrained_ckpt_dir
     )
     print(f"  Checkpoint : {ckpt_dir}")
     print("=" * 60)
@@ -223,7 +196,7 @@ def main():
 
     # Build eval DataLoader
     print(f"\n[3/3] Loading '{cfg.dataset_name}' validation set...")
-    val_loader = get_eval_loader(tokenizer, cfg, split='validation')
+    val_loader = get_retrieval_eval_loader(tokenizer, cfg, split='validation')
 
     # Run evaluation
     print("\nRunning evaluation...")

@@ -32,6 +32,7 @@ clara-repo/
 ---
 
 ## Chạy trên Kaggle
+Notebook sẵn để chạy full pipeline theo paper: [notebook/clara_fullpaper_kaggle.ipynb](notebook/clara_fullpaper_kaggle.ipynb)
 
 ### Bước 1 — Pull repo từ GitHub
 ```python
@@ -50,7 +51,25 @@ clara-repo/
 %run main.py
 ```
 
-### Hoặc chạy từng bước riêng lẻ
+### Tải pretrained E2E (khuyến nghị)
+```python
+!python -m scripts.download_pretrained --repo apple/CLaRa-7B-E2E --out ./clara-ckpts/pretrained-e2e
+```
+Sau đó chạy evaluate hoặc fine-tune, config mặc định sẽ dùng `./clara-ckpts/pretrained-e2e`.
+
+### Chạy theo paper (Stage I + Stage II)
+```python
+# Stage I (SCP): HotpotQA, L_CE + lambda * L_MSE
+!python -m scripts.train_stage1
+
+# Stage II (E2E): differentiable retrieval + ST estimator
+!python -m scripts.train_stage2
+
+# Evaluate Stage II (retrieval-based)
+!python -m scripts.evaluate
+```
+
+### Hoặc chạy từng bước riêng lẻ (legacy/simplified)
 Open config/config.py để chỉnh dataset_name và eval_mode, sau đó chạy:
 ```python
 # Chỉ train
@@ -83,3 +102,14 @@ clara-ckpts/
     ├── lora/              # LoRA adapter (HuggingFace PEFT format)
     └── clara_extra.pth    # Projector weights + mem_bias
 ```
+
+---
+
+## Ghi chú về mức độ khớp paper
+- Đã bổ sung Stage I (SCP) + Stage II (E2E) theo paper, gồm:
+    - Memory tokens appended vào input.
+    - Loss L_MSE alignment ở Stage I.
+    - ST estimator top-k ở Stage II.
+- Điều chỉnh thực tế để chạy trên Kaggle T4:
+    - Dùng HotpotQA làm tested dataset thay cho data synthesis từ Qwen.
+    - Giảm num_candidates và top_k so với paper (có thể tăng nếu đủ VRAM).

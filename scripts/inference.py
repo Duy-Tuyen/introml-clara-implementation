@@ -8,21 +8,26 @@ from models.utils import print_vram_usage
 
 
 def load_checkpoint(model, cfg, epoch: int = 1) -> None:
-    """Load projector, mem_bias và LoRA weights từ checkpoint đã lưu."""
-    ckpt_dir = os.path.join(cfg.output_dir, f'best_ep{epoch}')
-    ckpt_path = os.path.join(ckpt_dir, 'clara_extra.pth')
-    lora_dir = os.path.join(ckpt_dir, 'lora')
+    """Load Stage II adapters + memory tokens from checkpoint."""
+    ckpt_dir = os.path.join(cfg.output_dir, f'stage2_ep{epoch}')
+    query_dir = os.path.join(ckpt_dir, 'adapters', 'query')
+    gen_dir = os.path.join(ckpt_dir, 'adapters', 'generator')
+    extra_path = os.path.join(ckpt_dir, 'clara_stage2_extra.pth')
 
-    if os.path.exists(ckpt_path):
-        saved = torch.load(ckpt_path, map_location='cuda')
-        model.proj.load_state_dict(saved['proj'])
-        model.mem_bias.data = saved['mem_bias']
-        print(f'Loaded Projector & MemBias from: {ckpt_path}')
+    if os.path.isdir(query_dir):
+        q_weights = load_peft_weights(query_dir)
+        set_peft_model_state_dict(model.backbone, q_weights, adapter_name='query')
+        print(f'Loaded query adapter from: {query_dir}')
 
-    if os.path.exists(lora_dir):
-        lora_weights = load_peft_weights(lora_dir)
-        set_peft_model_state_dict(model.backbone, lora_weights)
-        print(f'Loaded LoRA adapter from: {lora_dir}')
+    if os.path.isdir(gen_dir):
+        g_weights = load_peft_weights(gen_dir)
+        set_peft_model_state_dict(model.backbone, g_weights, adapter_name='generator')
+        print(f'Loaded generator adapter from: {gen_dir}')
+
+    if os.path.exists(extra_path):
+        saved = torch.load(extra_path, map_location='cuda')
+        model.mem_token_embed.data = saved['mem_token_embed']
+        print(f'Loaded memory tokens from: {extra_path}')
 
 
 def run_inference(model, tokenizer, cfg, tests: list) -> None:
@@ -30,15 +35,20 @@ def run_inference(model, tokenizer, cfg, tests: list) -> None:
     model.eval()
     with torch.no_grad():
         for t in tests:
+            cand = t['doc']
             de = tokenizer(
-                t['doc'], max_length=cfg.doc_max_length,
+                [cand], max_length=cfg.doc_max_length,
                 padding='max_length', truncation=True, return_tensors='pt')
             qe = tokenizer(
                 f"[INST] {t['q']} [/INST]", max_length=cfg.max_qa_len,
                 padding='max_length', truncation=True, return_tensors='pt')
 
-            ans = model.generate_answer(
-                de['input_ids'].to('cuda:0'), de['attention_mask'].to('cuda:0'),
+            doc_ids = de['input_ids'].unsqueeze(0).to('cuda:0')
+            doc_mask = de['attention_mask'].unsqueeze(0).to('cuda:0')
+            cand_mask = torch.tensor([[1]], dtype=torch.long, device='cuda:0')
+
+            ans = model.generate_answer_e2e(
+                doc_ids, doc_mask, cand_mask,
                 qe['input_ids'].to('cuda:0'), qe['attention_mask'].to('cuda:0'),
                 max_new_tokens=32)
 
