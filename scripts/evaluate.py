@@ -9,8 +9,9 @@ Usage:
     # From repo root:
     python -m scripts.evaluate
 
-    # Override dataset or checkpoint via env vars (or edit cfg below):
-    CLARA_DATASET=2wikimultihop CLARA_CKPT_EPOCH=2 python -m scripts.evaluate
+    # Override dataset or checkpoint via env vars:
+    CLARA_DATASET=triviaqa python -m scripts.evaluate
+    CLARA_DATASET=squad CLARA_CKPT_DIR=/kaggle/input/... python -m scripts.evaluate
 """
 
 from __future__ import annotations
@@ -36,30 +37,11 @@ from data.dataset import get_eval_loader
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def normalize_answer(s: str) -> str:
-    """
-    Canonical answer normalisation used by SQuAD / most QA leaderboards.
-
-    Steps (order matters):
-        1. Lowercase
-        2. Remove punctuation
-        3. Remove articles (a, an, the)
-        4. Collapse whitespace
-    """
-    def _lower(text: str) -> str:
-        return text.lower()
-
-    def _remove_punctuation(text: str) -> str:
-        exclude = set(string.punctuation)
-        return ''.join(ch for ch in text if ch not in exclude)
-
-    def _remove_articles(text: str) -> str:
-        # Only strip leading/trailing/standalone articles, not mid-word
-        return re.sub(r'\b(a|an|the)\b', ' ', text)
-
-    def _fix_whitespace(text: str) -> str:
-        return ' '.join(text.split())
-
-    return _fix_whitespace(_remove_articles(_remove_punctuation(_lower(s))))
+    def _lower(text):          return text.lower()
+    def _remove_punc(text):    return ''.join(ch for ch in text if ch not in set(string.punctuation))
+    def _remove_articles(text): return re.sub(r'\b(a|an|the)\b', ' ', text)
+    def _fix_whitespace(text): return ' '.join(text.split())
+    return _fix_whitespace(_remove_articles(_remove_punc(_lower(s))))
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -67,65 +49,34 @@ def normalize_answer(s: str) -> str:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def calculate_exact_match(prediction: str, ground_truth: str) -> float:
-    """
-    Returns 1.0 if the normalised prediction equals the normalised ground truth,
-    else 0.0.
-    """
     return float(normalize_answer(prediction) == normalize_answer(ground_truth))
 
 
 def calculate_f1(prediction: str, ground_truth: str) -> float:
-    """
-    Token-level F1 between prediction and ground_truth after normalisation.
-    Identical to the SQuAD official evaluation script.
-
-    F1 = 2 * precision * recall / (precision + recall)
-    where precision = common_tokens / prediction_tokens
-          recall    = common_tokens / ground_truth_tokens
-    """
     pred_tokens = normalize_answer(prediction).split()
     gold_tokens = normalize_answer(ground_truth).split()
-
-    # Edge case: both empty → perfect match
     if not pred_tokens and not gold_tokens:
         return 1.0
-    # One of them is empty
     if not pred_tokens or not gold_tokens:
         return 0.0
-
-    pred_counter = collections.Counter(pred_tokens)
-    gold_counter = collections.Counter(gold_tokens)
-
-    # Intersection: sum of min counts for each token
-    common = sum((pred_counter & gold_counter).values())
-
+    common = sum((collections.Counter(pred_tokens) & collections.Counter(gold_tokens)).values())
     if common == 0:
         return 0.0
-
     precision = common / len(pred_tokens)
     recall    = common / len(gold_tokens)
-    f1 = (2 * precision * recall) / (precision + recall)
-    return f1
+    return (2 * precision * recall) / (precision + recall)
 
 
 def score_batch(
     predictions: List[str],
     ground_truths: List[str],
 ) -> Tuple[List[float], List[float]]:
-    """
-    Score a batch and return per-example (em, f1) lists.
-    Ground truth can be a single string or a list of acceptable answers —
-    we take the max score across all acceptable answers (SQuAD convention).
-    """
     em_scores, f1_scores = [], []
     for pred, golds in zip(predictions, ground_truths):
-        # golds may be a single string or a list of acceptable answers
         if isinstance(golds, str):
             golds = [golds]
-        em = max(calculate_exact_match(pred, g) for g in golds)
-        f1 = max(calculate_f1(pred, g)          for g in golds)
-        em_scores.append(em)
-        f1_scores.append(f1)
+        em_scores.append(max(calculate_exact_match(pred, g) for g in golds))
+        f1_scores.append(max(calculate_f1(pred, g)          for g in golds))
     return em_scores, f1_scores
 
 
@@ -135,9 +86,9 @@ def score_batch(
 
 def load_checkpoint(model, ckpt_dir: str) -> None:
     """
-    Load projector weights, mem_bias, and LoRA adapters from ckpt_dir.
+    Load projector weights, mem_bias, và LoRA adapters từ ckpt_dir.
 
-    Expected directory layout:
+    Expected layout:
         ckpt_dir/
         ├── clara_extra.pth   # projector state_dict + mem_bias
         └── lora/             # HuggingFace PEFT LoRA adapter
@@ -155,10 +106,8 @@ def load_checkpoint(model, ckpt_dir: str) -> None:
         saved = torch.load(extra_path, map_location='cuda')
         model.proj.load_state_dict(saved['proj'])
         model.mem_bias.data = saved['mem_bias']
-        epoch = saved.get('epoch', '?')
-        val   = saved.get('val_loss', '?')
         print(f"  ✓ Projector & MemBias  ← {extra_path}  "
-              f"(epoch={epoch}, val_loss={val})")
+              f"(epoch={saved.get('epoch','?')}, val_loss={saved.get('val_loss','?')})")
     else:
         print(f"  ⚠ clara_extra.pth not found — skipping projector weights.")
 
@@ -175,35 +124,25 @@ def load_checkpoint(model, ckpt_dir: str) -> None:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def evaluate(model, val_loader, cfg, max_new_tokens: int = 32) -> dict:
-    """
-    Run inference over val_loader and return aggregate EM and F1.
-
-    Args:
-        model           : CLaRaModel (already loaded with checkpoint)
-        val_loader      : DataLoader using CLaRaDataset.collate_eval()
-        cfg             : CLaRaConfig
-        max_new_tokens  : max tokens to generate per answer
-
-    Returns:
-        {'em': float, 'f1': float, 'n_samples': int,
-         'predictions': list[str], 'ground_truths': list[str]}
-    """
     model.eval()
     all_em, all_f1 = [], []
     all_preds, all_golds = [], []
 
     with torch.no_grad():
         for batch in tqdm(val_loader, desc='Evaluating', unit='batch'):
-            # Pull ground truth strings out BEFORE moving to CUDA
+            # Pull ground truth strings trước khi filter tensor
             ground_truths: List[str] = batch.pop('answers')
 
-            batch = {k: v.cuda() for k, v in batch.items()}
+            # FIX: filter tensor trước khi đưa lên GPU
+            tensor_batch = {k: v for k, v in batch.items()
+                            if isinstance(v, torch.Tensor)}
+            tensor_batch = {k: v.cuda() for k, v in tensor_batch.items()}
 
             predictions: List[str] = model.generate_answer(
-                batch['doc_input_ids'],
-                batch['doc_attention_mask'],
-                batch['question_input_ids'],
-                batch['question_attention_mask'],
+                tensor_batch['doc_input_ids'],
+                tensor_batch['doc_attention_mask'],
+                tensor_batch['question_input_ids'],
+                tensor_batch['question_attention_mask'],
                 max_new_tokens=max_new_tokens,
             )
 
@@ -228,12 +167,11 @@ def evaluate(model, val_loader, cfg, max_new_tokens: int = 32) -> dict:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def main():
-    # ── Config ────────────────────────────────────────────────────────────────
     cfg = CLaRaConfig(
-        dataset_name=os.environ.get('CLARA_DATASET', 'triviaqa'),
-        eval_mode=os.environ.get('CLARA_EVAL_MODE', 'oracle'),
-        eval_batch_size=int(os.environ.get('CLARA_EVAL_BS', 4)),
-        n_val=int(os.environ.get('CLARA_N_VAL', 500)),
+        dataset_name    = os.environ.get('CLARA_DATASET',  'triviaqa'),
+        eval_mode       = os.environ.get('CLARA_EVAL_MODE','oracle'),
+        eval_batch_size = int(os.environ.get('CLARA_EVAL_BS', 4)),
+        n_val           = int(os.environ.get('CLARA_N_VAL',  500)),
     )
 
     print("=" * 60)
@@ -243,36 +181,37 @@ def main():
     print(f"  Eval mode  : {cfg.eval_mode}")
     print(f"  Batch size : {cfg.eval_batch_size}")
     print(f"  Val samples: {cfg.n_val}")
-    print(f"  Checkpoint : {cfg.pretrained_ckpt_dir}")
+
+    # FIX: ưu tiên CLARA_CKPT_DIR (pretrained Apple weights) trước
+    # sau đó mới fallback về CLARA_CKPT_EPOCH (checkpoint tự train)
+    ckpt_dir = (
+        os.environ.get('CLARA_CKPT_DIR')                                           # pretrained Apple weights
+        or (os.path.join(cfg.output_dir, f"best_ep{os.environ['CLARA_CKPT_EPOCH']}")
+            if os.environ.get('CLARA_CKPT_EPOCH') else None)                       # checkpoint epoch cụ thể
+        or cfg.pretrained_ckpt_dir                                                 # fallback từ config
+    )
+    print(f"  Checkpoint : {ckpt_dir}")
     print("=" * 60)
 
-    # ── Build model & tokenizer ────────────────────────────────────────────────
+    # Build model
     print("\n[1/3] Building model...")
     model, tokenizer = build_clara_model(cfg)
     print(print_vram_usage())
 
-    # ── Load checkpoint ────────────────────────────────────────────────────────
-    print(f"\n[2/3] Loading checkpoint from '{cfg.pretrained_ckpt_dir}'...")
-
-    # Allow overriding with a specific best_epN directory
-    ckpt_epoch = os.environ.get('CLARA_CKPT_EPOCH')
-    if ckpt_epoch is not None:
-        ckpt_dir = os.path.join(cfg.output_dir, f'best_ep{ckpt_epoch}')
-    else:
-        ckpt_dir = cfg.pretrained_ckpt_dir
-
+    # Load checkpoint
+    print(f"\n[2/3] Loading checkpoint from '{ckpt_dir}'...")
     load_checkpoint(model, ckpt_dir)
     print(print_vram_usage())
 
-    # ── Build eval DataLoader ──────────────────────────────────────────────────
+    # Build eval DataLoader
     print(f"\n[3/3] Loading '{cfg.dataset_name}' validation set...")
     val_loader = get_eval_loader(tokenizer, cfg, split='validation')
 
-    # ── Run evaluation ─────────────────────────────────────────────────────────
+    # Run evaluation
     print("\nRunning evaluation...")
     results = evaluate(model, val_loader, cfg)
 
-    # ── Print results ──────────────────────────────────────────────────────────
+    # In kết quả
     print("\n" + "=" * 60)
     print("EVALUATION RESULTS")
     print("=" * 60)
@@ -282,77 +221,41 @@ def main():
     print(f"  F1 Score   : {results['f1'] * 100:.2f}%")
     print("=" * 60)
 
-    # ── Show a few prediction examples ────────────────────────────────────────
+    # In 5 ví dụ đầu
     print("\nSample predictions (first 5):")
     for pred, gold in zip(results['predictions'][:5], results['ground_truths'][:5]):
-        em = calculate_exact_match(pred, gold)
-        f1 = calculate_f1(pred, gold)
         print(f"  Gold : {gold}")
         print(f"  Pred : {pred}")
-        print(f"  EM={em:.0f}  F1={f1:.2f}")
+        print(f"  EM={calculate_exact_match(pred, gold):.0f}  F1={calculate_f1(pred, gold):.2f}")
         print("  " + "-" * 50)
 
-    # ── Show a few prediction examples ────────────────────────────────────────
-    print("\nSample predictions (first 5):")
-    for pred, gold in zip(results['predictions'][:5], results['ground_truths'][:5]):
-        em = calculate_exact_match(pred, gold)
-        f1 = calculate_f1(pred, gold)
-        print(f"  Gold : {gold}")
-        print(f"  Pred : {pred}")
-        print(f"  EM={em:.0f}  F1={f1:.2f}")
-        print("  " + "-" * 50)
-
+    # Lưu CSV
     import csv
     from datetime import datetime
-    
-    # 1. Tính điểm % trung bình của toàn bộ tập test
-    total_samples = len(results['predictions'])
-    total_em = sum([calculate_exact_match(p, g) for p, g in zip(results['predictions'], results['ground_truths'])])
-    total_f1 = sum([calculate_f1(p, g) for p, g in zip(results['predictions'], results['ground_truths'])])
-    
-    final_em = (total_em / total_samples) * 100 if total_samples > 0 else 0
-    final_f1 = (total_f1 / total_samples) * 100 if total_samples > 0 else 0
-    
-    print("\n" + "="*40)
-    print("🏆 OVERALL EVALUATION RESULTS 🏆")
-    print("="*40)
-    print(f"Total Samples Tested : {total_samples}")
-    print(f"Overall Exact Match  : {final_em:.2f}%")
-    print(f"Overall F1 Score     : {final_f1:.2f}%")
-    print("="*40)
 
-    # 2. Lưu vào file CSV (Bảng điểm)
     os.makedirs('results', exist_ok=True)
     csv_file = 'results/eval_scores.csv'
     file_exists = os.path.isfile(csv_file)
-    
-    # BẠN NHỚ SỬA TÊN NÀY TRƯỚC MỖI LẦN CHẠY TEST NHÉ!
-    # Ví dụ: "Apple_Pretrained", "My_Model_1_Epoch_4bit", v.v.
-    model_version = "Apple_Pretrained" 
-    
-    # Lấy thông tin từ config (Giả sử trên đầu hàm main Claude có khởi tạo `cfg = CLaRaConfig()`)
-    # Nếu Claude không truyền `cfg` xuống đây, bạn có thể thay bằng chuỗi "2wikimultihop"
-    dataset_name = cfg.dataset_name if 'cfg' in locals() else "unknown_dataset"
-    eval_mode = cfg.eval_mode if 'cfg' in locals() else "oracle"
+
+    # Đổi model_version tùy theo lần chạy
+    # Ví dụ: "Apple_Pretrained", "Finetuned_HotpotQA_ep1", v.v.
+    model_version = os.environ.get('CLARA_MODEL_VERSION', 'Apple_Pretrained')
 
     with open(csv_file, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         if not file_exists:
-            # Ghi header nếu file mới toanh
-            writer.writerow(['Timestamp', 'Model_Version', 'Dataset', 'Eval_Mode', 'Exact_Match(%)', 'F1_Score(%)'])
-        
-        # Ghi data
+            writer.writerow(['Timestamp', 'Model_Version', 'Dataset',
+                             'Eval_Mode', 'Exact_Match(%)', 'F1_Score(%)'])
         writer.writerow([
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
-            model_version, 
-            dataset_name, 
-            eval_mode, 
-            f"{final_em:.2f}", 
-            f"{final_f1:.2f}"
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            model_version,
+            cfg.dataset_name,
+            cfg.eval_mode,
+            f"{results['em'] * 100:.2f}",
+            f"{results['f1'] * 100:.2f}",
         ])
-        
-    print(f"✅ Báo cáo đã được lưu vào: {csv_file}\n")
 
+    print(f"\n✅ Kết quả đã lưu vào: {csv_file}")
     return results
 
 

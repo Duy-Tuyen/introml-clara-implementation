@@ -20,20 +20,23 @@ import torch
 
 
 # ── Dataset Registry ──────────────────────────────────────────────────────────
-# Maps cfg.dataset_name → (hf_path, hf_config, split_map)
-# split_map renames canonical splits so every dataset exposes 'train'/'validation'.
 
 _DATASET_REGISTRY: Dict[str, Dict] = {
+    'triviaqa': {
+        'hf_path':   'trivia_qa',
+        'hf_config': 'rc.nocontext',
+        'split_map': {'train': 'train', 'validation': 'validation'},
+        'filter':    lambda x: len(x['answer']['aliases']) > 0,
+    },
     '2wikimultihop': {
         'hf_path':   '2wikimultihop',
         'hf_config': None,
-        # 2WikiMultiHopQA uses 'train' / 'dev'
         'split_map': {'train': 'train', 'validation': 'dev'},
         'filter':    None,
     },
     'hotpotqa': {
         'hf_path':   'hotpot_qa',
-        'hf_config': 'distractor',        # or 'fullwiki'
+        'hf_config': 'distractor',
         'split_map': {'train': 'train', 'validation': 'validation'},
         'filter':    None,
     },
@@ -43,50 +46,35 @@ _DATASET_REGISTRY: Dict[str, Dict] = {
         'split_map': {'train': 'train', 'validation': 'validation'},
         'filter':    None,
     },
-
-    # ── Novel / custom datasets ────────────────────────────────────────────
-    # These are placeholders — replace hf_path with your actual HF dataset id
-    # or load from a local JSON/CSV file inside _load_raw() below.
+    # FIX: thêm SQuAD — dataset mới để eval
     'squad': {
         'hf_path':   'rajpurkar/squad',
         'hf_config': None,
         'split_map': {'train': 'train', 'validation': 'validation'},
         'filter':    lambda x: len(x['answers']['text']) > 0,
     },
-    'triviaqa': {
-        'hf_path':   'trivia_qa',
-        'hf_config': 'rc.nocontext',
-        # TriviaQA already uses 'train' / 'validation'
+    # ── Novel / custom datasets ────────────────────────────────────────────
+    'medical_novel': {
+        'hf_path':   'medmcqa',
+        'hf_config': None,
         'split_map': {'train': 'train', 'validation': 'validation'},
-        'filter':    lambda x: len(x['answer']['aliases']) > 0,
+        'filter':    None,
+    },
+    'legal_novel': {
+        'hf_path':   'nguyen-brat/legal_qa',
+        'hf_config': None,
+        'split_map': {'train': 'train', 'validation': 'validation'},
+        'filter':    None,
     },
 }
 
 
 # ── Per-dataset parsers ───────────────────────────────────────────────────────
-# Each parser receives one raw HF row and returns (doc, question, answer).
-# 'doc' is the gold passage in oracle mode; in normal mode a retriever supplies it.
 
 def _parse_triviaqa(row: dict, eval_mode: str) -> Tuple[str, str, str]:
     question = row['question']
     answer   = row['answer']['value']
-    if eval_mode == 'oracle':
-        # rc.nocontext has no passage → synthesise an oracle doc from the answer
-        doc = f"Trivia context: {question} The correct answer is: {answer}."
-    else:
-        # 'normal' mode: caller should supply a retrieved passage.
-        # Fallback to the same synthetic doc until a retriever is wired in.
-        doc = f"Trivia context: {question} The correct answer is: {answer}."
-    return doc, question, answer
-
-
-def _parse_squad(row: dict, eval_mode: str) -> Tuple[str, str, str]:
-    question = row['question']
-    answer   = row['answers']['text'][0] if row['answers']['text'] else ''
-    if eval_mode == 'oracle':
-        doc = row['context']   # SQuAD có sẵn passage rất chuẩn
-    else:
-        doc = row['context']   # dùng luôn vì SQuAD luôn có context
+    doc      = f"Trivia context: {question} The correct answer is: {answer}."
     return doc, question, answer
 
 
@@ -94,24 +82,22 @@ def _parse_2wikimultihop(row: dict, eval_mode: str) -> Tuple[str, str, str]:
     question = row['question']
     answer   = row['answer']
     if eval_mode == 'oracle':
-        # Concatenate all supporting facts as the oracle document
-        facts = row.get('supporting_facts', {})
-        titles    = facts.get('title', [])
-        sentences = facts.get('sent_id', [])
-        # Build a readable passage from context sentences
+        facts  = row.get('supporting_facts', {})
+        titles = facts.get('title', [])
+        sents  = facts.get('sent_id', [])
         ctx_map: dict = {}
         for title, para in zip(row.get('context', {}).get('title', []),
                                row.get('context', {}).get('sentences', [])):
             ctx_map[title] = para
         oracle_sents = []
-        for title, sent_id in zip(titles, sentences):
+        for title, sent_id in zip(titles, sents):
             try:
                 oracle_sents.append(ctx_map[title][sent_id])
             except (KeyError, IndexError):
                 pass
         doc = ' '.join(oracle_sents) if oracle_sents else question
     else:
-        doc = question   # placeholder until retriever is wired in
+        doc = question
     return doc, question, answer
 
 
@@ -119,8 +105,7 @@ def _parse_hotpotqa(row: dict, eval_mode: str) -> Tuple[str, str, str]:
     question = row['question']
     answer   = row['answer']
     if eval_mode == 'oracle':
-        # HotpotQA provides supporting_facts with paragraph titles + sentence indices
-        sf_titles = set(row.get('supporting_facts', {}).get('title', []))
+        sf_titles  = set(row.get('supporting_facts', {}).get('title', []))
         ctx_titles = row['context']['title']
         ctx_sents  = row['context']['sentences']
         oracle_sents = []
@@ -135,17 +120,22 @@ def _parse_hotpotqa(row: dict, eval_mode: str) -> Tuple[str, str, str]:
 
 def _parse_nq(row: dict, eval_mode: str) -> Tuple[str, str, str]:
     question = row['question']
-    # nq_open only has short answers (list) and no document passage
     answer   = row['answer'][0] if row['answer'] else ''
     doc      = f"Question: {question} Answer: {answer}."
     return doc, question, answer
 
 
+def _parse_squad(row: dict, eval_mode: str) -> Tuple[str, str, str]:
+    """
+    SQuAD luôn có passage context sẵn → oracle mode tự nhiên, không cần giả lập.
+    """
+    question = row['question']
+    answer   = row['answers']['text'][0] if row['answers']['text'] else ''
+    doc      = row['context']   # passage thật, không phải synthetic
+    return doc, question, answer
+
+
 def _parse_medical_novel(row: dict, eval_mode: str) -> Tuple[str, str, str]:
-    """
-    Placeholder parser for medical_novel dataset.
-    Adapt field names to match your actual dataset schema.
-    """
     question = row.get('question', '')
     answer   = row.get('answer', row.get('exp', ''))
     doc      = row.get('context', f"Medical context: {question}")
@@ -153,23 +143,18 @@ def _parse_medical_novel(row: dict, eval_mode: str) -> Tuple[str, str, str]:
 
 
 def _parse_legal_novel(row: dict, eval_mode: str) -> Tuple[str, str, str]:
-    """
-    Placeholder parser for legal_novel dataset.
-    Adapt field names to match your actual dataset schema.
-    """
     question = row.get('question', '')
     answer   = row.get('answer', '')
     doc      = row.get('context', f"Legal context: {question}")
     return doc, question, answer
 
 
-# Registry linking dataset_name → parser function
 _PARSERS: Dict[str, Callable] = {
     'triviaqa':       _parse_triviaqa,
     '2wikimultihop':  _parse_2wikimultihop,
     'hotpotqa':       _parse_hotpotqa,
     'nq':             _parse_nq,
-    'squad':          _parse_squad,        # ← thêm
+    'squad':          _parse_squad,        # FIX: thêm squad
     'medical_novel':  _parse_medical_novel,
     'legal_novel':    _parse_legal_novel,
 }
@@ -181,18 +166,15 @@ class CLaRaDataset(Dataset):
     """
     Unified dataset class for CLaRa evaluation and fine-tuning.
 
-    Every item returned by __getitem__ follows this schema:
-        {"doc": str, "question": str, "answer": str}
-
-    The collate() method tokenizes the batch and produces model-ready tensors,
-    identical to what CLaRaModel.forward() and generate_answer() expect.
+    collate_train : dùng cho train loop và _validate (có labels tensor)
+    collate_eval  : dùng cho scripts/evaluate.py (có answers string, không có labels)
     """
 
     def __init__(self, split: str, tok, cfg, n: Optional[int] = None):
-        self.tok      = tok
-        self.cfg      = cfg
-        self.split    = split           # 'train' or 'validation'
-        self.parser   = _PARSERS[cfg.dataset_name]
+        self.tok       = tok
+        self.cfg       = cfg
+        self.split     = split
+        self.parser    = _PARSERS[cfg.dataset_name]
         self.eval_mode = cfg.eval_mode
 
         raw = self._load_raw(cfg.dataset_name, split)
@@ -202,36 +184,26 @@ class CLaRaDataset(Dataset):
         print(f"[{cfg.dataset_name}|{split}] {len(self.data)} samples  "
               f"(eval_mode={cfg.eval_mode})")
 
-    # ── Internal helpers ──────────────────────────────────────────────────────
-
     def _load_raw(self, name: str, canonical_split: str) -> HFDataset:
-        """Load the HuggingFace dataset and remap split names."""
         reg   = _DATASET_REGISTRY[name]
         split = reg['split_map'].get(canonical_split, canonical_split)
-
-        ds = load_dataset(reg['hf_path'], reg['hf_config'], split=split)
-
+        ds    = load_dataset(reg['hf_path'], reg['hf_config'], split=split)
         if reg['filter'] is not None:
             ds = ds.filter(reg['filter'])
         return ds
-
-    # ── Dataset interface ─────────────────────────────────────────────────────
 
     def __len__(self) -> int:
         return len(self.data)
 
     def __getitem__(self, i: int) -> dict:
-        """Return a standardised dict for item i."""
         row = self.data[i]
         doc, question, answer = self.parser(row, self.eval_mode)
         return {"doc": doc, "question": question, "answer": answer}
 
-    # ── Collate (tokenization) ────────────────────────────────────────────────
-
     def collate_train(self, batch: list) -> dict:
         """
-        Collate for training.
-        Produces: doc tensors + QA tensors + labels (answer tokens only).
+        Collate cho train loop và _validate.
+        Tất cả values đều là Tensor — không có list string.
         """
         docs = [b['doc']      for b in batch]
         qs   = [b['question'] for b in batch]
@@ -259,19 +231,17 @@ class CLaRaDataset(Dataset):
 
     def collate_eval(self, batch: list) -> dict:
         """
-        Collate for evaluation.
-        Produces: doc tensors + question-only tensors + raw answer strings.
-        (Labels are NOT included — ground truth answers returned separately.)
+        Collate cho scripts/evaluate.py — generate answer + tính EM/F1.
+        answers là list[str] (KHÔNG phải tensor) — chỉ dùng cho evaluate, không cho _validate.
         """
         docs = [b['doc']      for b in batch]
         qs   = [b['question'] for b in batch]
-        ans  = [b['answer']   for b in batch]   # kept as strings for EM/F1
+        ans  = [b['answer']   for b in batch]
 
         doc_enc = self.tok(
             docs, max_length=self.cfg.doc_max_length,
             padding='max_length', truncation=True, return_tensors='pt')
 
-        # Prompt-only (no answer appended) so model has to generate the answer
         q_enc = self.tok(
             [f"[INST] {q} [/INST]" for q in qs],
             max_length=self.cfg.max_qa_len, padding='max_length',
@@ -282,7 +252,7 @@ class CLaRaDataset(Dataset):
             doc_attention_mask=doc_enc['attention_mask'],
             question_input_ids=q_enc['input_ids'],
             question_attention_mask=q_enc['attention_mask'],
-            answers=ans,            # list[str] — passed through for scoring
+            answers=ans,    # list[str] — chỉ dùng trong evaluate.py
         )
 
 
@@ -290,8 +260,10 @@ class CLaRaDataset(Dataset):
 
 def get_dataloaders(tokenizer, cfg) -> Tuple[DataLoader, DataLoader]:
     """
-    Build train and validation DataLoaders using CLaRaDataset.
-    Uses cfg.dataset_name to select the dataset automatically.
+    Build train và validation DataLoaders.
+
+    Cả train_dl và val_dl đều dùng collate_train vì _validate cần labels tensor.
+    collate_eval chỉ dùng trong get_eval_loader (cho scripts/evaluate.py).
     """
     train_ds = CLaRaDataset('train',      tokenizer, cfg, cfg.n_train)
     val_ds   = CLaRaDataset('validation', tokenizer, cfg, cfg.n_val)
@@ -304,11 +276,14 @@ def get_dataloaders(tokenizer, cfg) -> Tuple[DataLoader, DataLoader]:
         num_workers=2,
         pin_memory=True,
     )
+    # FIX: đổi từ collate_eval → collate_train
+    # _validate cần labels tensor để tính loss
+    # collate_eval trả về answers là list[str] → không thể .cuda() → crash
     val_dl = DataLoader(
         val_ds,
         batch_size=cfg.eval_batch_size,
         shuffle=False,
-        collate_fn=val_ds.collate_eval,
+        collate_fn=val_ds.collate_train,   # ← FIX
         num_workers=2,
         pin_memory=True,
     )
@@ -317,15 +292,15 @@ def get_dataloaders(tokenizer, cfg) -> Tuple[DataLoader, DataLoader]:
 
 def get_eval_loader(tokenizer, cfg, split: str = 'validation') -> DataLoader:
     """
-    Convenience function: returns a single eval DataLoader for any split.
-    Useful in scripts/evaluate.py without needing to build the train loader.
+    Dùng trong scripts/evaluate.py — generate answer và tính EM/F1.
+    Dùng collate_eval vì evaluate cần answers string, không cần loss.
     """
     ds = CLaRaDataset(split, tokenizer, cfg, cfg.n_val)
     return DataLoader(
         ds,
         batch_size=cfg.eval_batch_size,
         shuffle=False,
-        collate_fn=ds.collate_eval,
+        collate_fn=ds.collate_eval,   # ← đúng, chỉ dùng ở đây
         num_workers=2,
         pin_memory=True,
     )

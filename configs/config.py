@@ -22,7 +22,10 @@ class CLaRaConfig:
     # ── Training ──────────────────────────────────────────────────────────────
     batch_size: int         = 1
     grad_accum: int         = 8
-    lr: float               = 2e-4
+    # FIX: lr=5e-6 theo paper B.4 (end-to-end learning rate)
+    # Paper dùng 2e-4 cho compression pretraining (Stage I)
+    # nhưng 5e-6 cho end-to-end training (Stage II) — đây là Stage II
+    lr: float               = 5e-6
     num_epochs: int         = 1
     max_qa_len: int         = 96
     warmup_ratio: float     = 0.03
@@ -33,19 +36,19 @@ class CLaRaConfig:
     output_dir: str         = './clara-ckpts'
 
     # ── Dataset selection ─────────────────────────────────────────────────────
-    # Supported values: 'triviaqa' | '2wikimultihop' | 'hotpotqa' | 'nq'
-    # Novel/custom datasets: 'medical_novel' | 'legal_novel'
+    # Supported: 'triviaqa' | '2wikimultihop' | 'hotpotqa' | 'nq' | 'squad'
+    # Novel/custom: 'medical_novel' | 'legal_novel'
     dataset_name: str       = 'triviaqa'
 
     # ── Evaluation ────────────────────────────────────────────────────────────
-    # 'oracle' : document is the gold context (upper-bound setting from paper)
-    # 'normal' : document is retrieved by a retriever (realistic setting)
+    # 'oracle' : document là gold context (upper-bound, theo paper)
+    # 'normal' : document được retrieved bởi retriever (realistic)
     eval_mode: Literal['oracle', 'normal'] = 'oracle'
 
-    # Separate batch size for eval — can be larger than train since no gradients
+    # Batch size riêng cho eval — có thể lớn hơn train vì không cần gradient
     eval_batch_size: int    = 4
 
-    # Path to pretrained CLaRa checkpoint (projector + mem_bias + LoRA)
+    # Path đến pretrained CLaRa checkpoint (Apple SCP weights, compression-16)
     pretrained_ckpt_dir: str = './clara-ckpts/pretrained'
 
     def __post_init__(self):
@@ -54,7 +57,9 @@ class CLaRaConfig:
             f"must equal n_memory_tokens ({self.n_memory_tokens}). "
             f"Got {self.doc_max_length // self.compr_rate} != {self.n_memory_tokens}."
         )
+        # FIX: thêm 'squad' vào supported datasets
         supported = {'triviaqa', '2wikimultihop', 'hotpotqa', 'nq',
+                     'squad',
                      'medical_novel', 'legal_novel'}
         assert self.dataset_name in supported, (
             f"dataset_name '{self.dataset_name}' not recognised. "
