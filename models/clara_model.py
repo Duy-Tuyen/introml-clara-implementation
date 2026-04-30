@@ -73,7 +73,7 @@ class CLaRaModel(nn.Module):
         return mem_h
 
     def _mse_alignment(self, doc_h, mem_h, doc_mask):
-        mask = doc_mask.unsqueeze(-1).to(doc_h.dtype)
+        mask = doc_mask.unsqueeze(-1).to(device=doc_h.device, dtype=doc_h.dtype)
         doc_avg = (doc_h * mask).sum(1) / mask.sum(1).clamp(1)
         mem_avg = mem_h.mean(1)
         return F.mse_loss(mem_avg, doc_avg)
