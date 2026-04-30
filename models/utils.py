@@ -25,7 +25,7 @@ def load_peft_weights_local(adapter_dir: str) -> dict:
     so local absolute paths (e.g. /kaggle/working/...) never trigger
     HFValidationError from load_peft_weights().
     
-    Tries: adapter_model.safetensors → .bin → .pt → any .pt file in dir.
+    Tries: adapter_model.safetensors → .bin → .pt → any .pt file → subdirectory.
     """
     if not os.path.isdir(adapter_dir):
         raise FileNotFoundError(f"Adapter directory not found: {adapter_dir}")
@@ -44,13 +44,25 @@ def load_peft_weights_local(adapter_dir: str) -> dict:
             return _safe_load_file(path)
         return torch.load(path, map_location="cpu", weights_only=True)
 
-    # Fallback: look for any .pt file in directory
+    # Fallback 1: look for any .pt file in directory
     for fname in os.listdir(adapter_dir):
-        if fname.endswith(".pt"):
+        if fname.endswith(".pt") and fname != "adapter_model.pt":
             path = os.path.join(adapter_dir, fname)
             return torch.load(path, map_location="cpu", weights_only=True)
 
-    # Inspect directory for debugging
+    # Fallback 2: check if this is a parent directory with subdirectories
+    # (e.g. adapters/query/ containing query/adapter_model.safetensors from nested saves)
+    contents = os.listdir(adapter_dir)
+    for item in contents:
+        subdir = os.path.join(adapter_dir, item)
+        if os.path.isdir(subdir):
+            # Try to load from subdirectory recursively
+            try:
+                return load_peft_weights_local(subdir)
+            except FileNotFoundError:
+                continue
+
+    # Debug: show directory structure
     files = os.listdir(adapter_dir) if os.path.isdir(adapter_dir) else []
     raise FileNotFoundError(
         f"No adapter weights found in: {adapter_dir}\n"
