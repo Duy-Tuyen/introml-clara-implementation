@@ -29,7 +29,12 @@ class CLaRaModel(nn.Module):
         self.backbone.set_adapter('compressor')
 
         self.mem_token_embed = nn.Parameter(
-            torch.zeros(cfg.n_memory_tokens, self.H, dtype=torch.bfloat16, device='cuda'))
+            torch.zeros(cfg.n_memory_tokens, self.H, dtype=torch.bfloat16))
+
+    @property
+    def device(self):
+        """Get the device of the backbone model."""
+        return next(self.backbone.parameters()).device
 
     @property
     def _embed(self):
@@ -39,10 +44,10 @@ class CLaRaModel(nn.Module):
         self.backbone.set_adapter(adapter)
         tok_emb = self._embed(input_ids)
         B = tok_emb.size(0)
-        mem = self.mem_token_embed.unsqueeze(0).expand(B, -1, -1)
-        mem = mem.to(tok_emb.device)
+        mem = self.mem_token_embed.unsqueeze(0).expand(B, -1, -1).to(self.device)
         emb = torch.cat([tok_emb, mem], dim=1)
-        mm = torch.ones(B, mem.size(1), device=attention_mask.device, dtype=attention_mask.dtype)
+        attention_mask = attention_mask.to(self.device)
+        mm = torch.ones(B, mem.size(1), device=self.device, dtype=attention_mask.dtype)
         mask = torch.cat([attention_mask, mm], dim=1)
         out = self.backbone(
             inputs_embeds=emb,
@@ -79,14 +84,16 @@ class CLaRaModel(nn.Module):
         mse_loss = self._mse_alignment(doc_h, mem_h, doc_attention_mask)
 
         self.backbone.set_adapter('generator')
-        mem = mem_h.to(question_attention_mask.device)
-        q_e = self._embed(question_input_ids).to(question_attention_mask.device)
+        mem = mem_h.to(self.device)
+        q_e = self._embed(question_input_ids).to(self.device)
+        question_attention_mask = question_attention_mask.to(self.device)
+        labels = labels.to(self.device)
         emb = torch.cat([mem, q_e], dim=1)
-        mm = torch.ones(mem.size(0), mem.size(1), device=question_attention_mask.device,
+        mm = torch.ones(mem.size(0), mem.size(1), device=self.device,
                         dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
         pl = torch.full((mem.size(0), mem.size(1)), -100,
-                        device=question_attention_mask.device, dtype=labels.dtype)
+                        device=self.device, dtype=labels.dtype)
         labels = torch.cat([pl, labels], dim=1)
 
         out = self.backbone(inputs_embeds=emb, attention_mask=mask,
@@ -160,13 +167,16 @@ class CLaRaModel(nn.Module):
         selected = selected.reshape(B, self.cfg.top_k * self.cfg.n_memory_tokens, self.H)
 
         self.backbone.set_adapter('generator')
-        q_e = self._embed(question_input_ids).to(question_attention_mask.device)
+        q_e = self._embed(question_input_ids).to(self.device)
+        selected = selected.to(self.device)
+        question_attention_mask = question_attention_mask.to(self.device)
+        labels = labels.to(self.device)
         emb = torch.cat([selected, q_e], dim=1)
-        mm = torch.ones(B, selected.size(1), device=question_attention_mask.device,
+        mm = torch.ones(B, selected.size(1), device=self.device,
                         dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
         pl = torch.full((B, selected.size(1)), -100,
-                        device=question_attention_mask.device, dtype=labels.dtype)
+                        device=self.device, dtype=labels.dtype)
         labels = torch.cat([pl, labels], dim=1)
 
         return self.backbone(inputs_embeds=emb, attention_mask=mask,
@@ -207,11 +217,13 @@ class CLaRaModel(nn.Module):
         selected = selected.reshape(B, self.cfg.top_k * self.cfg.n_memory_tokens, self.H)
 
         self.backbone.set_adapter('generator')
-        q_e = self._embed(question_input_ids)
-        q_e = q_e.to(selected.device)
+        # Ensure all inputs are on backbone device before generation
+        q_e = self._embed(question_input_ids).to(self.device)
+        selected = selected.to(self.device)
+        question_input_ids = question_input_ids.to(self.device)
+        question_attention_mask = question_attention_mask.to(self.device)
         emb = torch.cat([selected, q_e], dim=1)
-        question_attention_mask = question_attention_mask.to(selected.device)
-        mm = torch.ones(B, selected.size(1), device=selected.device,
+        mm = torch.ones(B, selected.size(1), device=self.device,
                         dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
 
@@ -239,7 +251,7 @@ def build_clara_model(cfg):
     )
 
     base = AutoModelForCausalLM.from_pretrained(
-        cfg.base_model, quantization_config=bnb, device_map="auto",
+        cfg.base_model, quantization_config=bnb, device_map="cuda",
         torch_dtype=torch.bfloat16, low_cpu_mem_usage=True,
     )
     base.config.use_cache = False
@@ -247,8 +259,7 @@ def build_clara_model(cfg):
         base.gradient_checkpointing_enable()
 
     model = CLaRaModel(base, tokenizer, cfg)
-
-    for name, p in model.named_parameters():
+    return model, tokenizer
         if p.is_floating_point():
             p.requires_grad_(False)
 
