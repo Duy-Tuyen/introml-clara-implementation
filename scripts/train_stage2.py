@@ -154,8 +154,8 @@ def train_stage2(model, train_dl, val_dl, cfg) -> None:
             best_val = val_loss
             ckpt = os.path.join(cfg.output_dir, f"stage2_ep{epoch+1}")
             os.makedirs(ckpt, exist_ok=True)
-            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters', 'query'), adapter_name='query')
-            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters', 'generator'), adapter_name='generator')
+            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters'), adapter_name='query')
+            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters'), adapter_name='generator')
             torch.save(
                 {'mem_token_embed': model.mem_token_embed.data,
                  'epoch': epoch + 1,
