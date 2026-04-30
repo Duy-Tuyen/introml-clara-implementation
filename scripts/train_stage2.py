@@ -90,7 +90,8 @@ def _validate(model, dl, max_b: int = 40) -> float:
         for i, batch in enumerate(dl):
             if i >= max_b:
                 break
-            batch = {k: v.cuda() for k, v in batch.items() if isinstance(v, torch.Tensor)}
+            device = next(model.parameters()).device 
+            batch = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in batch.items()}
             out = model.forward_e2e(**batch)
             total += out.loss.item()
             n += 1
@@ -121,7 +122,8 @@ def train_stage2(model, train_dl, val_dl, cfg) -> None:
         opt.zero_grad()
 
         for step, batch in enumerate(train_dl):
-            batch = {k: v.cuda() for k, v in batch.items() if isinstance(v, torch.Tensor)}
+            device = next(model.parameters()).device
+            batch = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in batch.items()}
             loss = model.forward_e2e(**batch).loss / cfg.grad_accum
             loss.backward()
             ep_loss += loss.item() * cfg.grad_accum
