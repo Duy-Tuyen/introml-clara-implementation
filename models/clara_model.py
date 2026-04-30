@@ -160,7 +160,7 @@ class CLaRaModel(nn.Module):
         d_vec = mem_h.mean(2)
         scores = F.cosine_similarity(q_vec.unsqueeze(1), d_vec, dim=-1)
         if candidate_mask is not None:
-            scores = scores.masked_fill(candidate_mask == 0, -1e9)
+            scores = scores.masked_fill(candidate_mask.to(scores.device) == 0, -1e9)
 
         z = self._st_topk(scores, self.cfg.top_k, self.cfg.st_tau)
         selected = torch.einsum('bkc,bcmd->bkmd', z, mem_h)
@@ -205,7 +205,7 @@ class CLaRaModel(nn.Module):
         d_vec = mem_h.mean(2)
         scores = F.cosine_similarity(q_vec.unsqueeze(1), d_vec, dim=-1)
         if candidate_mask is not None:
-            scores = scores.masked_fill(candidate_mask == 0, -1e9)
+            scores = scores.masked_fill(candidate_mask.to(scores.device) == 0, -1e9)
 
         topk_idx = torch.topk(scores, k=self.cfg.top_k, dim=-1).indices
         selected = mem_h.gather(
