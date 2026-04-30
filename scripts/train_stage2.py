@@ -10,11 +10,12 @@ import os
 import torch
 from torch.optim import AdamW
 from transformers import get_cosine_schedule_with_warmup
-from peft import load_peft_weights, set_peft_model_state_dict
+from peft import set_peft_model_state_dict
 
 from configs.config import CLaRaConfig
 from models.clara_model import build_clara_model
 from data.dataset import get_retrieval_dataloaders
+from models.utils import load_peft_weights_local
 
 
 def _vram() -> str:
@@ -41,12 +42,12 @@ def _load_stage1(model, stage1_dir: str) -> None:
     extra_path = os.path.join(stage1_dir, 'clara_stage1_extra.pth')
 
     if os.path.isdir(comp_dir):
-        comp_weights = load_peft_weights(comp_dir)
+        comp_weights = load_peft_weights_local(comp_dir)
         set_peft_model_state_dict(model.backbone, comp_weights, adapter_name='compressor')
         print(f"Loaded compressor adapter from: {comp_dir}")
 
     if os.path.isdir(gen_dir):
-        gen_weights = load_peft_weights(gen_dir)
+        gen_weights = load_peft_weights_local(gen_dir)
         set_peft_model_state_dict(model.backbone, gen_weights, adapter_name='generator')
         print(f"Loaded generator adapter from: {gen_dir}")
 
@@ -67,12 +68,12 @@ def _load_stage2_init(model, stage2_dir: str) -> None:
     extra_path = os.path.join(stage2_dir, 'clara_stage2_extra.pth')
 
     if os.path.isdir(query_dir):
-        q_weights = load_peft_weights(query_dir)
+        q_weights = load_peft_weights_local(query_dir)
         set_peft_model_state_dict(model.backbone, q_weights, adapter_name='query')
         print(f"Loaded query adapter from: {query_dir}")
 
     if os.path.isdir(gen_dir):
-        g_weights = load_peft_weights(gen_dir)
+        g_weights = load_peft_weights_local(gen_dir)
         set_peft_model_state_dict(model.backbone, g_weights, adapter_name='generator')
         print(f"Loaded generator adapter from: {gen_dir}")
 

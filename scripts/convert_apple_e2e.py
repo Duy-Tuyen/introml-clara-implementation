@@ -16,10 +16,11 @@ from __future__ import annotations
 import argparse
 import os
 import torch
-from peft import get_peft_model_state_dict, load_peft_weights, set_peft_model_state_dict
+from peft import get_peft_model_state_dict, set_peft_model_state_dict
 
 from configs.config import CLaRaConfig
 from models.clara_model import build_clara_model
+from models.utils import load_peft_weights_local
 
 
 def parse_args() -> argparse.Namespace:
@@ -52,7 +53,7 @@ def _get_lora_state(model, input_dir: str) -> dict:
         return get_peft_model_state_dict(model.backbone, adapter_name="query")
 
     if os.path.isdir(lora_dir):
-        return load_peft_weights(lora_dir)
+        return load_peft_weights_local(lora_dir)
 
     raise FileNotFoundError(
         "No adapters.pth or lora/ found in input checkpoint."
