@@ -39,7 +39,9 @@ def _validate(model, dl, cfg, max_b: int = 40) -> float:
         for i, batch in enumerate(dl):
             if i >= max_b:
                 break
-            batch = {k: v.cuda() for k, v in batch.items() if isinstance(v, torch.Tensor)}
+            # Lấy device hiện tại của model (thường là tầng đầu tiên)
+            device = next(model.parameters()).device 
+            batch = {k: v.to(device) for k, v in batch.items() if isinstance(v, torch.Tensor)}
             ce_loss, mse_loss = model.forward_scp(**batch)
             loss = ce_loss + cfg.stage1_mse_lambda * mse_loss
             total += loss.item()

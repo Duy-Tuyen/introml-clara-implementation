@@ -43,13 +43,13 @@ def run_inference(model, tokenizer, cfg, tests: list) -> None:
                 f"[INST] {t['q']} [/INST]", max_length=cfg.max_qa_len,
                 padding='max_length', truncation=True, return_tensors='pt')
 
-            doc_ids = de['input_ids'].unsqueeze(0).to('cuda:0')
-            doc_mask = de['attention_mask'].unsqueeze(0).to('cuda:0')
-            cand_mask = torch.tensor([[1]], dtype=torch.long, device='cuda:0')
+            doc_ids = de['input_ids'].unsqueeze(0).to(model.device)
+            doc_mask = de['attention_mask'].unsqueeze(0).to(model.device)
+            cand_mask = torch.tensor([[1]], dtype=torch.long, device=model.device)
 
             ans = model.generate_answer_e2e(
                 doc_ids, doc_mask, cand_mask,
-                qe['input_ids'].to('cuda:0'), qe['attention_mask'].to('cuda:0'),
+                qe['input_ids'].to(model.device), qe['attention_mask'].to(model.device),
                 max_new_tokens=32)
 
             print(f"Q: {t['q']}")
