@@ -260,7 +260,3 @@ def build_clara_model(cfg):
 
     model = CLaRaModel(base, tokenizer, cfg)
     return model, tokenizer
-        if p.is_floating_point():
-            p.requires_grad_(False)
-
-    return model, tokenizer
