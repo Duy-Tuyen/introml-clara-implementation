@@ -52,7 +52,7 @@ class CLaRaConfig:
     # ── Dataset selection ─────────────────────────────────────────────────────
     # Supported: 'triviaqa' | '2wikimultihop' | 'hotpotqa' | 'nq' | 'squad'
     # Novel/custom: 'medical_novel' | 'legal_novel'
-    dataset_name: str       = 'triviaqa'
+    dataset_name: str       = 'hotpotqa'
 
     # ── Evaluation ────────────────────────────────────────────────────────────
     # 'oracle' : document là gold context (upper-bound, theo paper)
