@@ -251,7 +251,7 @@ def build_clara_model(cfg):
     )
 
     base = AutoModelForCausalLM.from_pretrained(
-        cfg.base_model, quantization_config=bnb, device_map="cuda",
+        cfg.base_model, quantization_config=bnb, device_map="auto",
         torch_dtype=torch.bfloat16, low_cpu_mem_usage=True,
     )
     base.config.use_cache = False
