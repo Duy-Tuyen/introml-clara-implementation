@@ -94,12 +94,40 @@ class CLaRaModel(nn.Module):
         return out.loss, mse_loss
 
     def _st_topk(self, scores, k: int, tau: float):
-        z_soft = F.softmax(scores / tau, dim=-1)
-        topk_idx = torch.topk(scores, k=k, dim=-1).indices
-        z_hard = torch.zeros(scores.size(0), k, scores.size(1), device=scores.device)
-        for i in range(k):
-            z_hard.scatter_(2, topk_idx[:, i].unsqueeze(-1), 1.0)
-        z = z_hard + (z_soft.unsqueeze(1) - z_soft.unsqueeze(1).detach())
+        # Paper Algorithm 1: iterative top-k with mask update between ranks
+        # Prevents selecting the same document twice across ranks j=1..k
+        B, D = scores.shape
+        eps = 1e-9
+
+        z_hard = torch.zeros(B, k, D, device=scores.device, dtype=scores.dtype)
+        z_soft = torch.zeros(B, k, D, device=scores.device, dtype=scores.dtype)
+
+        # taken tracks which docs have been selected (hard), used to mask next rank
+        # Algorithm 1 step 12: taken ← min(taken + Z_hard[:,j,:], 1)
+        taken = torch.zeros(B, D, device=scores.device, dtype=scores.dtype)
+
+        s_scaled = scores / max(tau, 1e-6)  # Algorithm 1 step 3
+
+        for j in range(k):
+            # Step 8: mask ← 1 - SG(taken)  — block already-selected docs
+            mask = 1.0 - taken.detach()
+
+            # Step 9: logits_j ← s_scaled + log(mask + ε)
+            logits_j = s_scaled + torch.log(mask + eps)
+
+            # Step 10: p_j ← softmax(logits_j)
+            p_j = F.softmax(logits_j, dim=-1)
+            z_soft[:, j, :] = p_j
+
+            # Step 6-7: hard selection = argmax of soft (on unmasked candidates)
+            r_j = p_j.argmax(dim=-1)  # (B,)
+            z_hard[:, j, :].scatter_(1, r_j.unsqueeze(-1), 1.0)
+
+            # Step 12: update taken with the hard selection
+            taken = torch.clamp(taken + z_hard[:, j, :].detach(), max=1.0)
+
+        # Step 14: Z = Z_hard + (Z_soft - SG(Z_soft))
+        z = z_hard + (z_soft - z_soft.detach())
         return z
 
     def forward_e2e(self, candidate_doc_ids, candidate_doc_mask, candidate_mask,

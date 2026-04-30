@@ -16,12 +16,12 @@ class CLaRaConfig:
     # ── LoRA ──────────────────────────────────────────────────────────────────
     lora_r: int             = 16
     lora_alpha: int         = 32
-    lora_dropout: float     = 0.05
+    lora_dropout: float     = 0.1    # Paper Table 10: LoRA Dropout = 0.1
     lora_targets: List[str] = field(
         default_factory=lambda: ['q_proj', 'v_proj', 'k_proj', 'o_proj'])
 
     # ── Training (Stage I: SCP) ───────────────────────────────────────────────
-    stage1_lr: float        = 2e-4
+    stage1_lr: float        = 1e-4   # Paper Table 10: compression learning LR = 1×10⁻⁴
     stage1_epochs: int      = 1
     stage1_mse_lambda: float = 0.1
 
