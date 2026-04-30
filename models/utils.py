@@ -24,6 +24,8 @@ def load_peft_weights_local(adapter_dir: str) -> dict:
     Reads directly from disk — bypasses HuggingFace Hub validation entirely
     so local absolute paths (e.g. /kaggle/working/...) never trigger
     HFValidationError from load_peft_weights().
+    
+    Tries: adapter_model.safetensors → .bin → .pt → any .pt file in dir.
     """
     if not os.path.isdir(adapter_dir):
         raise FileNotFoundError(f"Adapter directory not found: {adapter_dir}")
@@ -42,7 +44,16 @@ def load_peft_weights_local(adapter_dir: str) -> dict:
             return _safe_load_file(path)
         return torch.load(path, map_location="cpu", weights_only=True)
 
+    # Fallback: look for any .pt file in directory
+    for fname in os.listdir(adapter_dir):
+        if fname.endswith(".pt"):
+            path = os.path.join(adapter_dir, fname)
+            return torch.load(path, map_location="cpu", weights_only=True)
+
+    # Inspect directory for debugging
+    files = os.listdir(adapter_dir) if os.path.isdir(adapter_dir) else []
     raise FileNotFoundError(
         f"No adapter weights found in: {adapter_dir}\n"
-        f"Expected one of: adapter_model.safetensors / .bin / .pt"
+        f"Expected one of: adapter_model.safetensors / .bin / .pt\n"
+        f"Directory contents: {files}"
     )
