@@ -208,8 +208,10 @@ class CLaRaModel(nn.Module):
 
         self.backbone.set_adapter('generator')
         q_e = self._embed(question_input_ids)
+        q_e = q_e.to(selected.device)
         emb = torch.cat([selected, q_e], dim=1)
-        mm = torch.ones(B, selected.size(1), device=question_attention_mask.device,
+        question_attention_mask = question_attention_mask.to(selected.device)
+        mm = torch.ones(B, selected.size(1), device=selected.device,
                         dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
 
