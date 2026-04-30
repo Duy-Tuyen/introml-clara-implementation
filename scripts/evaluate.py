@@ -23,12 +23,12 @@ import collections
 from typing import List, Tuple
 
 import torch
-from peft import load_peft_weights, set_peft_model_state_dict
+from peft import set_peft_model_state_dict
 from tqdm import tqdm
 
 from configs.config import CLaRaConfig
 from models.clara_model import build_clara_model
-from models.utils import print_vram_usage
+from models.utils import load_peft_weights_local, print_vram_usage
 from data.dataset import get_retrieval_eval_loader
 
 
@@ -96,12 +96,12 @@ def load_checkpoint(model, ckpt_dir: str) -> None:
         )
 
     if os.path.isdir(query_dir):
-        q_weights = load_peft_weights(query_dir)
+        q_weights = load_peft_weights_local(query_dir)
         set_peft_model_state_dict(model.backbone, q_weights, adapter_name='query')
         print(f"  ✓ Query adapter ← {query_dir}")
 
     if os.path.isdir(gen_dir):
-        g_weights = load_peft_weights(gen_dir)
+        g_weights = load_peft_weights_local(gen_dir)
         set_peft_model_state_dict(model.backbone, g_weights, adapter_name='generator')
         print(f"  ✓ Generator adapter ← {gen_dir}")
 
