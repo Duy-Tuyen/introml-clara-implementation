@@ -130,8 +130,17 @@ class CLaRaModel(nn.Module):
         z = z_hard + (z_soft - z_soft.detach())
         return z
 
-    def forward_e2e(self, candidate_doc_ids, candidate_doc_mask, candidate_mask,
-                    question_input_ids, question_attention_mask, labels):
+    def forward_e2e(self, candidate_doc_input_ids, candidate_doc_attention_mask, candidate_mask,
+                    question_input_ids, question_attention_mask, labels,
+                    # aliases kept for back-compat
+                    candidate_doc_ids=None, candidate_doc_mask=None):
+        # support both naming conventions
+        if candidate_doc_ids is not None:
+            candidate_doc_input_ids = candidate_doc_ids
+        if candidate_doc_mask is not None:
+            candidate_doc_attention_mask = candidate_doc_mask
+        candidate_doc_ids = candidate_doc_input_ids
+        candidate_doc_mask = candidate_doc_attention_mask
         B, C, L = candidate_doc_ids.shape
         flat_ids = candidate_doc_ids.view(B * C, L)
         flat_mask = candidate_doc_mask.view(B * C, L)
@@ -164,12 +173,19 @@ class CLaRaModel(nn.Module):
                              labels=labels, return_dict=True)
 
     @torch.no_grad()
-    def generate_answer_e2e(self, candidate_doc_ids, candidate_doc_mask, candidate_mask,
-                            question_input_ids, question_attention_mask, max_new_tokens=64):
+    def generate_answer_e2e(self, candidate_doc_input_ids=None, candidate_doc_attention_mask=None,
+                            candidate_mask=None, question_input_ids=None, question_attention_mask=None,
+                            max_new_tokens=64,
+                            candidate_doc_ids=None, candidate_doc_mask=None):
+        # support both naming conventions
+        if candidate_doc_ids is not None:
+            candidate_doc_input_ids = candidate_doc_ids
+        if candidate_doc_mask is not None:
+            candidate_doc_attention_mask = candidate_doc_mask
         self.eval()
-        B, C, L = candidate_doc_ids.shape
-        flat_ids = candidate_doc_ids.view(B * C, L)
-        flat_mask = candidate_doc_mask.view(B * C, L)
+        B, C, L = candidate_doc_input_ids.shape
+        flat_ids = candidate_doc_input_ids.view(B * C, L)
+        flat_mask = candidate_doc_attention_mask.view(B * C, L)
 
         _, mem_h = self._compress_docs(flat_ids, flat_mask, track_grad=False)
         mem_h = mem_h.view(B, C, self.cfg.n_memory_tokens, self.H)
