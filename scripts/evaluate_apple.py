@@ -114,7 +114,7 @@ def assemble_workdir(ckpt_path: str, generation_topk: int = None) -> str:
             except OSError:
                 shutil.copy2(src, dst)
         else:
-            # Copy small files (we may patch config.json)
+            # Copy small files (we may patch config.json / modeling_clara.py)
             shutil.copy2(src, dst)
 
     # Patch config.json: fix Apple-internal paths + enable int4 quantization
@@ -294,6 +294,14 @@ def main():
     print("\n[2/4] Loading Apple CLaRa model (4-bit NF4)...")
     from transformers import AutoModel
     gc.collect(); torch.cuda.empty_cache()
+
+    # Clear HF's trust_remote_code module cache to ensure patched code is used
+    hf_modules_cache = os.path.expanduser(
+        "~/.cache/huggingface/modules/transformers_modules/apple-eval-workdir"
+    )
+    if os.path.isdir(hf_modules_cache):
+        shutil.rmtree(hf_modules_cache)
+        print("  ✓ Cleared stale HF module cache")
 
     model = AutoModel.from_pretrained(
         work_dir, trust_remote_code=True, load_pretrained_checkpoint=True,
