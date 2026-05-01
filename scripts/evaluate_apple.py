@@ -292,7 +292,8 @@ def main():
     model = AutoModel.from_pretrained(
         work_dir, trust_remote_code=True, load_pretrained_checkpoint=True,
     )
-    model.to("cuda")
+    # Note: do NOT call model.to("cuda") — 4-bit bitsandbytes models are
+    # already on GPU after from_pretrained. Calling .to() raises ValueError.
     vram = torch.cuda.memory_allocated() / 1e9
     total = torch.cuda.get_device_properties(0).total_memory / 1e9
     print(f"  ✓ Model loaded. VRAM: {vram:.1f}/{total:.1f} GB")
