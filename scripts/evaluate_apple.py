@@ -2,13 +2,14 @@
 scripts/evaluate_apple.py — Evaluation using Apple's original modeling_clara.py.
 
 Loads the Apple CLaRa checkpoint using their own model code (trust_remote_code=True)
-with 4-bit NF4 quantization (configured in compression-16/config.json) to fit T4 GPUs.
+with 4-bit NF4 quantization to fit T4 GPUs.
 
 Uses Apple's generate_from_questions() (E2E stage2) pipeline, which correctly
 handles memory token injection, adapter routing, and prompt formatting.
 
-Environment variables:
-    CLARA_CKPT_PATH      : Kaggle input path to .pth files (default: /kaggle/input/...)
+Environment variables (set by the notebook, same pattern as scripts/evaluate.py):
+    CLARA_CKPT_PATH      : Path to Apple compression-16 dir on Kaggle
+                           (default: /kaggle/input/datasets/tokiggle/clara-7b-e2e/compression-16)
     CLARA_DATASET        : 'triviaqa' | 'squad' | 'nq' | 'hotpotqa'
     CLARA_EVAL_MODE      : 'oracle' (default)
     CLARA_EVAL_BS        : Batch size (default: 1)
@@ -74,57 +75,66 @@ def score_batch(predictions: List[str], ground_truths: List[str]) -> Tuple[List[
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# 2. WORKDIR ASSEMBLY — Merge repo config/code with Kaggle .pth weights
+# 2. WORKDIR ASSEMBLY
+#    The Apple checkpoint on Kaggle (CLARA_CKPT_PATH) contains everything:
+#      modeling_clara.py, config.json, adapters.pth, decoder_first_last_layers.pth, tokenizer files
+#    We copy it to a writable dir so we can patch config.json for int4 quantization
+#    and fix the hardcoded Apple-internal model paths.
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def assemble_workdir(ckpt_path: str, generation_topk: int = None) -> str:
     """
-    Create a working directory that combines:
-    - modeling_clara.py + config.json from THIS REPO's compression-16/ dir
-      (already patched: int4 quantization, HF model names)
-    - Heavy .pth weight files symlinked from the Kaggle input checkpoint
+    Create a writable working copy of the Apple checkpoint directory with:
+      - config.json patched: quantization=int4, HF model names
+      - All other files symlinked (or copied on Windows) from ckpt_path
 
-    Returns the assembled workdir path.
+    Args:
+        ckpt_path: Path to the read-only Kaggle input checkpoint dir
+        generation_topk: Optional override for generation_top_k
+
+    Returns:
+        Path to the writable workdir
     """
-    # Repo's compression-16 dir (has our patched config.json + modeling_clara.py)
-    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    repo_c16 = os.path.join(repo_root, "compression-16")
-
-    work_dir = os.path.join(os.environ.get("KAGGLE_WORKING", "/kaggle/working"),
-                            "apple-eval-workdir")
+    work_dir = "/kaggle/working/apple-eval-workdir"
 
     if os.path.isdir(work_dir):
         shutil.rmtree(work_dir)
     os.makedirs(work_dir, exist_ok=True)
 
-    # Copy small files from repo's compression-16/ (patched config + model code)
-    for fname in os.listdir(repo_c16):
-        src = os.path.join(repo_c16, fname)
-        if os.path.isfile(src) and not fname.endswith('.pth'):
-            shutil.copy2(src, os.path.join(work_dir, fname))
-
-    # Symlink heavy .pth files from Kaggle input checkpoint
+    # Link or copy all files from the checkpoint
     for fname in os.listdir(ckpt_path):
+        src = os.path.join(ckpt_path, fname)
+        dst = os.path.join(work_dir, fname)
+        if not os.path.isfile(src):
+            continue
         if fname.endswith('.pth'):
-            src = os.path.join(ckpt_path, fname)
-            dst = os.path.join(work_dir, fname)
+            # Symlink heavy files to save space/time
             try:
                 os.symlink(src, dst)
             except OSError:
                 shutil.copy2(src, dst)
+        else:
+            # Copy small files (we may patch config.json)
+            shutil.copy2(src, dst)
 
-    # Optionally override generation_top_k
+    # Patch config.json: fix Apple-internal paths + enable int4 quantization
+    config_path = os.path.join(work_dir, 'config.json')
+    with open(config_path, 'r') as f:
+        config_data = json.load(f)
+
+    config_data['quantization'] = 'int4'
+    config_data['decoder_model_name'] = 'mistralai/Mistral-7B-Instruct-v0.2'
+    config_data['compr_base_model_name'] = 'mistralai/Mistral-7B-Instruct-v0.2'
+
     if generation_topk is not None:
-        config_path = os.path.join(work_dir, 'config.json')
-        with open(config_path, 'r') as f:
-            cfg = json.load(f)
-        cfg['generation_top_k'] = int(generation_topk)
-        with open(config_path, 'w') as f:
-            json.dump(cfg, f, indent=2)
+        config_data['generation_top_k'] = int(generation_topk)
 
-    print(f"  ✓ Workdir assembled: {work_dir}")
-    print(f"    - Config/code from: {repo_c16}")
-    print(f"    - Weights from:     {ckpt_path}")
+    with open(config_path, 'w') as f:
+        json.dump(config_data, f, indent=2)
+
+    print(f"  ✓ Workdir: {work_dir}")
+    print(f"    - Source: {ckpt_path}")
+    print(f"    - Patched: quantization=int4, decoder=mistralai/Mistral-7B-Instruct-v0.2")
     return work_dir
 
 
@@ -168,7 +178,8 @@ def load_eval_dataset(dataset_name: str, eval_mode: str, n_val: int):
         for row in ds:
             q = row['question']
             a = row['answer'][0] if row['answer'] else ''
-            samples.append({'question': q, 'answer': a, 'documents': [f"Question: {q} Answer: {a}."]})
+            samples.append({'question': q, 'answer': a,
+                            'documents': [f"Question: {q} Answer: {a}."]})
 
     elif dataset_name == 'hotpotqa':
         ds = load_dataset('hotpot_qa', 'distractor', split='validation')
@@ -198,7 +209,8 @@ def load_eval_dataset(dataset_name: str, eval_mode: str, n_val: int):
 # 4. EVALUATION LOOP
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def evaluate_apple(model, samples: list, batch_size: int = 1, max_new_tokens: int = 32) -> dict:
+def evaluate_apple(model, samples: list, batch_size: int = 1,
+                   max_new_tokens: int = 32) -> dict:
     """Run evaluation using Apple's generate_from_questions() E2E pipeline."""
     import gc
     model.eval()
@@ -247,7 +259,8 @@ def evaluate_apple(model, samples: list, batch_size: int = 1, max_new_tokens: in
 def main():
     import gc
 
-    ckpt_path       = os.environ.get('CLARA_CKPT_PATH', '/kaggle/input/datasets/tokiggle/clara-7b-e2e/compression-16')
+    ckpt_path       = os.environ.get('CLARA_CKPT_PATH',
+                                     '/kaggle/input/datasets/tokiggle/clara-7b-e2e/compression-16')
     dataset_name    = os.environ.get('CLARA_DATASET', 'triviaqa')
     eval_mode       = os.environ.get('CLARA_EVAL_MODE', 'oracle')
     batch_size      = int(os.environ.get('CLARA_EVAL_BS', '1'))
@@ -267,12 +280,12 @@ def main():
     print(f"  Max tokens : {max_new_tokens}")
     print("=" * 60)
 
-    # Step 1: Assemble workdir
-    print("\n[1/4] Assembling workdir (repo config + Kaggle weights)...")
+    # Step 1: Assemble workdir (copy from read-only Kaggle input, patch config)
+    print("\n[1/4] Assembling workdir...")
     work_dir = assemble_workdir(ckpt_path, generation_topk=generation_topk)
 
-    # Step 2: Load model
-    print("\n[2/4] Loading Apple CLaRa model (4-bit quantized)...")
+    # Step 2: Load model via Apple's modeling_clara.py (trust_remote_code)
+    print("\n[2/4] Loading Apple CLaRa model (4-bit NF4)...")
     from transformers import AutoModel
     gc.collect(); torch.cuda.empty_cache()
 
@@ -290,7 +303,8 @@ def main():
 
     # Step 4: Evaluate
     print("\n[4/4] Running evaluation...")
-    results = evaluate_apple(model, samples, batch_size=batch_size, max_new_tokens=max_new_tokens)
+    results = evaluate_apple(model, samples, batch_size=batch_size,
+                             max_new_tokens=max_new_tokens)
 
     # Print results
     print("\n" + "=" * 60)
