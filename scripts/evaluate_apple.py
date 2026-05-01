@@ -127,8 +127,13 @@ def assemble_workdir(ckpt_path: str, generation_topk: int = None) -> str:
     config_data['compr_base_model_name'] = 'mistralai/Mistral-7B-Instruct-v0.2'
     config_data['device_map'] = 'auto'  # Required for bitsandbytes 4-bit loading
 
+    # generation_top_k must be <= number of documents per sample.
+    # Our oracle eval provides 1 doc/sample, so default to 1.
+    # Apple's differentiable_topk crashes if k > num_docs ("index k out of range").
     if generation_topk is not None:
         config_data['generation_top_k'] = int(generation_topk)
+    else:
+        config_data['generation_top_k'] = 1
 
     with open(config_path, 'w') as f:
         json.dump(config_data, f, indent=2)
