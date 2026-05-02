@@ -44,22 +44,22 @@ def _load_stage1(model, stage1_dir: str) -> None:
     if os.path.isdir(comp_dir):
         comp_weights = load_peft_weights_local(comp_dir)
         set_peft_model_state_dict(model.backbone, comp_weights, adapter_name='compressor')
-        print(f"Loaded compressor adapter from: {comp_dir}")
+        print(f"Loaded compressor adapter from: {comp_dir}", flush=True)
 
     if os.path.isdir(gen_dir):
         gen_weights = load_peft_weights_local(gen_dir)
         set_peft_model_state_dict(model.backbone, gen_weights, adapter_name='generator')
-        print(f"Loaded generator adapter from: {gen_dir}")
+        print(f"Loaded generator adapter from: {gen_dir}", flush=True)
 
     if os.path.exists(extra_path):
         saved = torch.load(extra_path, map_location='cuda')
         model.mem_token_embed.data = saved['mem_token_embed']
-        print(f"Loaded mem_token_embed from: {extra_path}")
+        print(f"Loaded mem_token_embed from: {extra_path}", flush=True)
 
     # Init query adapter from compressor weights
     if os.path.isdir(comp_dir):
         set_peft_model_state_dict(model.backbone, comp_weights, adapter_name='query')
-        print("Initialized query adapter from compressor weights")
+        print("Initialized query adapter from compressor weights", flush=True)
 
 
 def _load_stage2_init(model, stage2_dir: str) -> None:
@@ -70,17 +70,17 @@ def _load_stage2_init(model, stage2_dir: str) -> None:
     if os.path.isdir(query_dir):
         q_weights = load_peft_weights_local(query_dir)
         set_peft_model_state_dict(model.backbone, q_weights, adapter_name='query')
-        print(f"Loaded query adapter from: {query_dir}")
+        print(f"Loaded query adapter from: {query_dir}", flush=True)
 
     if os.path.isdir(gen_dir):
         g_weights = load_peft_weights_local(gen_dir)
         set_peft_model_state_dict(model.backbone, g_weights, adapter_name='generator')
-        print(f"Loaded generator adapter from: {gen_dir}")
+        print(f"Loaded generator adapter from: {gen_dir}", flush=True)
 
     if os.path.exists(extra_path):
         saved = torch.load(extra_path, map_location='cuda')
         model.mem_token_embed.data = saved['mem_token_embed']
-        print(f"Loaded mem_token_embed from: {extra_path}")
+        print(f"Loaded mem_token_embed from: {extra_path}", flush=True)
 
 
 def _validate(model, dl, max_b: int = 40) -> float:
@@ -141,7 +141,7 @@ def train_stage2(model, train_dl, val_dl, cfg) -> None:
                 if gstep % 100 == 0:
                     print(f"  Ep{epoch+1} step{gstep:4d} | "
                           f"loss {ep_loss/(step+1):.4f} | "
-                          f"lr {sched.get_last_lr()[0]:.1e} | {_vram()}")
+                          f"lr {sched.get_last_lr()[0]:.1e} | {_vram()}", flush=True)
 
             if step % 50 == 0:
                 torch.cuda.empty_cache()
@@ -150,7 +150,7 @@ def train_stage2(model, train_dl, val_dl, cfg) -> None:
         val_loss = _validate(model, val_dl)
         train_loss = ep_loss / len(train_dl)
         print(f"\nEpoch {epoch+1}/{cfg.num_epochs}  "
-              f"train={train_loss:.4f}  val={val_loss:.4f}  {_vram()}")
+              f"train={train_loss:.4f}  val={val_loss:.4f}  {_vram()}", flush=True)
 
         if val_loss < best_val:
             best_val = val_loss
@@ -164,7 +164,7 @@ def train_stage2(model, train_dl, val_dl, cfg) -> None:
                  'val_loss': val_loss},
                 os.path.join(ckpt, 'clara_stage2_extra.pth'),
             )
-            print(f" Saved → {ckpt}  (val={val_loss:.4f})\n")
+            print(f" Saved → {ckpt}  (val={val_loss:.4f})\n", flush=True)
 
 
 def main() -> None:

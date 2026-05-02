@@ -93,7 +93,7 @@ def train_stage1(model, train_dl, val_dl, cfg) -> None:
                 if gstep % 100 == 0:
                     print(f"  Ep{epoch+1} step{gstep:4d} | "
                           f"loss {ep_loss/(step+1):.4f} | "
-                          f"lr {sched.get_last_lr()[0]:.1e} | {_vram()}")
+                          f"lr {sched.get_last_lr()[0]:.1e} | {_vram()}", flush=True)
 
             if step % 50 == 0:
                 torch.cuda.empty_cache()
@@ -102,7 +102,7 @@ def train_stage1(model, train_dl, val_dl, cfg) -> None:
         val_loss = _validate(model, val_dl, cfg)
         train_loss = ep_loss / len(train_dl)
         print(f"\nEpoch {epoch+1}/{cfg.stage1_epochs}  "
-              f"train={train_loss:.4f}  val={val_loss:.4f}  {_vram()}")
+              f"train={train_loss:.4f}  val={val_loss:.4f}  {_vram()}", flush=True)
 
         if val_loss < best_val:
             best_val = val_loss
@@ -116,7 +116,7 @@ def train_stage1(model, train_dl, val_dl, cfg) -> None:
                  'val_loss': val_loss},
                 os.path.join(ckpt, 'clara_stage1_extra.pth'),
             )
-            print(f" Saved → {ckpt}  (val={val_loss:.4f})\n")
+            print(f" Saved → {ckpt}  (val={val_loss:.4f})\n", flush=True)
 
 
 if __name__ == "__main__":
