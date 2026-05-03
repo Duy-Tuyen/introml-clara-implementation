@@ -21,24 +21,26 @@ class CLaRaConfig:
         default_factory=lambda: ['q_proj', 'v_proj', 'k_proj', 'o_proj'])
 
     # ── Training (Stage I: SCP) ───────────────────────────────────────────────
-    stage1_lr: float        = 1e-4   # Paper Table 10: compression learning LR = 1×10⁻⁴
+    # Paper LR = 1e-4, nhưng giảm xuống 2e-5 để tránh loss diverge trên T4
+    stage1_lr: float        = 2e-5
     stage1_epochs: int      = 1
     stage1_mse_lambda: float = 0.1
 
     # ── Training (Stage II: End-to-End) ───────────────────────────────────────
     batch_size: int         = 1
-    grad_accum: int         = 8
-    # FIX: lr=5e-6 theo paper B.4 (end-to-end learning rate)
-    # Paper dùng 2e-4 cho compression pretraining (Stage I)
-    # nhưng 5e-6 cho end-to-end training (Stage II) — đây là Stage II
+    # grad_accum=16 để gradient ổn định hơn với lr nhỏ
+    grad_accum: int         = 16
+    # Paper B.4: end-to-end learning rate = 5e-6
     lr: float               = 5e-6
     num_epochs: int         = 1
     max_qa_len: int         = 96
     warmup_ratio: float     = 0.03
     max_grad_norm: float    = 1.0
     grad_ckpt: bool         = True
-    n_train: int            = 8000
-    n_val: int              = 500
+    # Giảm từ 8000 → 500 để kịp Kaggle T4 quota (42000s)
+    # 500 steps × ~68s/step = ~9500s/stage → tổng ~20000s (an toàn)
+    n_train: int            = 500
+    n_val: int              = 100
     output_dir: str         = './clara-ckpts'
 
     # ── Retrieval (Stage II) ─────────────────────────────────────────────────-
