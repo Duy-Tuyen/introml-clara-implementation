@@ -152,15 +152,23 @@ def load_eval_dataset(dataset_name: str, eval_mode: str, n_val: int):
     from datasets import load_dataset
 
     if dataset_name == 'triviaqa':
-        ds = load_dataset('trivia_qa', 'rc.nocontext', split='validation')
+        ds = load_dataset('trivia_qa', 'rc', split='validation')
         ds = ds.filter(lambda x: len(x['answer']['aliases']) > 0)
         if n_val:
             ds = ds.select(range(min(n_val, len(ds))))
         samples = []
         for row in ds:
             q, a = row['question'], row['answer']['value']
-            doc = f"Trivia context: {q} The correct answer is: {a}."
-            samples.append({'question': q, 'answer': a, 'documents': [doc]})
+            # Use real search result passages as oracle documents
+            search_contexts = row.get('search_results', {}).get('search_context', [])
+            entity_contexts = row.get('entity_pages', {}).get('wiki_context', [])
+            contexts = search_contexts + entity_contexts
+            if contexts:
+                # Use first available context (truncated to reasonable length)
+                doc = contexts[0][:2000]
+            else:
+                doc = q  # Fallback: question only (no oracle)
+            samples.append({'question': q, 'answer': row['answer']['aliases'], 'documents': [doc]})
 
     elif dataset_name == 'squad':
         ds = load_dataset('rajpurkar/squad', split='validation')
