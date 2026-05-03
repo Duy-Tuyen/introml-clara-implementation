@@ -338,24 +338,6 @@ def main():
     results = evaluate_apple(model, samples, batch_size=batch_size,
                              max_new_tokens=max_new_tokens)
 
-    # Print results
-    print("\n" + "=" * 60)
-    print("EVALUATION RESULTS (Apple Native Pipeline)")
-    print("=" * 60)
-    print(f"  Dataset    : {dataset_name}  (eval_mode={eval_mode})")
-    print(f"  Samples    : {results['n_samples']}")
-    print(f"  Exact Match: {results['em'] * 100:.2f}%")
-    print(f"  F1 Score   : {results['f1'] * 100:.2f}%")
-    print("=" * 60)
-
-    # Sample predictions
-    print("\nSample predictions (first 5):")
-    for pred, gold in zip(results['predictions'][:5], results['ground_truths'][:5]):
-        print(f"  Gold : {gold}")
-        print(f"  Pred : {pred[:120]}")
-        print(f"  EM={calculate_exact_match(pred, gold):.0f}  F1={calculate_f1(pred, gold):.2f}")
-        print("  " + "-" * 50)
-
     # Save CSV
     import csv
     os.makedirs('results', exist_ok=True)
@@ -372,6 +354,30 @@ def main():
             f"{results['em'] * 100:.2f}", f"{results['f1'] * 100:.2f}",
         ])
     print(f"\n✅ Results saved to: {csv_file}")
+
+    # Print results
+    print("\n" + "=" * 60)
+    print("EVALUATION RESULTS (Apple Native Pipeline)")
+    print("=" * 60)
+    print(f"  Dataset    : {dataset_name}  (eval_mode={eval_mode})")
+    print(f"  Samples    : {results['n_samples']}")
+    print(f"  Exact Match: {results['em'] * 100:.2f}%")
+    print(f"  F1 Score   : {results['f1'] * 100:.2f}%")
+    print("=" * 60)
+
+    # Sample predictions
+    print("\nSample predictions (first 5):")
+    for pred, gold in zip(results['predictions'][:5], results['ground_truths'][:5]):
+        print(f"  Gold : {gold}")
+        print(f"  Pred : {pred[:120]}")
+        if isinstance(gold, list):
+            em_score = max([calculate_exact_match(pred, g) for g in gold])
+            f1_score = max([calculate_f1(pred, g) for g in gold])
+        else:
+            em_score = calculate_exact_match(pred, gold)
+            f1_score = calculate_f1(pred, gold)
+        print(f"  EM={em_score:.0f}  F1={f1_score:.2f}")
+        print("  " + "-" * 50)
 
     del model; gc.collect(); torch.cuda.empty_cache()
     return results
