@@ -152,23 +152,23 @@ def load_eval_dataset(dataset_name: str, eval_mode: str, n_val: int):
     from datasets import load_dataset
 
     if dataset_name == 'triviaqa':
-        ds = load_dataset('trivia_qa', 'rc', split='validation')
+        # Use rc.nocontext — the full 'rc' variant downloads ~10GB of evidence
+        # files which saturates Kaggle's 13GB RAM causing OOM hangs.
+        ds = load_dataset('trivia_qa', 'rc.nocontext', split='validation')
         ds = ds.filter(lambda x: len(x['answer']['aliases']) > 0)
         if n_val:
             ds = ds.select(range(min(n_val, len(ds))))
         samples = []
         for row in ds:
-            q, a = row['question'], row['answer']['value']
-            # Use real search result passages as oracle documents
-            search_contexts = row.get('search_results', {}).get('search_context', [])
-            entity_contexts = row.get('entity_pages', {}).get('wiki_context', [])
-            contexts = search_contexts + entity_contexts
-            if contexts:
-                # Use first available context (truncated to reasonable length)
-                doc = contexts[0][:2000]
-            else:
-                doc = q  # Fallback: question only (no oracle)
-            samples.append({'question': q, 'answer': row['answer']['aliases'], 'documents': [doc]})
+            q = row['question']
+            # rc.nocontext has no evidence documents. For oracle eval,
+            # use the question itself as the document (no answer leak).
+            # The model must still reason from the question + its training.
+            samples.append({
+                'question': q,
+                'answer': row['answer']['aliases'],  # All valid aliases
+                'documents': [q],
+            })
 
     elif dataset_name == 'squad':
         ds = load_dataset('rajpurkar/squad', split='validation')
@@ -191,8 +191,9 @@ def load_eval_dataset(dataset_name: str, eval_mode: str, n_val: int):
         for row in ds:
             q = row['question']
             a = row['answer'][0] if row['answer'] else ''
+            # Use question as document (no answer leak for oracle eval)
             samples.append({'question': q, 'answer': a,
-                            'documents': [f"Question: {q} Answer: {a}."]})
+                            'documents': [q]})
 
     elif dataset_name == 'hotpotqa':
         ds = load_dataset('hotpot_qa', 'distractor', split='validation')
@@ -228,6 +229,8 @@ def evaluate_apple(model, samples: list, batch_size: int = 1,
     import gc
     model.eval()
     all_em, all_f1, all_preds, all_golds = [], [], [], []
+    consecutive_errors = 0
+    MAX_CONSECUTIVE_ERRORS = 5  # Abort if this many batches fail in a row
 
     n_batches = (len(samples) + batch_size - 1) // batch_size
     from tqdm import tqdm
@@ -244,9 +247,16 @@ def evaluate_apple(model, samples: list, batch_size: int = 1,
                     questions=questions, documents=documents,
                     max_new_tokens=max_new_tokens,
                 )
+                consecutive_errors = 0  # Reset on success
             except Exception as e:
-                print(f"  ⚠ Batch {i} error: {e}")
+                consecutive_errors += 1
+                print(f"  ⚠ Batch {i} error ({consecutive_errors}/{MAX_CONSECUTIVE_ERRORS}): {e}")
                 decoded = [""] * len(questions)
+                if consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
+                    print(f"\n  ❌ ABORTING: {MAX_CONSECUTIVE_ERRORS} consecutive batch failures.")
+                    print(f"     This indicates a systematic error (e.g. device mismatch).")
+                    print(f"     Fix the root cause before re-running.")
+                    break
 
         em, f1 = score_batch(decoded, answers)
         all_em.extend(em); all_f1.extend(f1)
