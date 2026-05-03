@@ -25,5 +25,3 @@ __pycache__/
 *.safetensors
 
 docs/
-
-.specstory/
