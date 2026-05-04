@@ -77,6 +77,11 @@ def assemble_workdir(ckpt_path: str) -> str:
     # Oracle fine-tuning: 1 document per question → top_k must be 1
     cfg["generation_top_k"] = 1
 
+    # Disable memory token embedding optimization — we only train LoRA adapters.
+    # This prevents the in-place autograd error in _replace_embeddings where
+    # Apple's code modifies a view of the embedding weight in-place.
+    cfg["optimize_mem_tokens"] = False
+
     # Remove symlink and write patched config
     os.remove(config_path)
     with open(config_path, "w") as f:
@@ -399,9 +404,13 @@ def main():
     )
 
     # Enable gradient checkpointing to slash activation VRAM (~40% savings)
-    model.decoder.gradient_checkpointing_enable()
+    # use_reentrant=False is required to avoid conflicts with in-place ops
+    # in Apple's _replace_embeddings method
+    model.decoder.gradient_checkpointing_enable(
+        gradient_checkpointing_kwargs={"use_reentrant": False}
+    )
     model.decoder.config.use_cache = False
-    print("  ✓ Gradient checkpointing enabled")
+    print("  ✓ Gradient checkpointing enabled (non-reentrant)")
 
     vram = torch.cuda.memory_allocated() / 1e9
     total = torch.cuda.get_device_properties(0).total_memory / 1e9
