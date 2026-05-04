@@ -253,14 +253,17 @@ def freeze_encoder_adapter(model):
             param.requires_grad_(False)
             frozen_count += 1
 
-    # Also freeze memory token optimization to save VRAM
-    if hasattr(model, 'config') and getattr(model.config, 'optimize_mem_tokens', False):
-        emb = model.decoder.get_input_embeddings()
-        if emb.weight.requires_grad:
-            emb.weight.requires_grad_(False)
-            # Remove gradient hook if any
-            emb.weight._backward_hooks = {}
-            frozen_count += 1
+    # ALWAYS freeze the embedding weight — we never train embeddings during
+    # fine-tuning, and Apple's _replace_embeddings does in-place ops on
+    # the embedding output which crashes autograd if weight requires grad.
+    emb = model.decoder.get_input_embeddings()
+    print(f"  [debug] Embedding weight requires_grad BEFORE freeze: {emb.weight.requires_grad}")
+    emb.weight.requires_grad_(False)
+    # Remove any gradient hooks left from optimize_mem_tokens
+    if hasattr(emb.weight, '_backward_hooks'):
+        emb.weight._backward_hooks = {}
+    frozen_count += 1
+    print(f"  [debug] Embedding weight requires_grad AFTER  freeze: {emb.weight.requires_grad}")
 
     print(f"  ✓ Froze {frozen_count} encoder_adapter/embedding params")
 
