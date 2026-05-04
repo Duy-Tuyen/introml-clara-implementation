@@ -15,7 +15,7 @@ Environment variables (set by the notebook):
     CLARA_FT_LR          : Learning rate (default: 5e-6)
     CLARA_FT_EPOCHS      : Number of epochs (default: 1)
     CLARA_FT_GRAD_ACC    : Gradient accumulation steps (default: 8)
-    CLARA_FT_MAX_DEC_LEN : Max decoder sequence length (default: 512)
+    CLARA_FT_MAX_DEC_LEN : Max decoder sequence length (default: 256)
     CLARA_OUTPUT_DIR      : Where to save fine-tuned checkpoint
     CLARA_MODEL_VERSION   : Version string for logging
 """
@@ -360,7 +360,7 @@ def main():
     lr            = float(os.environ.get('CLARA_FT_LR', '5e-6'))
     num_epochs    = int(os.environ.get('CLARA_FT_EPOCHS', '1'))
     grad_accum    = int(os.environ.get('CLARA_FT_GRAD_ACC', '8'))
-    max_dec_len   = int(os.environ.get('CLARA_FT_MAX_DEC_LEN', '512'))
+    max_dec_len   = int(os.environ.get('CLARA_FT_MAX_DEC_LEN', '256'))
     output_dir    = os.environ.get('CLARA_OUTPUT_DIR',
                                    f'/kaggle/working/clara-ft-{dataset_name}')
     model_version = os.environ.get('CLARA_MODEL_VERSION',
@@ -397,6 +397,11 @@ def main():
     model = AutoModel.from_pretrained(
         work_dir, trust_remote_code=True, load_pretrained_checkpoint=True,
     )
+
+    # Enable gradient checkpointing to slash activation VRAM (~40% savings)
+    model.decoder.gradient_checkpointing_enable()
+    model.decoder.config.use_cache = False
+    print("  ✓ Gradient checkpointing enabled")
 
     vram = torch.cuda.memory_allocated() / 1e9
     total = torch.cuda.get_device_properties(0).total_memory / 1e9
@@ -453,13 +458,20 @@ def main():
 
         for step, sample in enumerate(train_samples):
             try:
+                # Clear cache before each step to prevent fragmentation OOM
+                torch.cuda.empty_cache()
+
                 batch = prepare_batch(model, sample, max_dec_len)
                 loss, info = model(batch=batch)
                 loss = loss / grad_accum
                 loss.backward()
                 epoch_loss += loss.item() * grad_accum
                 epoch_samples += 1
-            except Exception as e:
+            except RuntimeError as e:
+                if 'out of memory' in str(e):
+                    # Free the failed computation graph
+                    torch.cuda.empty_cache()
+                    gc.collect()
                 errors += 1
                 if errors <= 3:
                     print(f"  ⚠ Step {step} error: {e}")
@@ -485,9 +497,8 @@ def main():
                           f"loss {avg_loss:.4f} | "
                           f"lr {scheduler.get_last_lr()[0]:.1e} | {_vram()}")
 
-            # VRAM management: clear cache periodically
-            if step % 50 == 0:
-                torch.cuda.empty_cache()
+            # VRAM management
+            if (step + 1) % grad_accum == 0:
                 gc.collect()
 
         # Flush remaining gradients
