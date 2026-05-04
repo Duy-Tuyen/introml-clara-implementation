@@ -15,7 +15,7 @@ Environment variables (set by the notebook):
     CLARA_FT_LR          : Learning rate (default: 5e-6)
     CLARA_FT_EPOCHS      : Number of epochs (default: 1)
     CLARA_FT_GRAD_ACC    : Gradient accumulation steps (default: 8)
-    CLARA_FT_MAX_DEC_LEN : Max decoder sequence length (default: 256)
+    CLARA_FT_MAX_DEC_LEN : Max decoder sequence length (default: 128)
     CLARA_OUTPUT_DIR      : Where to save fine-tuned checkpoint
     CLARA_MODEL_VERSION   : Version string for logging
 """
@@ -369,7 +369,7 @@ def main():
     lr            = float(os.environ.get('CLARA_FT_LR', '5e-6'))
     num_epochs    = int(os.environ.get('CLARA_FT_EPOCHS', '1'))
     grad_accum    = int(os.environ.get('CLARA_FT_GRAD_ACC', '8'))
-    max_dec_len   = int(os.environ.get('CLARA_FT_MAX_DEC_LEN', '256'))
+    max_dec_len   = int(os.environ.get('CLARA_FT_MAX_DEC_LEN', '128'))
     output_dir    = os.environ.get('CLARA_OUTPUT_DIR',
                                    f'/kaggle/working/clara-ft-{dataset_name}')
     model_version = os.environ.get('CLARA_MODEL_VERSION',
@@ -502,9 +502,9 @@ def main():
                     print(f"  [timing] Batch prepared, starting forward..."); sys.stdout.flush()
                     _t0 = _time.time()
 
-                # Mixed precision: float16 (T4 is Turing arch, no bfloat16 HW)
-                with torch.autocast(device_type='cuda', dtype=torch.float16):
-                    loss, info = model(batch=batch)
+                # No autocast — model is already 4-bit quantized with
+                # float32 LoRA. Adding autocast creates redundant casts.
+                loss, info = model(batch=batch)
 
                 if step == 0:
                     print(f"  [timing] Forward done in {_time.time()-_t0:.1f}s, backward..."); sys.stdout.flush()
