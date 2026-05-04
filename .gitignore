@@ -1,7 +1,12 @@
+.vscode/
+checkpoints/
+
 # Local clones (do not commit)
 ml-clara/
 2WikiMultihopQA/
 CLaRa-7B-Instruct/
+
+compression-16/
 
 # Generated artifacts
 results/
@@ -20,5 +25,3 @@ __pycache__/
 *.safetensors
 
 docs/
-
-.specstory/

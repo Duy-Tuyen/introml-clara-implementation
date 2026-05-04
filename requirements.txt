@@ -2,7 +2,7 @@ transformers==4.43.3
 peft==0.11.1
 bitsandbytes==0.43.1
 datasets
-accelerate
+accelerate>=0.34.0,<1.0.0
 huggingface_hub
 triton==2.2.0
 torch>=2.1.0
