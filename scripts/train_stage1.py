@@ -39,7 +39,9 @@ def _validate(model, dl, cfg, max_b: int = 40) -> float:
         for i, batch in enumerate(dl):
             if i >= max_b:
                 break
-            batch = {k: v.cuda() for k, v in batch.items() if isinstance(v, torch.Tensor)}
+            # Lấy device hiện tại của model (thường là tầng đầu tiên)
+            device = next(model.parameters()).device 
+            batch = {k: v.to(device) for k, v in batch.items() if isinstance(v, torch.Tensor)}
             ce_loss, mse_loss = model.forward_scp(**batch)
             loss = ce_loss + cfg.stage1_mse_lambda * mse_loss
             total += loss.item()
@@ -91,7 +93,7 @@ def train_stage1(model, train_dl, val_dl, cfg) -> None:
                 if gstep % 100 == 0:
                     print(f"  Ep{epoch+1} step{gstep:4d} | "
                           f"loss {ep_loss/(step+1):.4f} | "
-                          f"lr {sched.get_last_lr()[0]:.1e} | {_vram()}")
+                          f"lr {sched.get_last_lr()[0]:.1e} | {_vram()}", flush=True)
 
             if step % 50 == 0:
                 torch.cuda.empty_cache()
@@ -100,21 +102,21 @@ def train_stage1(model, train_dl, val_dl, cfg) -> None:
         val_loss = _validate(model, val_dl, cfg)
         train_loss = ep_loss / len(train_dl)
         print(f"\nEpoch {epoch+1}/{cfg.stage1_epochs}  "
-              f"train={train_loss:.4f}  val={val_loss:.4f}  {_vram()}")
+              f"train={train_loss:.4f}  val={val_loss:.4f}  {_vram()}", flush=True)
 
         if val_loss < best_val:
             best_val = val_loss
             ckpt = os.path.join(cfg.output_dir, f"stage1_ep{epoch+1}")
             os.makedirs(ckpt, exist_ok=True)
-            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters', 'compressor'), adapter_name='compressor')
-            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters', 'generator'), adapter_name='generator')
+            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters'), adapter_name='compressor')
+            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters'), adapter_name='generator')
             torch.save(
                 {'mem_token_embed': model.mem_token_embed.data,
                  'epoch': epoch + 1,
                  'val_loss': val_loss},
                 os.path.join(ckpt, 'clara_stage1_extra.pth'),
             )
-            print(f" Saved → {ckpt}  (val={val_loss:.4f})\n")
+            print(f" Saved → {ckpt}  (val={val_loss:.4f})\n", flush=True)
 
 
 if __name__ == "__main__":
@@ -125,6 +127,8 @@ if __name__ == "__main__":
         cfg.n_val = int(os.environ['CLARA_N_VAL'])
     if os.environ.get('CLARA_GRAD_ACC'):
         cfg.grad_accum = int(os.environ['CLARA_GRAD_ACC'])
+    if os.environ.get('CLARA_OUTPUT_DIR'):
+        cfg.output_dir = os.environ['CLARA_OUTPUT_DIR']
 
     model, tokenizer = build_clara_model(cfg)
     train_dl, val_dl = get_dataloaders(tokenizer, cfg)

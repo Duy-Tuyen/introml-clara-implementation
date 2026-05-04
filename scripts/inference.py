@@ -1,10 +1,10 @@
 import os
 import torch
-from peft import load_peft_weights, set_peft_model_state_dict
+from peft import set_peft_model_state_dict
 
 from configs.config import CLaRaConfig
 from models.clara_model import build_clara_model
-from models.utils import print_vram_usage
+from models.utils import load_peft_weights_local, print_vram_usage
 
 
 def load_checkpoint(model, cfg, epoch: int = 1) -> None:
@@ -15,12 +15,12 @@ def load_checkpoint(model, cfg, epoch: int = 1) -> None:
     extra_path = os.path.join(ckpt_dir, 'clara_stage2_extra.pth')
 
     if os.path.isdir(query_dir):
-        q_weights = load_peft_weights(query_dir)
+        q_weights = load_peft_weights_local(query_dir)
         set_peft_model_state_dict(model.backbone, q_weights, adapter_name='query')
         print(f'Loaded query adapter from: {query_dir}')
 
     if os.path.isdir(gen_dir):
-        g_weights = load_peft_weights(gen_dir)
+        g_weights = load_peft_weights_local(gen_dir)
         set_peft_model_state_dict(model.backbone, g_weights, adapter_name='generator')
         print(f'Loaded generator adapter from: {gen_dir}')
 
@@ -43,13 +43,13 @@ def run_inference(model, tokenizer, cfg, tests: list) -> None:
                 f"[INST] {t['q']} [/INST]", max_length=cfg.max_qa_len,
                 padding='max_length', truncation=True, return_tensors='pt')
 
-            doc_ids = de['input_ids'].unsqueeze(0).to('cuda:0')
-            doc_mask = de['attention_mask'].unsqueeze(0).to('cuda:0')
-            cand_mask = torch.tensor([[1]], dtype=torch.long, device='cuda:0')
+            doc_ids = de['input_ids'].unsqueeze(0).to(model.device)
+            doc_mask = de['attention_mask'].unsqueeze(0).to(model.device)
+            cand_mask = torch.tensor([[1]], dtype=torch.long, device=model.device)
 
             ans = model.generate_answer_e2e(
                 doc_ids, doc_mask, cand_mask,
-                qe['input_ids'].to('cuda:0'), qe['attention_mask'].to('cuda:0'),
+                qe['input_ids'].to(model.device), qe['attention_mask'].to(model.device),
                 max_new_tokens=32)
 
             print(f"Q: {t['q']}")

@@ -29,7 +29,12 @@ class CLaRaModel(nn.Module):
         self.backbone.set_adapter('compressor')
 
         self.mem_token_embed = nn.Parameter(
-            torch.zeros(cfg.n_memory_tokens, self.H, dtype=torch.bfloat16, device='cuda'))
+            torch.zeros(cfg.n_memory_tokens, self.H, dtype=torch.bfloat16))
+
+    @property
+    def device(self):
+        """Get the device of the backbone model."""
+        return next(self.backbone.parameters()).device
 
     @property
     def _embed(self):
@@ -39,9 +44,10 @@ class CLaRaModel(nn.Module):
         self.backbone.set_adapter(adapter)
         tok_emb = self._embed(input_ids)
         B = tok_emb.size(0)
-        mem = self.mem_token_embed.unsqueeze(0).expand(B, -1, -1)
+        mem = self.mem_token_embed.unsqueeze(0).expand(B, -1, -1).to(self.device)
         emb = torch.cat([tok_emb, mem], dim=1)
-        mm = torch.ones(B, mem.size(1), device=attention_mask.device, dtype=attention_mask.dtype)
+        attention_mask = attention_mask.to(self.device)
+        mm = torch.ones(B, mem.size(1), device=self.device, dtype=attention_mask.dtype)
         mask = torch.cat([attention_mask, mm], dim=1)
         out = self.backbone(
             inputs_embeds=emb,
@@ -67,7 +73,7 @@ class CLaRaModel(nn.Module):
         return mem_h
 
     def _mse_alignment(self, doc_h, mem_h, doc_mask):
-        mask = doc_mask.unsqueeze(-1).to(doc_h.dtype)
+        mask = doc_mask.unsqueeze(-1).to(device=doc_h.device, dtype=doc_h.dtype)
         doc_avg = (doc_h * mask).sum(1) / mask.sum(1).clamp(1)
         mem_avg = mem_h.mean(1)
         return F.mse_loss(mem_avg, doc_avg)
@@ -78,14 +84,16 @@ class CLaRaModel(nn.Module):
         mse_loss = self._mse_alignment(doc_h, mem_h, doc_attention_mask)
 
         self.backbone.set_adapter('generator')
-        mem = mem_h.to(question_attention_mask.device)
-        q_e = self._embed(question_input_ids).to(question_attention_mask.device)
+        mem = mem_h.to(self.device)
+        q_e = self._embed(question_input_ids).to(self.device)
+        question_attention_mask = question_attention_mask.to(self.device)
+        labels = labels.to(self.device)
         emb = torch.cat([mem, q_e], dim=1)
-        mm = torch.ones(mem.size(0), mem.size(1), device=question_attention_mask.device,
+        mm = torch.ones(mem.size(0), mem.size(1), device=self.device,
                         dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
         pl = torch.full((mem.size(0), mem.size(1)), -100,
-                        device=question_attention_mask.device, dtype=labels.dtype)
+                        device=self.device, dtype=labels.dtype)
         labels = torch.cat([pl, labels], dim=1)
 
         out = self.backbone(inputs_embeds=emb, attention_mask=mask,
@@ -93,16 +101,53 @@ class CLaRaModel(nn.Module):
         return out.loss, mse_loss
 
     def _st_topk(self, scores, k: int, tau: float):
-        z_soft = F.softmax(scores / tau, dim=-1)
-        topk_idx = torch.topk(scores, k=k, dim=-1).indices
-        z_hard = torch.zeros(scores.size(0), k, scores.size(1), device=scores.device)
-        for i in range(k):
-            z_hard.scatter_(2, topk_idx[:, i].unsqueeze(-1), 1.0)
-        z = z_hard + (z_soft.unsqueeze(1) - z_soft.unsqueeze(1).detach())
+        # Paper Algorithm 1: iterative top-k with mask update between ranks
+        # Prevents selecting the same document twice across ranks j=1..k
+        B, D = scores.shape
+        eps = 1e-9
+
+        z_hard = torch.zeros(B, k, D, device=scores.device, dtype=scores.dtype)
+        z_soft = torch.zeros(B, k, D, device=scores.device, dtype=scores.dtype)
+
+        # taken tracks which docs have been selected (hard), used to mask next rank
+        # Algorithm 1 step 12: taken ← min(taken + Z_hard[:,j,:], 1)
+        taken = torch.zeros(B, D, device=scores.device, dtype=scores.dtype)
+
+        s_scaled = scores / max(tau, 1e-6)  # Algorithm 1 step 3
+
+        for j in range(k):
+            # Step 8: mask ← 1 - SG(taken)  — block already-selected docs
+            mask = 1.0 - taken.detach()
+
+            # Step 9: logits_j ← s_scaled + log(mask + ε)
+            logits_j = s_scaled + torch.log(mask + eps)
+
+            # Step 10: p_j ← softmax(logits_j)
+            p_j = F.softmax(logits_j, dim=-1)
+            z_soft[:, j, :] = p_j
+
+            # Step 6-7: hard selection = argmax of soft (on unmasked candidates)
+            r_j = p_j.argmax(dim=-1)  # (B,)
+            z_hard[:, j, :].scatter_(1, r_j.unsqueeze(-1), 1.0)
+
+            # Step 12: update taken with the hard selection
+            taken = torch.clamp(taken + z_hard[:, j, :].detach(), max=1.0)
+
+        # Step 14: Z = Z_hard + (Z_soft - SG(Z_soft))
+        z = z_hard + (z_soft - z_soft.detach())
         return z
 
-    def forward_e2e(self, candidate_doc_ids, candidate_doc_mask, candidate_mask,
-                    question_input_ids, question_attention_mask, labels):
+    def forward_e2e(self, candidate_doc_input_ids, candidate_doc_attention_mask, candidate_mask,
+                    question_input_ids, question_attention_mask, labels,
+                    # aliases kept for back-compat
+                    candidate_doc_ids=None, candidate_doc_mask=None):
+        # support both naming conventions
+        if candidate_doc_ids is not None:
+            candidate_doc_input_ids = candidate_doc_ids
+        if candidate_doc_mask is not None:
+            candidate_doc_attention_mask = candidate_doc_mask
+        candidate_doc_ids = candidate_doc_input_ids
+        candidate_doc_mask = candidate_doc_attention_mask
         B, C, L = candidate_doc_ids.shape
         flat_ids = candidate_doc_ids.view(B * C, L)
         flat_mask = candidate_doc_mask.view(B * C, L)
@@ -115,32 +160,42 @@ class CLaRaModel(nn.Module):
         d_vec = mem_h.mean(2)
         scores = F.cosine_similarity(q_vec.unsqueeze(1), d_vec, dim=-1)
         if candidate_mask is not None:
-            scores = scores.masked_fill(candidate_mask == 0, -1e9)
+            scores = scores.masked_fill(candidate_mask.to(scores.device) == 0, -1e9)
 
         z = self._st_topk(scores, self.cfg.top_k, self.cfg.st_tau)
         selected = torch.einsum('bkc,bcmd->bkmd', z, mem_h)
         selected = selected.reshape(B, self.cfg.top_k * self.cfg.n_memory_tokens, self.H)
 
         self.backbone.set_adapter('generator')
-        q_e = self._embed(question_input_ids).to(question_attention_mask.device)
+        q_e = self._embed(question_input_ids).to(self.device)
+        selected = selected.to(self.device)
+        question_attention_mask = question_attention_mask.to(self.device)
+        labels = labels.to(self.device)
         emb = torch.cat([selected, q_e], dim=1)
-        mm = torch.ones(B, selected.size(1), device=question_attention_mask.device,
+        mm = torch.ones(B, selected.size(1), device=self.device,
                         dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
         pl = torch.full((B, selected.size(1)), -100,
-                        device=question_attention_mask.device, dtype=labels.dtype)
+                        device=self.device, dtype=labels.dtype)
         labels = torch.cat([pl, labels], dim=1)
 
         return self.backbone(inputs_embeds=emb, attention_mask=mask,
                              labels=labels, return_dict=True)
 
     @torch.no_grad()
-    def generate_answer_e2e(self, candidate_doc_ids, candidate_doc_mask, candidate_mask,
-                            question_input_ids, question_attention_mask, max_new_tokens=64):
+    def generate_answer_e2e(self, candidate_doc_input_ids=None, candidate_doc_attention_mask=None,
+                            candidate_mask=None, question_input_ids=None, question_attention_mask=None,
+                            max_new_tokens=64,
+                            candidate_doc_ids=None, candidate_doc_mask=None):
+        # support both naming conventions
+        if candidate_doc_ids is not None:
+            candidate_doc_input_ids = candidate_doc_ids
+        if candidate_doc_mask is not None:
+            candidate_doc_attention_mask = candidate_doc_mask
         self.eval()
-        B, C, L = candidate_doc_ids.shape
-        flat_ids = candidate_doc_ids.view(B * C, L)
-        flat_mask = candidate_doc_mask.view(B * C, L)
+        B, C, L = candidate_doc_input_ids.shape
+        flat_ids = candidate_doc_input_ids.view(B * C, L)
+        flat_mask = candidate_doc_attention_mask.view(B * C, L)
 
         _, mem_h = self._compress_docs(flat_ids, flat_mask, track_grad=False)
         mem_h = mem_h.view(B, C, self.cfg.n_memory_tokens, self.H)
@@ -150,7 +205,7 @@ class CLaRaModel(nn.Module):
         d_vec = mem_h.mean(2)
         scores = F.cosine_similarity(q_vec.unsqueeze(1), d_vec, dim=-1)
         if candidate_mask is not None:
-            scores = scores.masked_fill(candidate_mask == 0, -1e9)
+            scores = scores.masked_fill(candidate_mask.to(scores.device) == 0, -1e9)
 
         topk_idx = torch.topk(scores, k=self.cfg.top_k, dim=-1).indices
         selected = mem_h.gather(
@@ -162,12 +217,17 @@ class CLaRaModel(nn.Module):
         selected = selected.reshape(B, self.cfg.top_k * self.cfg.n_memory_tokens, self.H)
 
         self.backbone.set_adapter('generator')
-        q_e = self._embed(question_input_ids)
+        # Ensure all inputs are on backbone device before generation
+        q_e = self._embed(question_input_ids).to(self.device)
+        selected = selected.to(self.device)
+        question_input_ids = question_input_ids.to(self.device)
+        question_attention_mask = question_attention_mask.to(self.device)
         emb = torch.cat([selected, q_e], dim=1)
-        mm = torch.ones(B, selected.size(1), device=question_attention_mask.device,
+        mm = torch.ones(B, selected.size(1), device=self.device,
                         dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
 
+        input_len = emb.size(1)
         ids = self.backbone.generate(
             inputs_embeds=emb,
             attention_mask=mask,
@@ -176,7 +236,14 @@ class CLaRaModel(nn.Module):
             pad_token_id=self.tok.eos_token_id,
         )
 
-        return self.tok.batch_decode(ids, skip_special_tokens=True)
+        # Khi dùng inputs_embeds, một số version transformers trả về full sequence
+        # → chỉ lấy phần mới generate để decode
+        if ids.size(1) > max_new_tokens:
+            new_ids = ids[:, input_len:] if ids.size(1) > input_len else ids[:, -max_new_tokens:]
+        else:
+            new_ids = ids
+
+        return self.tok.batch_decode(new_ids, skip_special_tokens=True)
 
 
 def build_clara_model(cfg):
@@ -192,7 +259,7 @@ def build_clara_model(cfg):
     )
 
     base = AutoModelForCausalLM.from_pretrained(
-        cfg.base_model, quantization_config=bnb, device_map={'': 0},
+        cfg.base_model, quantization_config=bnb, device_map="auto",
         torch_dtype=torch.bfloat16, low_cpu_mem_usage=True,
     )
     base.config.use_cache = False
@@ -200,9 +267,4 @@ def build_clara_model(cfg):
         base.gradient_checkpointing_enable()
 
     model = CLaRaModel(base, tokenizer, cfg)
-
-    for name, p in model.named_parameters():
-        if p.is_floating_point():
-            p.requires_grad_(False)
-
     return model, tokenizer

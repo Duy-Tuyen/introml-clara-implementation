@@ -10,11 +10,12 @@ import os
 import torch
 from torch.optim import AdamW
 from transformers import get_cosine_schedule_with_warmup
-from peft import load_peft_weights, set_peft_model_state_dict
+from peft import set_peft_model_state_dict
 
 from configs.config import CLaRaConfig
 from models.clara_model import build_clara_model
 from data.dataset import get_retrieval_dataloaders
+from models.utils import load_peft_weights_local
 
 
 def _vram() -> str:
@@ -41,24 +42,45 @@ def _load_stage1(model, stage1_dir: str) -> None:
     extra_path = os.path.join(stage1_dir, 'clara_stage1_extra.pth')
 
     if os.path.isdir(comp_dir):
-        comp_weights = load_peft_weights(comp_dir)
+        comp_weights = load_peft_weights_local(comp_dir)
         set_peft_model_state_dict(model.backbone, comp_weights, adapter_name='compressor')
-        print(f"Loaded compressor adapter from: {comp_dir}")
+        print(f"Loaded compressor adapter from: {comp_dir}", flush=True)
 
     if os.path.isdir(gen_dir):
-        gen_weights = load_peft_weights(gen_dir)
+        gen_weights = load_peft_weights_local(gen_dir)
         set_peft_model_state_dict(model.backbone, gen_weights, adapter_name='generator')
-        print(f"Loaded generator adapter from: {gen_dir}")
+        print(f"Loaded generator adapter from: {gen_dir}", flush=True)
 
     if os.path.exists(extra_path):
         saved = torch.load(extra_path, map_location='cuda')
         model.mem_token_embed.data = saved['mem_token_embed']
-        print(f"Loaded mem_token_embed from: {extra_path}")
+        print(f"Loaded mem_token_embed from: {extra_path}", flush=True)
 
     # Init query adapter from compressor weights
     if os.path.isdir(comp_dir):
         set_peft_model_state_dict(model.backbone, comp_weights, adapter_name='query')
-        print("Initialized query adapter from compressor weights")
+        print("Initialized query adapter from compressor weights", flush=True)
+
+
+def _load_stage2_init(model, stage2_dir: str) -> None:
+    query_dir = os.path.join(stage2_dir, 'adapters', 'query')
+    gen_dir = os.path.join(stage2_dir, 'adapters', 'generator')
+    extra_path = os.path.join(stage2_dir, 'clara_stage2_extra.pth')
+
+    if os.path.isdir(query_dir):
+        q_weights = load_peft_weights_local(query_dir)
+        set_peft_model_state_dict(model.backbone, q_weights, adapter_name='query')
+        print(f"Loaded query adapter from: {query_dir}", flush=True)
+
+    if os.path.isdir(gen_dir):
+        g_weights = load_peft_weights_local(gen_dir)
+        set_peft_model_state_dict(model.backbone, g_weights, adapter_name='generator')
+        print(f"Loaded generator adapter from: {gen_dir}", flush=True)
+
+    if os.path.exists(extra_path):
+        saved = torch.load(extra_path, map_location='cuda')
+        model.mem_token_embed.data = saved['mem_token_embed']
+        print(f"Loaded mem_token_embed from: {extra_path}", flush=True)
 
 
 def _validate(model, dl, max_b: int = 40) -> float:
@@ -68,7 +90,8 @@ def _validate(model, dl, max_b: int = 40) -> float:
         for i, batch in enumerate(dl):
             if i >= max_b:
                 break
-            batch = {k: v.cuda() for k, v in batch.items() if isinstance(v, torch.Tensor)}
+            device = next(model.parameters()).device 
+            batch = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in batch.items()}
             out = model.forward_e2e(**batch)
             total += out.loss.item()
             n += 1
@@ -99,7 +122,8 @@ def train_stage2(model, train_dl, val_dl, cfg) -> None:
         opt.zero_grad()
 
         for step, batch in enumerate(train_dl):
-            batch = {k: v.cuda() for k, v in batch.items() if isinstance(v, torch.Tensor)}
+            device = next(model.parameters()).device
+            batch = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in batch.items()}
             loss = model.forward_e2e(**batch).loss / cfg.grad_accum
             loss.backward()
             ep_loss += loss.item() * cfg.grad_accum
@@ -117,7 +141,7 @@ def train_stage2(model, train_dl, val_dl, cfg) -> None:
                 if gstep % 100 == 0:
                     print(f"  Ep{epoch+1} step{gstep:4d} | "
                           f"loss {ep_loss/(step+1):.4f} | "
-                          f"lr {sched.get_last_lr()[0]:.1e} | {_vram()}")
+                          f"lr {sched.get_last_lr()[0]:.1e} | {_vram()}", flush=True)
 
             if step % 50 == 0:
                 torch.cuda.empty_cache()
@@ -126,21 +150,21 @@ def train_stage2(model, train_dl, val_dl, cfg) -> None:
         val_loss = _validate(model, val_dl)
         train_loss = ep_loss / len(train_dl)
         print(f"\nEpoch {epoch+1}/{cfg.num_epochs}  "
-              f"train={train_loss:.4f}  val={val_loss:.4f}  {_vram()}")
+              f"train={train_loss:.4f}  val={val_loss:.4f}  {_vram()}", flush=True)
 
         if val_loss < best_val:
             best_val = val_loss
             ckpt = os.path.join(cfg.output_dir, f"stage2_ep{epoch+1}")
             os.makedirs(ckpt, exist_ok=True)
-            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters', 'query'), adapter_name='query')
-            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters', 'generator'), adapter_name='generator')
+            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters'), adapter_name='query')
+            model.backbone.save_pretrained(os.path.join(ckpt, 'adapters'), adapter_name='generator')
             torch.save(
                 {'mem_token_embed': model.mem_token_embed.data,
                  'epoch': epoch + 1,
                  'val_loss': val_loss},
                 os.path.join(ckpt, 'clara_stage2_extra.pth'),
             )
-            print(f" Saved → {ckpt}  (val={val_loss:.4f})\n")
+            print(f" Saved → {ckpt}  (val={val_loss:.4f})\n", flush=True)
 
 
 def main() -> None:
@@ -153,9 +177,15 @@ def main() -> None:
         cfg.grad_accum = int(os.environ['CLARA_GRAD_ACC'])
     if os.environ.get('CLARA_STAGE1_DIR'):
         cfg.stage1_ckpt_dir = os.environ['CLARA_STAGE1_DIR']
+    if os.environ.get('CLARA_OUTPUT_DIR'):
+        cfg.output_dir = os.environ['CLARA_OUTPUT_DIR']
+
+    stage2_init = os.environ.get('CLARA_STAGE2_INIT')
 
     model, tokenizer = build_clara_model(cfg)
     _load_stage1(model, cfg.stage1_ckpt_dir)
+    if stage2_init:
+        _load_stage2_init(model, stage2_init)
     train_dl, val_dl = get_retrieval_dataloaders(tokenizer, cfg)
     train_stage2(model, train_dl, val_dl, cfg)
 
