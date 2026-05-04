@@ -486,7 +486,10 @@ def main():
                     gc.collect()
                 errors += 1
                 if errors <= 3:
+                    import traceback
                     print(f"  ⚠ Step {step} error: {e}")
+                    if errors == 1:
+                        traceback.print_exc()
                 if errors >= 10:
                     print(f"  ❌ Too many errors ({errors}), aborting epoch")
                     break
