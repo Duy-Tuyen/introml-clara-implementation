@@ -406,14 +406,12 @@ def main():
         work_dir, trust_remote_code=True, load_pretrained_checkpoint=True,
     )
 
-    # Enable gradient checkpointing to slash activation VRAM (~40% savings)
-    # use_reentrant=False is required to avoid conflicts with in-place ops
-    # in Apple's _replace_embeddings method
-    model.decoder.gradient_checkpointing_enable(
-        gradient_checkpointing_kwargs={"use_reentrant": False}
-    )
+    # NOTE: gradient checkpointing is INCOMPATIBLE with Apple's adapter switching.
+    # The model calls set_adapter() during forward (encoder→query→decoder), so
+    # recomputation during backward produces different tensor shapes → crash.
+    # Instead we save VRAM via: mixed precision autocast + reduced seq len.
     model.decoder.config.use_cache = False
-    print("  ✓ Gradient checkpointing enabled (non-reentrant)")
+    print("  ✓ KV cache disabled for training")
 
     # ── Monkey-patch _replace_embeddings to fix in-place autograd error ────
     # Apple's original code: inputs_embeds = embedding(ids) then in-place
@@ -497,7 +495,11 @@ def main():
                 torch.cuda.empty_cache()
 
                 batch = prepare_batch(model, sample, max_dec_len)
-                loss, info = model(batch=batch)
+
+                # Mixed precision for VRAM savings (replaces grad checkpointing)
+                with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+                    loss, info = model(batch=batch)
+
                 loss = loss / grad_accum
                 loss.backward()
                 epoch_loss += loss.item() * grad_accum
