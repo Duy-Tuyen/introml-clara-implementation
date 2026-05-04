@@ -545,11 +545,12 @@ def main():
                 optimizer.zero_grad()
                 global_step += 1
 
-                if global_step % 25 == 0:
+                if global_step % 5 == 0 or global_step == 1:
                     avg_loss = epoch_loss / max(epoch_samples, 1)
                     print(f"  Ep{epoch+1} step{global_step:4d}/{total_steps} | "
                           f"loss {avg_loss:.4f} | "
                           f"lr {scheduler.get_last_lr()[0]:.1e} | {_vram()}")
+                    sys.stdout.flush()
 
             # VRAM management
             if (step + 1) % grad_accum == 0:
