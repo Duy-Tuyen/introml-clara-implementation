@@ -327,17 +327,14 @@ def save_finetuned_checkpoint(model, ckpt_path: str, output_dir: str,
         else:
             shutil.copy2(src, dst)
 
-    # Extract adapter state dicts in Apple's format: {adapter_name: state_dict}
+    # Extract adapter state dicts using Apple's own method
+    # This produces correctly-formatted keys that load_adapter() expects
     adapter_state = {}
     for adapter_name in model.adapter_keys:
-        adapter_sd = {}
         model.decoder.set_adapter(adapter_name)
-        for name, param in model.decoder.named_parameters():
-            if 'lora_' in name and adapter_name in name:
-                # Strip the base model prefix to match loading expectations
-                adapter_sd[name] = param.data.cpu().clone()
-        if adapter_sd:
-            adapter_state[adapter_name] = adapter_sd
+        sd = model.decoder.get_adapter_state_dict(adapter_name)
+        if sd:
+            adapter_state[adapter_name] = {k: v.cpu().clone() for k, v in sd.items()}
 
     torch.save(adapter_state, os.path.join(output_dir, 'adapters.pth'))
 
