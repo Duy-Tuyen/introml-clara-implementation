@@ -23,7 +23,7 @@ class CLaRaConfig:
     # ── Training (Stage I: SCP) ───────────────────────────────────────────────
     # Paper LR = 1e-4, nhưng giảm xuống 2e-5 để tránh loss diverge trên T4
     stage1_lr: float        = 2e-5
-    stage1_epochs: int      = 1
+    stage1_epochs: int      = 3
     stage1_mse_lambda: float = 0.1
 
     # ── Training (Stage II: End-to-End) ───────────────────────────────────────
@@ -32,7 +32,7 @@ class CLaRaConfig:
     grad_accum: int         = 16
     # Paper B.4: end-to-end learning rate = 5e-6
     lr: float               = 5e-6
-    num_epochs: int         = 1
+    num_epochs: int         = 3
     max_qa_len: int         = 96
     warmup_ratio: float     = 0.03
     max_grad_norm: float    = 1.0

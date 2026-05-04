@@ -227,6 +227,7 @@ class CLaRaModel(nn.Module):
                         dtype=question_attention_mask.dtype)
         mask = torch.cat([mm, question_attention_mask], dim=1)
 
+        input_len = emb.size(1)
         ids = self.backbone.generate(
             inputs_embeds=emb,
             attention_mask=mask,
@@ -235,7 +236,14 @@ class CLaRaModel(nn.Module):
             pad_token_id=self.tok.eos_token_id,
         )
 
-        return self.tok.batch_decode(ids, skip_special_tokens=True)
+        # Khi dùng inputs_embeds, một số version transformers trả về full sequence
+        # → chỉ lấy phần mới generate để decode
+        if ids.size(1) > max_new_tokens:
+            new_ids = ids[:, input_len:] if ids.size(1) > input_len else ids[:, -max_new_tokens:]
+        else:
+            new_ids = ids
+
+        return self.tok.batch_decode(new_ids, skip_special_tokens=True)
 
 
 def build_clara_model(cfg):
