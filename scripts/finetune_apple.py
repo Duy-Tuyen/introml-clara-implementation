@@ -502,15 +502,20 @@ def main():
                     print(f"  [timing] Batch prepared, starting forward..."); sys.stdout.flush()
                     _t0 = _time.time()
 
-                # Mixed precision for VRAM savings (replaces grad checkpointing)
-                with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+                # Mixed precision: float16 (T4 is Turing arch, no bfloat16 HW)
+                with torch.autocast(device_type='cuda', dtype=torch.float16):
                     loss, info = model(batch=batch)
 
                 if step == 0:
                     print(f"  [timing] Forward done in {_time.time()-_t0:.1f}s, backward..."); sys.stdout.flush()
+                    _t1 = _time.time()
 
                 loss = loss / grad_accum
                 loss.backward()
+
+                if step == 0:
+                    print(f"  [timing] Backward done in {_time.time()-_t1:.1f}s | {_vram()}"); sys.stdout.flush()
+
                 epoch_loss += loss.item() * grad_accum
                 epoch_samples += 1
             except RuntimeError as e:
