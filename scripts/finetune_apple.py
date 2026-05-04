@@ -552,6 +552,13 @@ def main():
                           f"lr {scheduler.get_last_lr()[0]:.1e} | {_vram()}")
                     sys.stdout.flush()
 
+                if global_step % 20 == 0:
+                    print(f"  [Auto-Save] Saving mid-epoch checkpoint at step {global_step}...")
+                    sys.stdout.flush()
+                    avg_loss = epoch_loss / max(epoch_samples, 1)
+                    save_finetuned_checkpoint(
+                        model, ckpt_path, output_dir, epoch + 1, avg_loss)
+
             # VRAM management
             if (step + 1) % grad_accum == 0:
                 gc.collect()
