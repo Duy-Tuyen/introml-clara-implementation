@@ -364,7 +364,7 @@ def main():
     ckpt_path     = os.environ.get('CLARA_CKPT_PATH',
                                    '/kaggle/input/datasets/tokiggle/clara-7b-e2e-4q')
     dataset_name  = os.environ.get('CLARA_DATASET', 'squad')
-    n_train       = int(os.environ.get('CLARA_N_TRAIN', '2000'))
+    n_train       = int(os.environ.get('CLARA_N_TRAIN', '800'))
     n_val         = int(os.environ.get('CLARA_N_VAL', '200'))
     lr            = float(os.environ.get('CLARA_FT_LR', '5e-6'))
     num_epochs    = int(os.environ.get('CLARA_FT_EPOCHS', '1'))
