@@ -74,6 +74,9 @@ def assemble_workdir(ckpt_path: str) -> str:
     cfg["load_adapters"] = False
     cfg["pure_inference"] = False
 
+    # Oracle fine-tuning: 1 document per question → top_k must be 1
+    cfg["generation_top_k"] = 1
+
     # Remove symlink and write patched config
     os.remove(config_path)
     with open(config_path, "w") as f:
