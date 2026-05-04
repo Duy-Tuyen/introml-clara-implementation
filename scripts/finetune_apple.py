@@ -415,6 +415,29 @@ def main():
     model.decoder.config.use_cache = False
     print("  ✓ Gradient checkpointing enabled (non-reentrant)")
 
+    # ── Monkey-patch _replace_embeddings to fix in-place autograd error ────
+    # Apple's original code: inputs_embeds = embedding(ids) then in-place
+    # assignment. The embedding output is a view of the weight tensor,
+    # so in-place ops crash autograd. Fix: .clone() before modifying.
+    import types
+
+    def _replace_embeddings_safe(self, compressed_embs, dec_input_ids, indices):
+        inputs_embeds = self.decoder.get_input_embeddings()(dec_input_ids).clone()
+        num_embs = compressed_embs.size(1)
+        slot_len = num_embs + (1 if self.sep else 0)
+        first_mem_token_indices = torch.argmax(
+            (dec_input_ids == self.decoder_tokenizer.mem_token_ids[0]).int(), dim=1
+        )
+        batch_size = inputs_embeds.size(0)
+        for i in range(batch_size):
+            for j in range(indices[i], indices[i + 1]):
+                start_idx = first_mem_token_indices[i].item() + (j - indices[i]) * slot_len
+                inputs_embeds[i, start_idx:start_idx + num_embs, :] = compressed_embs[j]
+        return inputs_embeds
+
+    model._replace_embeddings = types.MethodType(_replace_embeddings_safe, model)
+    print("  ✓ Patched _replace_embeddings (.clone() for autograd safety)")
+
     vram = torch.cuda.memory_allocated() / 1e9
     total = torch.cuda.get_device_properties(0).total_memory / 1e9
     print(f"  ✓ Model loaded. VRAM: {vram:.1f}/{total:.1f} GB")
