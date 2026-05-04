@@ -1,0 +1,1095 @@
+6.2s 1 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+6.2s 2 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+6.2s 3 0.00s - to python to disable frozen modules.
+6.2s 4 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+6.7s 5 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+6.7s 6 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+6.7s 7 0.00s - to python to disable frozen modules.
+6.7s 8 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+7.8s 9 Cloning into '/kaggle/working/introml-clara-implementation'...
+8.0s 10 [1/3] Cloning repository...
+8.0s 11 Cloning into '/kaggle/working/introml-clara-implementation'...
+8.0s 12 
+8.0s 13 Cloning into '/kaggle/working/introml-clara-implementation'...
+8.6s 14 [2/3] Installing dependencies...
+10.6s 15 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.7/43.7 kB 1.7 MB/s eta 0:00:00
+10.8s 16 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.7/43.7 kB 1.7 MB/s eta 0:00:00
+15.2s 17 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.4/9.4 MB 78.7 MB/s eta 0:00:00
+15.2s 18 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 251.6/251.6 kB 19.0 MB/s eta 0:00:00
+15.4s 19 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.4/9.4 MB 78.7 MB/s eta 0:00:00
+15.4s 20 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 251.6/251.6 kB 19.0 MB/s eta 0:00:00
+16.4s 21 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 119.8/119.8 MB 15.8 MB/s eta 0:00:00
+16.6s 22 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 119.8/119.8 MB 15.8 MB/s eta 0:00:00
+18.1s 23 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 167.9/167.9 MB 11.2 MB/s eta 0:00:00
+18.1s 24 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 324.4/324.4 kB 27.0 MB/s eta 0:00:00
+18.1s 25 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 566.4/566.4 kB 36.4 MB/s eta 0:00:00
+18.3s 26 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 167.9/167.9 MB 11.2 MB/s eta 0:00:00
+18.3s 27 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 324.4/324.4 kB 27.0 MB/s eta 0:00:00
+18.3s 28 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 566.4/566.4 kB 36.4 MB/s eta 0:00:00
+26.4s 29 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 779.1/779.1 MB 2.4 MB/s eta 0:00:00
+26.6s 30 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 779.1/779.1 MB 2.4 MB/s eta 0:00:00
+30.8s 31 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 410.6/410.6 MB 3.6 MB/s eta 0:00:00
+31.0s 32 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.1/14.1 MB 95.7 MB/s eta 0:00:00
+31.0s 33 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 410.6/410.6 MB 3.6 MB/s eta 0:00:00
+31.0s 34 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.1/14.1 MB 95.7 MB/s eta 0:00:00
+31.2s 35 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.7/23.7 MB 76.4 MB/s eta 0:00:00
+31.2s 36 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 823.6/823.6 kB 47.6 MB/s eta 0:00:00
+31.4s 37 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.7/23.7 MB 76.4 MB/s eta 0:00:00
+31.4s 38 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 823.6/823.6 kB 47.6 MB/s eta 0:00:00
+42.7s 39 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 731.7/731.7 MB 1.3 MB/s eta 0:00:00
+42.9s 40 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 731.7/731.7 MB 1.3 MB/s eta 0:00:00
+43.8s 41 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.6/121.6 MB 16.0 MB/s eta 0:00:00
+44.0s 42 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.6/121.6 MB 16.0 MB/s eta 0:00:00
+45.5s 43 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.5/56.5 MB 6.5 MB/s eta 0:00:00
+45.7s 44 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.5/56.5 MB 6.5 MB/s eta 0:00:00
+49.4s 45 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 124.2/124.2 MB 3.2 MB/s eta 0:00:00
+49.6s 46 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 124.2/124.2 MB 3.2 MB/s eta 0:00:00
+51.4s 47 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 196.0/196.0 MB 9.6 MB/s eta 0:00:00
+51.6s 48 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 196.0/196.0 MB 9.6 MB/s eta 0:00:00
+53.2s 49 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 176.2/176.2 MB 10.6 MB/s eta 0:00:00
+53.2s 50 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.1/99.1 kB 7.7 MB/s eta 0:00:00
+53.3s 51 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 107.2 MB/s eta 0:00:00
+53.4s 52 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 176.2/176.2 MB 10.6 MB/s eta 0:00:00
+53.4s 53 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.1/99.1 kB 7.7 MB/s eta 0:00:00
+53.4s 54 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 107.2 MB/s eta 0:00:00
+179.1s 55 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+179.1s 56 torchaudio 2.10.0+cu128 requires torch==2.10.0, but you have torch 2.3.1 which is incompatible.
+179.1s 57 torchvision 0.25.0+cu128 requires torch==2.10.0, but you have torch 2.3.1 which is incompatible.
+179.3s 58 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+179.3s 59 torchaudio 2.10.0+cu128 requires torch==2.10.0, but you have torch 2.3.1 which is incompatible.
+179.3s 60 torchvision 0.25.0+cu128 requires torch==2.10.0, but you have torch 2.3.1 which is incompatible.
+179.3s 61 
+179.3s 62 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+179.3s 63 torchaudio 2.10.0+cu128 requires torch==2.10.0, but you have torch 2.3.1 which is incompatible.
+179.3s 64 torchvision 0.25.0+cu128 requires torch==2.10.0, but you have torch 2.3.1 which is incompatible.
+180.0s 65 [3/3] Running setup script...
+188.8s 66 Found existing installation: torchvision 0.25.0+cu128
+188.8s 67 Uninstalling torchvision-0.25.0+cu128:
+188.8s 68 Successfully uninstalled torchvision-0.25.0+cu128
+188.8s 69 Found existing installation: torchaudio 2.10.0+cu128
+188.8s 70 Uninstalling torchaudio-2.10.0+cu128:
+188.8s 71 Successfully uninstalled torchaudio-2.10.0+cu128
+188.8s 72 
+188.8s 73 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 529.0/529.0 kB 2.7 MB/s eta 0:00:00
+188.8s 74 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 383.7/383.7 kB 27.8 MB/s eta 0:00:00
+188.8s 75 
+188.8s 76 Patched bitsandbytes CUDA 12.8 → libbitsandbytes_cuda124_nocublaslt.so
+188.8s 77 Torch: 2.3.1+cu121 | CUDA: 12.1
+188.8s 78 GPU: Tesla T4
+188.8s 79 Môi trường Kaggle đã sẵn sàng. Hãy RESTART KERNEL rồi chạy tiếp.
+189.0s 80 Found existing installation: torchvision 0.25.0+cu128
+189.0s 81 Uninstalling torchvision-0.25.0+cu128:
+189.0s 82 Successfully uninstalled torchvision-0.25.0+cu128
+189.0s 83 Found existing installation: torchaudio 2.10.0+cu128
+189.0s 84 Uninstalling torchaudio-2.10.0+cu128:
+189.0s 85 Successfully uninstalled torchaudio-2.10.0+cu128
+189.0s 86 
+189.0s 87 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 529.0/529.0 kB 2.7 MB/s eta 0:00:00
+189.0s 88 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 383.7/383.7 kB 27.8 MB/s eta 0:00:00
+189.0s 89 
+189.0s 90 Patched bitsandbytes CUDA 12.8 → libbitsandbytes_cuda124_nocublaslt.so
+189.0s 91 Torch: 2.3.1+cu121 | CUDA: 12.1
+189.0s 92 GPU: Tesla T4
+189.0s 93 Môi trường Kaggle đã sẵn sàng. Hãy RESTART KERNEL rồi chạy tiếp.
+189.2s 94 
+189.2s 95 Setup complete. Please RESTART the kernel before continuing.
+189.2s 96 Working directory : /kaggle/working/introml-clara-implementation
+189.2s 97 Python path entry : /kaggle/working/introml-clara-implementation
+190.7s 98 GPU       : Tesla T4
+190.7s 99 VRAM      : 15.6 GB
+190.7s 100 CUDA      : 12.1
+190.7s 101 PyTorch   : 2.3.1+cu121
+190.7s 102 Checkpoint: /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+190.7s 103 Files     : ['config.json', 'tokenizer.json', 'tokenizer_config.json', 'modeling_clara.py', 'chat_template.jinja', 'decoder_first_last_layers.pth', 'special_tokens_map.json', 'tokenizer.model', 'adapters.pth']
+190.7s 104 
+190.7s 105 ✓ Environment ready.
+190.9s 106 ╔════════════════════════════════════════════════════════════╗
+190.9s 107 ║  QUICK TEST — Apple Native Pipeline (5 SQuAD samples)       ║
+190.9s 108 ╠════════════════════════════════════════════════════════════╣
+190.9s 109 ║  Uses Apple's own modeling_clara.py (4-bit NF4)             ║
+190.9s 110 ║  generate_from_questions() E2E stage2 pipeline              ║
+190.9s 111 ╚════════════════════════════════════════════════════════════╝
+196.7s 112 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1029: SyntaxWarning: invalid escape sequence '\ '
+196.7s 113 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.7s 114 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1072: SyntaxWarning: invalid escape sequence '\ '
+196.7s 115 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.7s 116 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1094: SyntaxWarning: invalid escape sequence '\ '
+196.7s 117 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.7s 118 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1117: SyntaxWarning: invalid escape sequence '\ '
+196.7s 119 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.7s 120 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1139: SyntaxWarning: invalid escape sequence '\ '
+196.7s 121 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.7s 122 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1165: SyntaxWarning: invalid escape sequence '\ '
+196.7s 123 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.7s 124 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1189: SyntaxWarning: invalid escape sequence '\ '
+196.7s 125 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.8s 126 /usr/local/lib/python3.12/dist-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+196.8s 127 warnings.warn(
+196.9s 128 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1029: SyntaxWarning: invalid escape sequence '\ '
+196.9s 129 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.9s 130 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1072: SyntaxWarning: invalid escape sequence '\ '
+196.9s 131 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.9s 132 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1094: SyntaxWarning: invalid escape sequence '\ '
+196.9s 133 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.9s 134 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1117: SyntaxWarning: invalid escape sequence '\ '
+196.9s 135 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.9s 136 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1139: SyntaxWarning: invalid escape sequence '\ '
+196.9s 137 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.9s 138 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1165: SyntaxWarning: invalid escape sequence '\ '
+196.9s 139 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.9s 140 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1189: SyntaxWarning: invalid escape sequence '\ '
+196.9s 141 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.9s 142 /usr/local/lib/python3.12/dist-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+196.9s 143 warnings.warn(
+196.9s 144 
+196.9s 145 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1029: SyntaxWarning: invalid escape sequence '\ '
+196.9s 146 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.9s 147 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1072: SyntaxWarning: invalid escape sequence '\ '
+196.9s 148 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.9s 149 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1094: SyntaxWarning: invalid escape sequence '\ '
+196.9s 150 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.9s 151 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1117: SyntaxWarning: invalid escape sequence '\ '
+196.9s 152 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.9s 153 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1139: SyntaxWarning: invalid escape sequence '\ '
+196.9s 154 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.9s 155 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1165: SyntaxWarning: invalid escape sequence '\ '
+196.9s 156 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+196.9s 157 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1189: SyntaxWarning: invalid escape sequence '\ '
+196.9s 158 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+196.9s 159 /usr/local/lib/python3.12/dist-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+196.9s 160 warnings.warn(
+197.1s 161 ============================================================
+197.1s 162 CLaRa Evaluation — Apple Native Pipeline
+197.1s 163 ============================================================
+197.1s 164 Checkpoint : /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+197.1s 165 Dataset    : squad
+197.1s 166 Eval mode  : oracle
+197.1s 167 Batch size : 1
+197.1s 168 Val samples: 5
+197.1s 169 Max tokens : 32
+197.1s 170 ============================================================
+197.1s 171 
+197.1s 172 [1/4] Assembling workdir...
+197.1s 173 ✓ Workdir: /kaggle/working/apple-eval-workdir
+197.1s 174 - Source: /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+197.1s 175 - Patched: quantization=int4, decoder=mistralai/Mistral-7B-Instruct-v0.2
+197.1s 176 
+197.1s 177 [2/4] Loading Apple CLaRa model (4-bit NF4)...
+197.1s 178 Initializing model from trained checkpoint: CLaRaConfig {
+197.1s 179 "_attn_implementation_autoset": true,
+197.1s 180 "ae_mode": "token",
+197.1s 181 "attn_implementation": null,
+197.1s 182 "auto_map": {
+197.1s 183 "AutoConfig": "modeling_clara.CLaRaConfig",
+197.1s 184 "AutoModel": "modeling_clara.CLaRa"
+197.1s 185 },
+197.1s 186 "compr_base_model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+197.1s 187 "compr_every_n_layer": null,
+197.1s 188 "compr_linear_type": "concat",
+197.1s 189 "compr_mlp_hidden_dim": 8096,
+197.1s 190 "compr_model_name": null,
+197.1s 191 "compr_n_layers": 5,
+197.1s 192 "compr_rate": 16,
+197.1s 193 "compr_rms_norm": false,
+197.1s 194 "compr_use_mlp": false,
+197.1s 195 "decoder_model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+197.1s 196 "device_map": null,
+197.1s 197 "different_mem_tokens": true,
+197.1s 198 "doc_max_length": 256,
+197.1s 199 "generation_top_k": 1,
+197.1s 200 "kbtc_training": false,
+197.1s 201 "load_adapters": false,
+197.1s 202 "load_pretrained_checkpoint": false,
+197.1s 203 "lora": true,
+197.1s 204 "lora_compressor": false,
+197.1s 205 "lora_r": 16,
+197.1s 206 "lora_r_compressor": 16,
+197.1s 207 "max_new_tokens": 128,
+197.1s 208 "model_type": "CLaRa",
+197.1s 209 "optimize_mem_tokens": true,
+197.1s 210 "pad_token_id": 2,
+197.1s 211 "pure_inference": false,
+197.1s 212 "quantization": "int4",
+197.1s 213 "sep": true,
+197.1s 214 "stage2_retrieval_top_n": 1,
+197.1s 215 "training_form": "both_separately",
+197.1s 216 "training_stage": "stage2",
+197.1s 217 "transformers_version": "4.43.3"
+197.1s 218 }
+197.1s 219 
+197.3s 220 ============================================================
+197.3s 221 CLaRa Evaluation — Apple Native Pipeline
+197.3s 222 ============================================================
+197.3s 223 Checkpoint : /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+197.3s 224 Dataset    : squad
+197.3s 225 Eval mode  : oracle
+197.3s 226 Batch size : 1
+197.3s 227 Val samples: 5
+197.3s 228 Max tokens : 32
+197.3s 229 ============================================================
+197.3s 230 
+197.3s 231 [1/4] Assembling workdir...
+197.3s 232 ✓ Workdir: /kaggle/working/apple-eval-workdir
+197.3s 233 - Source: /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+197.3s 234 - Patched: quantization=int4, decoder=mistralai/Mistral-7B-Instruct-v0.2
+197.3s 235 
+197.3s 236 [2/4] Loading Apple CLaRa model (4-bit NF4)...
+197.3s 237 Initializing model from trained checkpoint: CLaRaConfig {
+197.3s 238 "_attn_implementation_autoset": true,
+197.3s 239 "ae_mode": "token",
+197.3s 240 "attn_implementation": null,
+197.3s 241 "auto_map": {
+197.3s 242 "AutoConfig": "modeling_clara.CLaRaConfig",
+197.3s 243 "AutoModel": "modeling_clara.CLaRa"
+197.3s 244 },
+197.3s 245 "compr_base_model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+197.3s 246 "compr_every_n_layer": null,
+197.3s 247 "compr_linear_type": "concat",
+197.3s 248 "compr_mlp_hidden_dim": 8096,
+197.3s 249 "compr_model_name": null,
+197.3s 250 "compr_n_layers": 5,
+197.3s 251 "compr_rate": 16,
+197.3s 252 "compr_rms_norm": false,
+197.3s 253 "compr_use_mlp": false,
+197.3s 254 "decoder_model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+197.3s 255 "device_map": null,
+197.3s 256 "different_mem_tokens": true,
+197.3s 257 "doc_max_length": 256,
+197.3s 258 "generation_top_k": 1,
+197.3s 259 "kbtc_training": false,
+197.3s 260 "load_adapters": false,
+197.3s 261 "load_pretrained_checkpoint": false,
+197.3s 262 "lora": true,
+197.3s 263 "lora_compressor": false,
+197.3s 264 "lora_r": 16,
+197.3s 265 "lora_r_compressor": 16,
+197.3s 266 "max_new_tokens": 128,
+197.3s 267 "model_type": "CLaRa",
+197.3s 268 "optimize_mem_tokens": true,
+197.3s 269 "pad_token_id": 2,
+197.3s 270 "pure_inference": false,
+197.3s 271 "quantization": "int4",
+197.3s 272 "sep": true,
+197.3s 273 "stage2_retrieval_top_n": 1,
+197.3s 274 "training_form": "both_separately",
+197.3s 275 "training_stage": "stage2",
+197.3s 276 "transformers_version": "4.43.3"
+197.3s 277 }
+197.3s 278 
+197.3s 279 Downloading shards:   0%|          | 0/3 [00:00<?, ?it/s]Downloading shards:   0%|          | 0/3 [00:00<?, ?it/s]
+218.0s 280 Downloading shards:   0%|          | 0/3 [00:00<?, ?it/s]Downloading shards:  33%|███▎      | 1/3 [00:20<00:41, 20.73s/it]Downloading shards:  33%|███▎      | 1/3 [00:20<00:41, 20.73s/it]
+239.5s 281 Downloading shards:  33%|███▎      | 1/3 [00:20<00:41, 20.73s/it]Downloading shards:  67%|██████▋   | 2/3 [00:42<00:21, 21.18s/it]Downloading shards:  67%|██████▋   | 2/3 [00:42<00:21, 21.18s/it]
+260.6s 282 Downloading shards:  67%|██████▋   | 2/3 [00:42<00:21, 21.18s/it]Downloading shards: 100%|██████████| 3/3 [01:03<00:00, 21.21s/it]Downloading shards: 100%|██████████| 3/3 [01:03<00:00, 21.16s/it]
+260.8s 283 Downloading shards: 100%|██████████| 3/3 [01:03<00:00, 21.21s/it]Downloading shards: 100%|██████████| 3/3 [01:03<00:00, 21.16s/it]
+260.8s 284 
+260.8s 285 Downloading shards: 100%|██████████| 3/3 [01:03<00:00, 21.21s/it]Downloading shards: 100%|██████████| 3/3 [01:03<00:00, 21.16s/it]
+261.5s 286 Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]
+263.8s 287 Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:04,  2.25s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:04,  2.25s/it]
+265.8s 288 Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:04,  2.25s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:04<00:02,  2.14s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:04<00:02,  2.14s/it]
+267.5s 289 Loading checkpoint shards:  67%|██████▋   | 2/3 [00:04<00:02,  2.14s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.00s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.05s/it]
+267.7s 290 Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.00s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.05s/it]
+267.7s 291 
+267.7s 292 Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.00s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.05s/it]
+279.6s 293 Base decoder parameters: 7241732096
+279.6s 294 Model adapter keys: []
+279.6s 295 Memory token count: 16
+279.6s 296 Loading checkpoint adapter: decoder_adapter
+279.6s 297 Loading checkpoint adapter: encoder_adapter
+279.6s 298 Loading checkpoint adapter: query_reasoner_adapter
+279.6s 299 ✓ Model loaded. VRAM: 5.0/15.6 GB
+279.6s 300 
+279.6s 301 [3/4] Loading 'squad' validation set...
+279.8s 302 Generating train split:   0%|          | 0/87599 [00:00<?, ? examples/s]Generating train split:  43%|████▎     | 38000/87599 [00:00<00:00, 350069.63 examples/s]Generating train split: 100%|██████████| 87599/87599 [00:00<00:00, 496156.56 examples/s]
+279.8s 303 Generating validation split:   0%|          | 0/10570 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 10570/10570 [00:00<00:00, 360554.60 examples/s]
+279.8s 304 Base decoder parameters: 7241732096
+279.8s 305 Model adapter keys: []
+279.8s 306 Memory token count: 16
+279.8s 307 Loading checkpoint adapter: decoder_adapter
+279.8s 308 Loading checkpoint adapter: encoder_adapter
+279.8s 309 Loading checkpoint adapter: query_reasoner_adapter
+279.8s 310 ✓ Model loaded. VRAM: 5.0/15.6 GB
+279.8s 311 
+279.8s 312 [3/4] Loading 'squad' validation set...
+279.8s 313 Generating train split:   0%|          | 0/87599 [00:00<?, ? examples/s]Generating train split:  43%|████▎     | 38000/87599 [00:00<00:00, 350069.63 examples/s]Generating train split: 100%|██████████| 87599/87599 [00:00<00:00, 496156.56 examples/s]
+279.8s 314 Generating validation split:   0%|          | 0/10570 [00:00<?, ? examples/s]
+279.8s 315 Generating train split:   0%|          | 0/87599 [00:00<?, ? examples/s]Generating train split:  43%|████▎     | 38000/87599 [00:00<00:00, 350069.63 examples/s]Generating train split: 100%|██████████| 87599/87599 [00:00<00:00, 496156.56 examples/s]
+280.0s 316 Generating validation split:   0%|          | 0/10570 [00:00<?, ? examples/s]Filter:   0%|          | 0/10570 [00:00<?, ? examples/s]Filter:  66%|██████▌   | 7000/10570 [00:00<00:00, 58338.14 examples/s]Filter: 100%|██████████| 10570/10570 [00:00<00:00, 59582.19 examples/s]
+280.0s 317 ✓ Loaded 5 samples from squad (eval_mode=oracle)
+280.0s 318 
+280.0s 319 [4/4] Running evaluation...
+280.0s 320 Evaluating:   0%|          | 0/5 [00:00<?, ?batch/s]Generating validation split: 100%|██████████| 10570/10570 [00:00<00:00, 360554.60 examples/s]
+280.0s 321 Filter:   0%|          | 0/10570 [00:00<?, ? examples/s]Filter:  66%|██████▌   | 7000/10570 [00:00<00:00, 58338.14 examples/s]Filter: 100%|██████████| 10570/10570 [00:00<00:00, 59582.19 examples/s]
+280.0s 322 
+280.0s 323 Generating validation split: 100%|██████████| 10570/10570 [00:00<00:00, 360554.60 examples/s]
+280.0s 324 Filter:   0%|          | 0/10570 [00:00<?, ? examples/s]Filter:  66%|██████▌   | 7000/10570 [00:00<00:00, 58338.14 examples/s]Filter: 100%|██████████| 10570/10570 [00:00<00:00, 59582.19 examples/s]
+280.1s 325 We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+280.2s 326 ✓ Loaded 5 samples from squad (eval_mode=oracle)
+280.2s 327 
+280.2s 328 [4/4] Running evaluation...
+280.2s 329 Evaluating:   0%|          | 0/5 [00:00<?, ?batch/s]We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+280.2s 330 
+280.2s 331 Evaluating:   0%|          | 0/5 [00:00<?, ?batch/s]We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+282.7s 332 Evaluating:  20%|██        | 1/5 [00:02<00:10,  2.52s/batch]Evaluating:  80%|████████  | 4/5 [00:02<00:00,  1.95batch/s]Evaluating: 100%|██████████| 5/5 [00:02<00:00,  1.85batch/s]
+282.7s 333 Evaluating:  20%|██        | 1/5 [00:02<00:10,  2.52s/batch]Evaluating:  80%|████████  | 4/5 [00:02<00:00,  1.95batch/s]Evaluating: 100%|██████████| 5/5 [00:02<00:00,  1.85batch/s]
+282.7s 334 
+282.7s 335 Evaluating:  20%|██        | 1/5 [00:02<00:10,  2.52s/batch]Evaluating:  80%|████████  | 4/5 [00:02<00:00,  1.95batch/s]Evaluating: 100%|██████████| 5/5 [00:02<00:00,  1.85batch/s]
+283.2s 336 ⚠ Batch 0 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.2s 337 ⚠ Batch 1 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.2s 338 ⚠ Batch 2 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.2s 339 ⚠ Batch 3 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.2s 340 ⚠ Batch 4 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.2s 341 
+283.2s 342 ============================================================
+283.2s 343 EVALUATION RESULTS (Apple Native Pipeline)
+283.2s 344 ============================================================
+283.2s 345 Dataset    : squad  (eval_mode=oracle)
+283.2s 346 Samples    : 5
+283.2s 347 Exact Match: 0.00%
+283.2s 348 F1 Score   : 0.00%
+283.2s 349 ============================================================
+283.2s 350 
+283.2s 351 Sample predictions (first 5):
+283.2s 352 Gold : Denver Broncos
+283.2s 353 Pred :
+283.2s 354 EM=0  F1=0.00
+283.2s 355 --------------------------------------------------
+283.2s 356 Gold : Carolina Panthers
+283.2s 357 Pred :
+283.2s 358 EM=0  F1=0.00
+283.2s 359 --------------------------------------------------
+283.2s 360 Gold : Santa Clara, California
+283.2s 361 Pred :
+283.2s 362 EM=0  F1=0.00
+283.2s 363 --------------------------------------------------
+283.2s 364 Gold : Denver Broncos
+283.2s 365 Pred :
+283.2s 366 EM=0  F1=0.00
+283.2s 367 --------------------------------------------------
+283.2s 368 Gold : gold
+283.2s 369 Pred :
+283.2s 370 EM=0  F1=0.00
+283.2s 371 --------------------------------------------------
+283.2s 372 
+283.2s 373 ✅ Results saved to: results/eval_scores.csv
+283.4s 374 ⚠ Batch 0 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.4s 375 ⚠ Batch 1 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.4s 376 ⚠ Batch 2 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.4s 377 ⚠ Batch 3 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.4s 378 ⚠ Batch 4 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+283.4s 379 
+283.4s 380 ============================================================
+283.4s 381 EVALUATION RESULTS (Apple Native Pipeline)
+283.4s 382 ============================================================
+283.4s 383 Dataset    : squad  (eval_mode=oracle)
+283.4s 384 Samples    : 5
+283.4s 385 Exact Match: 0.00%
+283.4s 386 F1 Score   : 0.00%
+283.4s 387 ============================================================
+283.4s 388 
+283.4s 389 Sample predictions (first 5):
+283.4s 390 Gold : Denver Broncos
+283.4s 391 Pred :
+283.4s 392 EM=0  F1=0.00
+283.4s 393 --------------------------------------------------
+283.4s 394 Gold : Carolina Panthers
+283.4s 395 Pred :
+283.4s 396 EM=0  F1=0.00
+283.4s 397 --------------------------------------------------
+283.4s 398 Gold : Santa Clara, California
+283.4s 399 Pred :
+283.4s 400 EM=0  F1=0.00
+283.4s 401 --------------------------------------------------
+283.4s 402 Gold : Denver Broncos
+283.4s 403 Pred :
+283.4s 404 EM=0  F1=0.00
+283.4s 405 --------------------------------------------------
+283.4s 406 Gold : gold
+283.4s 407 Pred :
+283.4s 408 EM=0  F1=0.00
+283.4s 409 --------------------------------------------------
+283.4s 410 
+283.4s 411 ✅ Results saved to: results/eval_scores.csv
+284.9s 412 
+284.9s 413 ✅ Quick test complete!
+284.9s 414 If predictions look sensible → proceed to Section 2 or 3.
+286.0s 415 
+286.0s 416 ╔════════════════════════════════════════════════════════════╗
+286.0s 417 ║  MODEL A — Apple Native Eval: TRIVIAQA                      ║
+286.0s 418 ╠════════════════════════════════════════════════════════════╣
+286.0s 419 ║  Pipeline  : Apple modeling_clara.py (4-bit NF4)            ║
+286.0s 420 ║  Dataset   : triviaqa                                       ║
+286.0s 421 ║  Eval mode : oracle  |  Metrics: EM + F1                    ║
+286.0s 422 ╚════════════════════════════════════════════════════════════╝
+289.3s 423 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1029: SyntaxWarning: invalid escape sequence '\ '
+289.3s 424 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.3s 425 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1072: SyntaxWarning: invalid escape sequence '\ '
+289.3s 426 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.3s 427 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1094: SyntaxWarning: invalid escape sequence '\ '
+289.3s 428 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.3s 429 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1117: SyntaxWarning: invalid escape sequence '\ '
+289.3s 430 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.3s 431 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1139: SyntaxWarning: invalid escape sequence '\ '
+289.3s 432 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.3s 433 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1165: SyntaxWarning: invalid escape sequence '\ '
+289.3s 434 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.3s 435 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1189: SyntaxWarning: invalid escape sequence '\ '
+289.3s 436 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.5s 437 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1029: SyntaxWarning: invalid escape sequence '\ '
+289.5s 438 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.5s 439 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1072: SyntaxWarning: invalid escape sequence '\ '
+289.5s 440 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.5s 441 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1094: SyntaxWarning: invalid escape sequence '\ '
+289.5s 442 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.5s 443 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1117: SyntaxWarning: invalid escape sequence '\ '
+289.5s 444 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.5s 445 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1139: SyntaxWarning: invalid escape sequence '\ '
+289.5s 446 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.5s 447 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1165: SyntaxWarning: invalid escape sequence '\ '
+289.5s 448 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.5s 449 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1189: SyntaxWarning: invalid escape sequence '\ '
+289.5s 450 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.5s 451 
+289.5s 452 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1029: SyntaxWarning: invalid escape sequence '\ '
+289.5s 453 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.5s 454 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1072: SyntaxWarning: invalid escape sequence '\ '
+289.5s 455 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.5s 456 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1094: SyntaxWarning: invalid escape sequence '\ '
+289.5s 457 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.5s 458 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1117: SyntaxWarning: invalid escape sequence '\ '
+289.5s 459 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.5s 460 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1139: SyntaxWarning: invalid escape sequence '\ '
+289.5s 461 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.5s 462 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1165: SyntaxWarning: invalid escape sequence '\ '
+289.5s 463 user_prompt = [{"role": "user", "content": prompt_user.replace(':\ ', ': ')}]
+289.5s 464 /root/.cache/huggingface/modules/transformers_modules/apple-eval-workdir/modeling_clara.py:1189: SyntaxWarning: invalid escape sequence '\ '
+289.5s 465 combined_content = prompt_system + '\n' + prompt_user.replace(':\ ', ': ')
+289.7s 466 /usr/local/lib/python3.12/dist-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+289.7s 467 warnings.warn(
+289.9s 468 /usr/local/lib/python3.12/dist-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+289.9s 469 warnings.warn(
+289.9s 470 
+289.9s 471 /usr/local/lib/python3.12/dist-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+289.9s 472 warnings.warn(
+290.2s 473 ============================================================
+290.2s 474 CLaRa Evaluation — Apple Native Pipeline
+290.2s 475 ============================================================
+290.2s 476 Checkpoint : /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+290.2s 477 Dataset    : triviaqa
+290.2s 478 Eval mode  : oracle
+290.2s 479 Batch size : 1
+290.2s 480 Val samples: 500
+290.2s 481 Max tokens : 32
+290.2s 482 ============================================================
+290.2s 483 
+290.2s 484 [1/4] Assembling workdir...
+290.2s 485 ✓ Workdir: /kaggle/working/apple-eval-workdir
+290.2s 486 - Source: /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+290.2s 487 - Patched: quantization=int4, decoder=mistralai/Mistral-7B-Instruct-v0.2
+290.2s 488 
+290.2s 489 [2/4] Loading Apple CLaRa model (4-bit NF4)...
+290.2s 490 ✓ Cleared stale HF module cache
+290.2s 491 Initializing model from trained checkpoint: CLaRaConfig {
+290.2s 492 "_attn_implementation_autoset": true,
+290.2s 493 "ae_mode": "token",
+290.2s 494 "attn_implementation": null,
+290.2s 495 "auto_map": {
+290.2s 496 "AutoConfig": "modeling_clara.CLaRaConfig",
+290.2s 497 "AutoModel": "modeling_clara.CLaRa"
+290.2s 498 },
+290.2s 499 "compr_base_model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+290.2s 500 "compr_every_n_layer": null,
+290.2s 501 "compr_linear_type": "concat",
+290.2s 502 "compr_mlp_hidden_dim": 8096,
+290.2s 503 "compr_model_name": null,
+290.2s 504 "compr_n_layers": 5,
+290.2s 505 "compr_rate": 16,
+290.2s 506 "compr_rms_norm": false,
+290.2s 507 "compr_use_mlp": false,
+290.2s 508 "decoder_model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+290.2s 509 "device_map": null,
+290.2s 510 "different_mem_tokens": true,
+290.2s 511 "doc_max_length": 256,
+290.2s 512 "generation_top_k": 1,
+290.2s 513 "kbtc_training": false,
+290.2s 514 "load_adapters": false,
+290.2s 515 "load_pretrained_checkpoint": false,
+290.2s 516 "lora": true,
+290.2s 517 "lora_compressor": false,
+290.2s 518 "lora_r": 16,
+290.2s 519 "lora_r_compressor": 16,
+290.2s 520 "max_new_tokens": 128,
+290.2s 521 "model_type": "CLaRa",
+290.2s 522 "optimize_mem_tokens": true,
+290.2s 523 "pad_token_id": 2,
+290.2s 524 "pure_inference": false,
+290.2s 525 "quantization": "int4",
+290.2s 526 "sep": true,
+290.2s 527 "stage2_retrieval_top_n": 1,
+290.2s 528 "training_form": "both_separately",
+290.2s 529 "training_stage": "stage2",
+290.2s 530 "transformers_version": "4.43.3"
+290.2s 531 }
+290.2s 532 
+290.4s 533 ============================================================
+290.4s 534 CLaRa Evaluation — Apple Native Pipeline
+290.4s 535 ============================================================
+290.4s 536 Checkpoint : /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+290.4s 537 Dataset    : triviaqa
+290.4s 538 Eval mode  : oracle
+290.4s 539 Batch size : 1
+290.4s 540 Val samples: 500
+290.4s 541 Max tokens : 32
+290.4s 542 ============================================================
+290.4s 543 
+290.4s 544 [1/4] Assembling workdir...
+290.4s 545 ✓ Workdir: /kaggle/working/apple-eval-workdir
+290.4s 546 - Source: /kaggle/input/datasets/tokiggle/clara-7b-e2e-4q
+290.4s 547 - Patched: quantization=int4, decoder=mistralai/Mistral-7B-Instruct-v0.2
+290.4s 548 
+290.4s 549 [2/4] Loading Apple CLaRa model (4-bit NF4)...
+290.4s 550 ✓ Cleared stale HF module cache
+290.4s 551 Initializing model from trained checkpoint: CLaRaConfig {
+290.4s 552 "_attn_implementation_autoset": true,
+290.4s 553 "ae_mode": "token",
+290.4s 554 "attn_implementation": null,
+290.4s 555 "auto_map": {
+290.4s 556 "AutoConfig": "modeling_clara.CLaRaConfig",
+290.4s 557 "AutoModel": "modeling_clara.CLaRa"
+290.4s 558 },
+290.4s 559 "compr_base_model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+290.4s 560 "compr_every_n_layer": null,
+290.4s 561 "compr_linear_type": "concat",
+290.4s 562 "compr_mlp_hidden_dim": 8096,
+290.4s 563 "compr_model_name": null,
+290.4s 564 "compr_n_layers": 5,
+290.4s 565 "compr_rate": 16,
+290.4s 566 "compr_rms_norm": false,
+290.4s 567 "compr_use_mlp": false,
+290.4s 568 "decoder_model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+290.4s 569 "device_map": null,
+290.4s 570 "different_mem_tokens": true,
+290.4s 571 "doc_max_length": 256,
+290.4s 572 "generation_top_k": 1,
+290.4s 573 "kbtc_training": false,
+290.4s 574 "load_adapters": false,
+290.4s 575 "load_pretrained_checkpoint": false,
+290.4s 576 "lora": true,
+290.4s 577 "lora_compressor": false,
+290.4s 578 "lora_r": 16,
+290.4s 579 "lora_r_compressor": 16,
+290.4s 580 "max_new_tokens": 128,
+290.4s 581 "model_type": "CLaRa",
+290.4s 582 "optimize_mem_tokens": true,
+290.4s 583 "pad_token_id": 2,
+290.4s 584 "pure_inference": false,
+290.4s 585 "quantization": "int4",
+290.4s 586 "sep": true,
+290.4s 587 "stage2_retrieval_top_n": 1,
+290.4s 588 "training_form": "both_separately",
+290.4s 589 "training_stage": "stage2",
+290.4s 590 "transformers_version": "4.43.3"
+290.4s 591 }
+290.4s 592 
+290.4s 593 Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]
+309.1s 594 Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:18<00:37, 18.68s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:18<00:37, 18.68s/it]
+325.2s 595 Loading checkpoint shards:  33%|███▎      | 1/3 [00:18<00:37, 18.68s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:34<00:17, 17.16s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:34<00:17, 17.16s/it]
+329.7s 596 Loading checkpoint shards:  67%|██████▋   | 2/3 [00:34<00:17, 17.16s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:39<00:00, 11.49s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:39<00:00, 13.17s/it]
+329.9s 597 Loading checkpoint shards: 100%|██████████| 3/3 [00:39<00:00, 11.49s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:39<00:00, 13.17s/it]
+329.9s 598 
+329.9s 599 Loading checkpoint shards: 100%|██████████| 3/3 [00:39<00:00, 11.49s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:39<00:00, 13.17s/it]
+338.0s 600 Base decoder parameters: 7241732096
+338.0s 601 Model adapter keys: []
+338.0s 602 Memory token count: 16
+338.0s 603 Loading checkpoint adapter: decoder_adapter
+338.0s 604 Loading checkpoint adapter: encoder_adapter
+338.0s 605 Loading checkpoint adapter: query_reasoner_adapter
+338.0s 606 ✓ Model loaded. VRAM: 5.0/15.6 GB
+338.0s 607 
+338.0s 608 [3/4] Loading 'triviaqa' validation set...
+338.2s 609 Base decoder parameters: 7241732096
+338.2s 610 Model adapter keys: []
+338.2s 611 Memory token count: 16
+338.2s 612 Loading checkpoint adapter: decoder_adapter
+338.2s 613 Loading checkpoint adapter: encoder_adapter
+338.2s 614 Loading checkpoint adapter: query_reasoner_adapter
+338.2s 615 ✓ Model loaded. VRAM: 5.0/15.6 GB
+338.2s 616 
+338.2s 617 [3/4] Loading 'triviaqa' validation set...
+338.2s 618 Downloading data:   0%|          | 0/26 [00:00<?, ?files/s]Downloading data:   0%|          | 0/26 [00:00<?, ?files/s]
+342.3s 619 Downloading data:   0%|          | 0/26 [00:00<?, ?files/s]Downloading data:   4%|▍         | 1/26 [00:04<01:42,  4.09s/files]Downloading data:   4%|▍         | 1/26 [00:04<01:42,  4.09s/files]
+345.8s 620 Downloading data:   4%|▍         | 1/26 [00:04<01:42,  4.09s/files]Downloading data:   8%|▊         | 2/26 [00:07<01:29,  3.72s/files]Downloading data:   8%|▊         | 2/26 [00:07<01:29,  3.72s/files]
+349.7s 621 Downloading data:   8%|▊         | 2/26 [00:07<01:29,  3.72s/files]Downloading data:  12%|█▏        | 3/26 [00:11<01:27,  3.83s/files]Downloading data:  12%|█▏        | 3/26 [00:11<01:27,  3.83s/files]
+354.3s 622 Downloading data:  12%|█▏        | 3/26 [00:11<01:27,  3.83s/files]Downloading data:  15%|█▌        | 4/26 [00:16<01:30,  4.11s/files]Downloading data:  15%|█▌        | 4/26 [00:16<01:30,  4.11s/files]
+359.1s 623 Downloading data:  15%|█▌        | 4/26 [00:16<01:30,  4.11s/files]Downloading data:  19%|█▉        | 5/26 [00:20<01:31,  4.37s/files]Downloading data:  19%|█▉        | 5/26 [00:20<01:31,  4.37s/files]
+363.4s 624 Downloading data:  19%|█▉        | 5/26 [00:20<01:31,  4.37s/files]Downloading data:  23%|██▎       | 6/26 [00:25<01:26,  4.34s/files]Downloading data:  23%|██▎       | 6/26 [00:25<01:26,  4.34s/files]
+368.6s 625 Downloading data:  23%|██▎       | 6/26 [00:25<01:26,  4.34s/files]Downloading data:  27%|██▋       | 7/26 [00:30<01:28,  4.63s/files]Downloading data:  27%|██▋       | 7/26 [00:30<01:28,  4.63s/files]
+372.4s 626 Downloading data:  27%|██▋       | 7/26 [00:30<01:28,  4.63s/files]Downloading data:  31%|███       | 8/26 [00:34<01:18,  4.37s/files]Downloading data:  31%|███       | 8/26 [00:34<01:18,  4.37s/files]
+376.3s 627 Downloading data:  31%|███       | 8/26 [00:34<01:18,  4.37s/files]Downloading data:  35%|███▍      | 9/26 [00:38<01:11,  4.21s/files]Downloading data:  35%|███▍      | 9/26 [00:38<01:11,  4.21s/files]
+380.1s 628 Downloading data:  35%|███▍      | 9/26 [00:38<01:11,  4.21s/files]Downloading data:  38%|███▊      | 10/26 [00:41<01:05,  4.08s/files]Downloading data:  38%|███▊      | 10/26 [00:41<01:05,  4.08s/files]
+385.1s 629 Downloading data:  38%|███▊      | 10/26 [00:41<01:05,  4.08s/files]Downloading data:  42%|████▏     | 11/26 [00:46<01:05,  4.38s/files]Downloading data:  42%|████▏     | 11/26 [00:46<01:05,  4.38s/files]
+389.2s 630 Downloading data:  42%|████▏     | 11/26 [00:46<01:05,  4.38s/files]Downloading data:  46%|████▌     | 12/26 [00:50<00:59,  4.28s/files]Downloading data:  46%|████▌     | 12/26 [00:50<00:59,  4.28s/files]
+392.6s 631 Downloading data:  46%|████▌     | 12/26 [00:50<00:59,  4.28s/files]Downloading data:  50%|█████     | 13/26 [00:54<00:52,  4.01s/files]Downloading data:  50%|█████     | 13/26 [00:54<00:52,  4.01s/files]
+396.1s 632 Downloading data:  50%|█████     | 13/26 [00:54<00:52,  4.01s/files]Downloading data:  54%|█████▍    | 14/26 [00:57<00:46,  3.87s/files]Downloading data:  54%|█████▍    | 14/26 [00:57<00:46,  3.87s/files]
+399.1s 633 Downloading data:  54%|█████▍    | 14/26 [00:57<00:46,  3.87s/files]Downloading data:  58%|█████▊    | 15/26 [01:00<00:39,  3.61s/files]Downloading data:  58%|█████▊    | 15/26 [01:00<00:39,  3.61s/files]
+401.7s 634 Downloading data:  58%|█████▊    | 15/26 [01:00<00:39,  3.61s/files]Downloading data:  62%|██████▏   | 16/26 [01:03<00:32,  3.28s/files]Downloading data:  62%|██████▏   | 16/26 [01:03<00:32,  3.28s/files]
+403.8s 635 Downloading data:  62%|██████▏   | 16/26 [01:03<00:32,  3.28s/files]Downloading data:  65%|██████▌   | 17/26 [01:05<00:26,  2.95s/files]Downloading data:  65%|██████▌   | 17/26 [01:05<00:26,  2.95s/files]
+406.5s 636 Downloading data:  65%|██████▌   | 17/26 [01:05<00:26,  2.95s/files]Downloading data:  69%|██████▉   | 18/26 [01:08<00:23,  2.88s/files]Downloading data:  69%|██████▉   | 18/26 [01:08<00:23,  2.88s/files]
+409.4s 637 Downloading data:  69%|██████▉   | 18/26 [01:08<00:23,  2.88s/files]Downloading data:  73%|███████▎  | 19/26 [01:11<00:20,  2.86s/files]Downloading data:  73%|███████▎  | 19/26 [01:11<00:20,  2.86s/files]
+412.9s 638 Downloading data:  73%|███████▎  | 19/26 [01:11<00:20,  2.86s/files]Downloading data:  77%|███████▋  | 20/26 [01:14<00:18,  3.07s/files]Downloading data:  77%|███████▋  | 20/26 [01:14<00:18,  3.07s/files]
+415.1s 639 Downloading data:  77%|███████▋  | 20/26 [01:14<00:18,  3.07s/files]Downloading data:  81%|████████  | 21/26 [01:16<00:14,  2.82s/files]Downloading data:  81%|████████  | 21/26 [01:16<00:14,  2.82s/files]
+417.4s 640 Downloading data:  81%|████████  | 21/26 [01:16<00:14,  2.82s/files]Downloading data:  85%|████████▍ | 22/26 [01:19<00:10,  2.66s/files]Downloading data:  85%|████████▍ | 22/26 [01:19<00:10,  2.66s/files]
+419.6s 641 Downloading data:  85%|████████▍ | 22/26 [01:19<00:10,  2.66s/files]Downloading data:  88%|████████▊ | 23/26 [01:21<00:07,  2.51s/files]Downloading data:  88%|████████▊ | 23/26 [01:21<00:07,  2.51s/files]
+422.0s 642 Downloading data:  88%|████████▊ | 23/26 [01:21<00:07,  2.51s/files]Downloading data:  92%|█████████▏| 24/26 [01:23<00:04,  2.48s/files]Downloading data:  92%|█████████▏| 24/26 [01:23<00:04,  2.48s/files]
+423.8s 643 Downloading data:  92%|█████████▏| 24/26 [01:23<00:04,  2.48s/files]Downloading data:  96%|█████████▌| 25/26 [01:25<00:02,  2.27s/files]Downloading data:  96%|█████████▌| 25/26 [01:25<00:02,  2.27s/files]
+426.5s 644 Downloading data:  96%|█████████▌| 25/26 [01:25<00:02,  2.27s/files]Downloading data: 100%|██████████| 26/26 [01:28<00:00,  2.45s/files]Downloading data: 100%|██████████| 26/26 [01:28<00:00,  3.40s/files]
+426.7s 645 Downloading data: 100%|██████████| 26/26 [01:28<00:00,  2.45s/files]Downloading data: 100%|██████████| 26/26 [01:28<00:00,  3.40s/files]
+426.7s 646 
+426.7s 647 Downloading data: 100%|██████████| 26/26 [01:28<00:00,  2.45s/files]Downloading data: 100%|██████████| 26/26 [01:28<00:00,  3.40s/files]
+450.0s 648 Generating train split:   0%|          | 0/138384 [00:00<?, ? examples/s]Generating train split:   0%|          | 0/138384 [00:00<?, ? examples/s]
+451.2s 649 Generating train split:   0%|          | 0/138384 [00:00<?, ? examples/s]Generating train split:   1%|          | 1000/138384 [00:01<02:44, 835.90 examples/s]Generating train split:   1%|          | 1000/138384 [00:01<02:44, 835.90 examples/s]
+451.7s 650 Generating train split:   1%|          | 1000/138384 [00:01<02:44, 835.90 examples/s]Generating train split:   1%|▏         | 2000/138384 [00:01<01:46, 1280.89 examples/s]Generating train split:   1%|▏         | 2000/138384 [00:01<01:46, 1280.89 examples/s]
+452.1s 651 Generating train split:   1%|▏         | 2000/138384 [00:01<01:46, 1280.89 examples/s]Generating train split:   2%|▏         | 3000/138384 [00:02<01:25, 1592.63 examples/s]Generating train split:   2%|▏         | 3000/138384 [00:02<01:25, 1592.63 examples/s]
+452.5s 652 Generating train split:   2%|▏         | 3000/138384 [00:02<01:25, 1592.63 examples/s]Generating train split:   3%|▎         | 4000/138384 [00:02<01:10, 1896.81 examples/s]Generating train split:   4%|▎         | 5000/138384 [00:02<00:50, 2641.23 examples/s]Generating train split:   3%|▎         | 4000/138384 [00:02<01:10, 1896.81 examples/s]Generating train split:   4%|▎         | 5000/138384 [00:02<00:50, 2641.23 examples/s]
+453.6s 653 Generating train split:   3%|▎         | 4000/138384 [00:02<01:10, 1896.81 examples/s]Generating train split:   4%|▎         | 5000/138384 [00:02<00:50, 2641.23 examples/s]Generating train split:   5%|▍         | 6323/138384 [00:03<01:09, 1893.48 examples/s]Generating train split:   5%|▍         | 6323/138384 [00:03<01:09, 1893.48 examples/s]
+454.0s 654 Generating train split:   5%|▍         | 6323/138384 [00:03<01:09, 1893.48 examples/s]Generating train split:   5%|▌         | 7323/138384 [00:04<01:03, 2049.97 examples/s]Generating train split:   5%|▌         | 7323/138384 [00:04<01:03, 2049.97 examples/s]
+454.4s 655 Generating train split:   5%|▌         | 7323/138384 [00:04<01:03, 2049.97 examples/s]Generating train split:   6%|▌         | 8323/138384 [00:04<01:00, 2144.04 examples/s]Generating train split:   6%|▌         | 8323/138384 [00:04<01:00, 2144.04 examples/s]
+454.9s 656 Generating train split:   6%|▌         | 8323/138384 [00:04<01:00, 2144.04 examples/s]Generating train split:   7%|▋         | 9323/138384 [00:04<00:58, 2205.26 examples/s]Generating train split:   7%|▋         | 10323/138384 [00:04<00:44, 2849.77 examples/s]Generating train split:   7%|▋         | 9323/138384 [00:04<00:58, 2205.26 examples/s]Generating train split:   7%|▋         | 10323/138384 [00:04<00:44, 2849.77 examples/s]
+456.0s 657 Generating train split:   7%|▋         | 9323/138384 [00:04<00:58, 2205.26 examples/s]Generating train split:   7%|▋         | 10323/138384 [00:04<00:44, 2849.77 examples/s]Generating train split:   8%|▊         | 11646/138384 [00:05<01:02, 2014.50 examples/s]Generating train split:   8%|▊         | 11646/138384 [00:05<01:02, 2014.50 examples/s]
+456.4s 658 Generating train split:   8%|▊         | 11646/138384 [00:05<01:02, 2014.50 examples/s]Generating train split:   9%|▉         | 12646/138384 [00:06<00:58, 2134.84 examples/s]Generating train split:   9%|▉         | 12646/138384 [00:06<00:58, 2134.84 examples/s]
+456.8s 659 Generating train split:   9%|▉         | 12646/138384 [00:06<00:58, 2134.84 examples/s]Generating train split:  10%|▉         | 13646/138384 [00:06<00:55, 2247.13 examples/s]Generating train split:  10%|▉         | 13646/138384 [00:06<00:55, 2247.13 examples/s]
+457.2s 660 Generating train split:  10%|▉         | 13646/138384 [00:06<00:55, 2247.13 examples/s]Generating train split:  11%|█         | 14646/138384 [00:07<00:56, 2208.06 examples/s]Generating train split:  11%|█         | 14646/138384 [00:07<00:56, 2208.06 examples/s]
+458.6s 661 Generating train split:  11%|█         | 14646/138384 [00:07<00:56, 2208.06 examples/s]Generating train split:  12%|█▏        | 16969/138384 [00:08<01:03, 1927.09 examples/s]Generating train split:  12%|█▏        | 16969/138384 [00:08<01:03, 1927.09 examples/s]
+459.6s 662 Generating train split:  12%|█▏        | 16969/138384 [00:08<01:03, 1927.09 examples/s]Generating train split:  13%|█▎        | 17969/138384 [00:09<01:15, 1588.05 examples/s]Generating train split:  13%|█▎        | 17969/138384 [00:09<01:15, 1588.05 examples/s]
+460.6s 663 Generating train split:  13%|█▎        | 17969/138384 [00:09<01:15, 1588.05 examples/s]Generating train split:  14%|█▎        | 18969/138384 [00:10<01:25, 1397.38 examples/s]Generating train split:  14%|█▎        | 18969/138384 [00:10<01:25, 1397.38 examples/s]
+461.6s 664 Generating train split:  14%|█▎        | 18969/138384 [00:10<01:25, 1397.38 examples/s]Generating train split:  14%|█▍        | 19969/138384 [00:11<01:34, 1251.19 examples/s]Generating train split:  14%|█▍        | 19969/138384 [00:11<01:34, 1251.19 examples/s]
+461.9s 665 Generating train split:  14%|█▍        | 19969/138384 [00:11<01:34, 1251.19 examples/s]Generating train split:  15%|█▌        | 20969/138384 [00:11<01:19, 1485.41 examples/s]Generating train split:  15%|█▌        | 20969/138384 [00:11<01:19, 1485.41 examples/s]
+464.4s 666 Generating train split:  15%|█▌        | 20969/138384 [00:11<01:19, 1485.41 examples/s]Generating train split:  16%|█▌        | 22292/138384 [00:14<02:05, 922.03 examples/s] Generating train split:  16%|█▌        | 22292/138384 [00:14<02:05, 922.03 examples/s]
+465.2s 667 Generating train split:  16%|█▌        | 22292/138384 [00:14<02:05, 922.03 examples/s] Generating train split:  17%|█▋        | 23292/138384 [00:15<01:54, 1003.80 examples/s]Generating train split:  17%|█▋        | 23292/138384 [00:15<01:54, 1003.80 examples/s]
+465.7s 668 Generating train split:  17%|█▋        | 23292/138384 [00:15<01:54, 1003.80 examples/s]Generating train split:  18%|█▊        | 24292/138384 [00:15<01:38, 1156.78 examples/s]Generating train split:  18%|█▊        | 24292/138384 [00:15<01:38, 1156.78 examples/s]
+466.3s 669 Generating train split:  18%|█▊        | 24292/138384 [00:15<01:38, 1156.78 examples/s]Generating train split:  18%|█▊        | 25292/138384 [00:16<01:30, 1246.85 examples/s]Generating train split:  19%|█▉        | 26292/138384 [00:16<01:09, 1604.59 examples/s]Generating train split:  18%|█▊        | 25292/138384 [00:16<01:30, 1246.85 examples/s]Generating train split:  19%|█▉        | 26292/138384 [00:16<01:09, 1604.59 examples/s]
+468.4s 670 Generating train split:  18%|█▊        | 25292/138384 [00:16<01:30, 1246.85 examples/s]Generating train split:  19%|█▉        | 26292/138384 [00:16<01:09, 1604.59 examples/s]Generating train split:  20%|█▉        | 27615/138384 [00:18<01:40, 1101.27 examples/s]Generating train split:  20%|█▉        | 27615/138384 [00:18<01:40, 1101.27 examples/s]
+469.5s 671 Generating train split:  20%|█▉        | 27615/138384 [00:18<01:40, 1101.27 examples/s]Generating train split:  21%|██        | 28615/138384 [00:19<01:44, 1053.33 examples/s]Generating train split:  21%|██        | 28615/138384 [00:19<01:44, 1053.33 examples/s]
+470.3s 672 Generating train split:  21%|██        | 28615/138384 [00:19<01:44, 1053.33 examples/s]Generating train split:  21%|██▏       | 29615/138384 [00:20<01:40, 1085.34 examples/s]Generating train split:  21%|██▏       | 29615/138384 [00:20<01:40, 1085.34 examples/s]
+471.0s 673 Generating train split:  21%|██▏       | 29615/138384 [00:20<01:40, 1085.34 examples/s]Generating train split:  22%|██▏       | 30615/138384 [00:21<01:32, 1164.11 examples/s]Generating train split:  23%|██▎       | 31615/138384 [00:21<01:09, 1542.18 examples/s]Generating train split:  22%|██▏       | 30615/138384 [00:21<01:32, 1164.11 examples/s]Generating train split:  23%|██▎       | 31615/138384 [00:21<01:09, 1542.18 examples/s]
+473.2s 674 Generating train split:  22%|██▏       | 30615/138384 [00:21<01:32, 1164.11 examples/s]Generating train split:  23%|██▎       | 31615/138384 [00:21<01:09, 1542.18 examples/s]Generating train split:  24%|██▍       | 32938/138384 [00:23<01:41, 1039.04 examples/s]Generating train split:  24%|██▍       | 32938/138384 [00:23<01:41, 1039.04 examples/s]
+474.0s 675 Generating train split:  24%|██▍       | 32938/138384 [00:23<01:41, 1039.04 examples/s]Generating train split:  25%|██▍       | 33938/138384 [00:23<01:36, 1086.82 examples/s]Generating train split:  25%|██▍       | 33938/138384 [00:23<01:36, 1086.82 examples/s]
+474.7s 676 Generating train split:  25%|██▍       | 33938/138384 [00:23<01:36, 1086.82 examples/s]Generating train split:  25%|██▌       | 34938/138384 [00:24<01:29, 1160.53 examples/s]Generating train split:  25%|██▌       | 34938/138384 [00:24<01:29, 1160.53 examples/s]
+475.3s 677 Generating train split:  25%|██▌       | 34938/138384 [00:24<01:29, 1160.53 examples/s]Generating train split:  26%|██▌       | 35938/138384 [00:25<01:20, 1270.92 examples/s]Generating train split:  27%|██▋       | 36938/138384 [00:25<01:00, 1679.09 examples/s]Generating train split:  26%|██▌       | 35938/138384 [00:25<01:20, 1270.92 examples/s]Generating train split:  27%|██▋       | 36938/138384 [00:25<01:00, 1679.09 examples/s]
+476.7s 678 Generating train split:  26%|██▌       | 35938/138384 [00:25<01:20, 1270.92 examples/s]Generating train split:  27%|██▋       | 36938/138384 [00:25<01:00, 1679.09 examples/s]Generating train split:  28%|██▊       | 38261/138384 [00:26<01:11, 1401.28 examples/s]Generating train split:  28%|██▊       | 38261/138384 [00:26<01:11, 1401.28 examples/s]
+477.2s 679 Generating train split:  28%|██▊       | 38261/138384 [00:26<01:11, 1401.28 examples/s]Generating train split:  28%|██▊       | 39261/138384 [00:27<01:04, 1533.87 examples/s]Generating train split:  28%|██▊       | 39261/138384 [00:27<01:04, 1533.87 examples/s]
+477.6s 680 Generating train split:  28%|██▊       | 39261/138384 [00:27<01:04, 1533.87 examples/s]Generating train split:  29%|██▉       | 40261/138384 [00:27<00:58, 1690.48 examples/s]Generating train split:  29%|██▉       | 40261/138384 [00:27<00:58, 1690.48 examples/s]
+478.1s 681 Generating train split:  29%|██▉       | 40261/138384 [00:27<00:58, 1690.48 examples/s]Generating train split:  30%|██▉       | 41261/138384 [00:28<00:53, 1801.82 examples/s]Generating train split:  30%|██▉       | 41261/138384 [00:28<00:53, 1801.82 examples/s]
+479.4s 682 Generating train split:  30%|██▉       | 41261/138384 [00:28<00:53, 1801.82 examples/s]Generating train split:  31%|███▏      | 43584/138384 [00:29<00:52, 1802.47 examples/s]Generating train split:  31%|███▏      | 43584/138384 [00:29<00:52, 1802.47 examples/s]
+479.9s 683 Generating train split:  31%|███▏      | 43584/138384 [00:29<00:52, 1802.47 examples/s]Generating train split:  32%|███▏      | 44584/138384 [00:29<00:51, 1810.08 examples/s]Generating train split:  32%|███▏      | 44584/138384 [00:29<00:51, 1810.08 examples/s]
+480.4s 684 Generating train split:  32%|███▏      | 44584/138384 [00:29<00:51, 1810.08 examples/s]Generating train split:  33%|███▎      | 45584/138384 [00:30<00:50, 1855.55 examples/s]Generating train split:  33%|███▎      | 45584/138384 [00:30<00:50, 1855.55 examples/s]
+480.9s 685 Generating train split:  33%|███▎      | 45584/138384 [00:30<00:50, 1855.55 examples/s]Generating train split:  34%|███▎      | 46584/138384 [00:30<00:48, 1882.16 examples/s]Generating train split:  34%|███▍      | 47584/138384 [00:31<00:37, 2396.93 examples/s]Generating train split:  34%|███▎      | 46584/138384 [00:30<00:48, 1882.16 examples/s]Generating train split:  34%|███▍      | 47584/138384 [00:31<00:37, 2396.93 examples/s]
+482.2s 686 Generating train split:  34%|███▎      | 46584/138384 [00:30<00:48, 1882.16 examples/s]Generating train split:  34%|███▍      | 47584/138384 [00:31<00:37, 2396.93 examples/s]Generating train split:  35%|███▌      | 48907/138384 [00:32<00:52, 1714.24 examples/s]Generating train split:  35%|███▌      | 48907/138384 [00:32<00:52, 1714.24 examples/s]
+482.8s 687 Generating train split:  35%|███▌      | 48907/138384 [00:32<00:52, 1714.24 examples/s]Generating train split:  36%|███▌      | 49907/138384 [00:32<00:50, 1737.00 examples/s]Generating train split:  36%|███▌      | 49907/138384 [00:32<00:50, 1737.00 examples/s]
+483.3s 688 Generating train split:  36%|███▌      | 49907/138384 [00:32<00:50, 1737.00 examples/s]Generating train split:  37%|███▋      | 50907/138384 [00:33<00:49, 1775.10 examples/s]Generating train split:  37%|███▋      | 50907/138384 [00:33<00:49, 1775.10 examples/s]
+483.9s 689 Generating train split:  37%|███▋      | 50907/138384 [00:33<00:49, 1775.10 examples/s]Generating train split:  38%|███▊      | 51907/138384 [00:33<00:49, 1736.82 examples/s]Generating train split:  38%|███▊      | 51907/138384 [00:33<00:49, 1736.82 examples/s]
+485.4s 690 Generating train split:  38%|███▊      | 51907/138384 [00:33<00:49, 1736.82 examples/s]Generating train split:  39%|███▉      | 54230/138384 [00:35<00:50, 1665.57 examples/s]Generating train split:  39%|███▉      | 54230/138384 [00:35<00:50, 1665.57 examples/s]
+485.9s 691 Generating train split:  39%|███▉      | 54230/138384 [00:35<00:50, 1665.57 examples/s]Generating train split:  40%|███▉      | 55230/138384 [00:35<00:48, 1713.23 examples/s]Generating train split:  40%|███▉      | 55230/138384 [00:35<00:48, 1713.23 examples/s]
+486.4s 692 Generating train split:  40%|███▉      | 55230/138384 [00:35<00:48, 1713.23 examples/s]Generating train split:  41%|████      | 56230/138384 [00:36<00:46, 1770.57 examples/s]Generating train split:  41%|████      | 56230/138384 [00:36<00:46, 1770.57 examples/s]
+487.7s 693 Generating train split:  41%|████      | 56230/138384 [00:36<00:46, 1770.57 examples/s]Generating train split:  41%|████▏     | 57230/138384 [00:37<01:01, 1330.10 examples/s]Generating train split:  41%|████▏     | 57230/138384 [00:37<01:01, 1330.10 examples/s]
+487.9s 694 Generating train split:  41%|████▏     | 57230/138384 [00:37<01:01, 1330.10 examples/s]Generating train split:  42%|████▏     | 58230/138384 [00:37<00:48, 1642.32 examples/s]Generating train split:  42%|████▏     | 58230/138384 [00:37<00:48, 1642.32 examples/s]
+489.5s 695 Generating train split:  42%|████▏     | 58230/138384 [00:37<00:48, 1642.32 examples/s]Generating train split:  43%|████▎     | 59553/138384 [00:39<01:04, 1231.70 examples/s]Generating train split:  43%|████▎     | 59553/138384 [00:39<01:04, 1231.70 examples/s]
+490.3s 696 Generating train split:  43%|████▎     | 59553/138384 [00:39<01:04, 1231.70 examples/s]Generating train split:  44%|████▍     | 60553/138384 [00:40<01:02, 1245.46 examples/s]Generating train split:  44%|████▍     | 60553/138384 [00:40<01:02, 1245.46 examples/s]
+491.0s 697 Generating train split:  44%|████▍     | 60553/138384 [00:40<01:02, 1245.46 examples/s]Generating train split:  44%|████▍     | 61553/138384 [00:40<00:59, 1287.32 examples/s]Generating train split:  44%|████▍     | 61553/138384 [00:40<00:59, 1287.32 examples/s]
+491.6s 698 Generating train split:  44%|████▍     | 61553/138384 [00:40<00:59, 1287.32 examples/s]Generating train split:  45%|████▌     | 62553/138384 [00:41<00:55, 1356.10 examples/s]Generating train split:  45%|████▌     | 62553/138384 [00:41<00:55, 1356.10 examples/s]
+492.9s 699 Generating train split:  45%|████▌     | 62553/138384 [00:41<00:55, 1356.10 examples/s]Generating train split:  47%|████▋     | 64876/138384 [00:42<00:47, 1540.80 examples/s]Generating train split:  47%|████▋     | 64876/138384 [00:42<00:47, 1540.80 examples/s]
+493.7s 700 Generating train split:  47%|████▋     | 64876/138384 [00:42<00:47, 1540.80 examples/s]Generating train split:  48%|████▊     | 65876/138384 [00:43<00:49, 1466.49 examples/s]Generating train split:  48%|████▊     | 65876/138384 [00:43<00:49, 1466.49 examples/s]
+494.2s 701 Generating train split:  48%|████▊     | 65876/138384 [00:43<00:49, 1466.49 examples/s]Generating train split:  48%|████▊     | 66876/138384 [00:44<00:45, 1572.55 examples/s]Generating train split:  48%|████▊     | 66876/138384 [00:44<00:45, 1572.55 examples/s]
+494.5s 702 Generating train split:  48%|████▊     | 66876/138384 [00:44<00:45, 1572.55 examples/s]Generating train split:  49%|████▉     | 67876/138384 [00:44<00:38, 1823.97 examples/s]Generating train split:  50%|████▉     | 68876/138384 [00:44<00:29, 2339.84 examples/s]Generating train split:  49%|████▉     | 67876/138384 [00:44<00:38, 1823.97 examples/s]Generating train split:  50%|████▉     | 68876/138384 [00:44<00:29, 2339.84 examples/s]
+495.4s 703 Generating train split:  49%|████▉     | 67876/138384 [00:44<00:38, 1823.97 examples/s]Generating train split:  50%|████▉     | 68876/138384 [00:44<00:29, 2339.84 examples/s]Generating train split:  51%|█████     | 70198/138384 [00:45<00:33, 2044.16 examples/s]Generating train split:  51%|█████     | 70198/138384 [00:45<00:33, 2044.16 examples/s]
+495.8s 704 Generating train split:  51%|█████     | 70198/138384 [00:45<00:33, 2044.16 examples/s]Generating train split:  51%|█████▏    | 71198/138384 [00:45<00:31, 2162.72 examples/s]Generating train split:  51%|█████▏    | 71198/138384 [00:45<00:31, 2162.72 examples/s]
+496.2s 705 Generating train split:  51%|█████▏    | 71198/138384 [00:45<00:31, 2162.72 examples/s]Generating train split:  52%|█████▏    | 72198/138384 [00:46<00:29, 2278.54 examples/s]Generating train split:  52%|█████▏    | 72198/138384 [00:46<00:29, 2278.54 examples/s]
+497.0s 706 Generating train split:  52%|█████▏    | 72198/138384 [00:46<00:29, 2278.54 examples/s]Generating train split:  53%|█████▎    | 73198/138384 [00:46<00:35, 1844.09 examples/s]Generating train split:  53%|█████▎    | 73198/138384 [00:46<00:35, 1844.09 examples/s]
+497.4s 707 Generating train split:  53%|█████▎    | 73198/138384 [00:46<00:35, 1844.09 examples/s]Generating train split:  54%|█████▎    | 74198/138384 [00:47<00:32, 1951.19 examples/s]Generating train split:  54%|█████▎    | 74198/138384 [00:47<00:32, 1951.19 examples/s]
+499.7s 708 Generating train split:  54%|█████▎    | 74198/138384 [00:47<00:32, 1951.19 examples/s]Generating train split:  55%|█████▍    | 75520/138384 [00:49<00:58, 1074.32 examples/s]Generating train split:  55%|█████▍    | 75520/138384 [00:49<00:58, 1074.32 examples/s]
+499.9s 709 Generating train split:  55%|█████▍    | 75520/138384 [00:49<00:58, 1074.32 examples/s]Generating train split:  55%|█████▌    | 76520/138384 [00:49<00:45, 1360.45 examples/s]Generating train split:  55%|█████▌    | 76520/138384 [00:49<00:45, 1360.45 examples/s]
+500.2s 710 Generating train split:  55%|█████▌    | 76520/138384 [00:49<00:45, 1360.45 examples/s]Generating train split:  56%|█████▌    | 77520/138384 [00:50<00:36, 1668.59 examples/s]Generating train split:  56%|█████▌    | 77520/138384 [00:50<00:36, 1668.59 examples/s]
+500.5s 711 Generating train split:  56%|█████▌    | 77520/138384 [00:50<00:36, 1668.59 examples/s]Generating train split:  57%|█████▋    | 78520/138384 [00:50<00:30, 1957.80 examples/s]Generating train split:  57%|█████▋    | 78520/138384 [00:50<00:30, 1957.80 examples/s]
+501.2s 712 Generating train split:  57%|█████▋    | 78520/138384 [00:50<00:30, 1957.80 examples/s]Generating train split:  58%|█████▊    | 80842/138384 [00:51<00:23, 2427.86 examples/s]Generating train split:  58%|█████▊    | 80842/138384 [00:51<00:23, 2427.86 examples/s]
+501.5s 713 Generating train split:  58%|█████▊    | 80842/138384 [00:51<00:23, 2427.86 examples/s]Generating train split:  59%|█████▉    | 81842/138384 [00:51<00:22, 2558.20 examples/s]Generating train split:  59%|█████▉    | 81842/138384 [00:51<00:22, 2558.20 examples/s]
+501.8s 714 Generating train split:  59%|█████▉    | 81842/138384 [00:51<00:22, 2558.20 examples/s]Generating train split:  60%|█████▉    | 82842/138384 [00:51<00:20, 2721.39 examples/s]Generating train split:  60%|█████▉    | 82842/138384 [00:51<00:20, 2721.39 examples/s]
+502.1s 715 Generating train split:  60%|█████▉    | 82842/138384 [00:51<00:20, 2721.39 examples/s]Generating train split:  61%|██████    | 83842/138384 [00:52<00:19, 2823.68 examples/s]Generating train split:  61%|██████    | 83842/138384 [00:52<00:19, 2823.68 examples/s]
+502.7s 716 Generating train split:  61%|██████    | 83842/138384 [00:52<00:19, 2823.68 examples/s]Generating train split:  62%|██████▏   | 86164/138384 [00:52<00:16, 3143.73 examples/s]Generating train split:  62%|██████▏   | 86164/138384 [00:52<00:16, 3143.73 examples/s]
+503.0s 717 Generating train split:  62%|██████▏   | 86164/138384 [00:52<00:16, 3143.73 examples/s]Generating train split:  63%|██████▎   | 87164/138384 [00:52<00:15, 3284.13 examples/s]Generating train split:  63%|██████▎   | 87164/138384 [00:52<00:15, 3284.13 examples/s]
+503.3s 718 Generating train split:  63%|██████▎   | 87164/138384 [00:52<00:15, 3284.13 examples/s]Generating train split:  64%|██████▎   | 88164/138384 [00:53<00:14, 3370.15 examples/s]Generating train split:  64%|██████▎   | 88164/138384 [00:53<00:14, 3370.15 examples/s]
+503.5s 719 Generating train split:  64%|██████▎   | 88164/138384 [00:53<00:14, 3370.15 examples/s]Generating train split:  64%|██████▍   | 89164/138384 [00:53<00:14, 3488.80 examples/s]Generating train split:  64%|██████▍   | 89164/138384 [00:53<00:14, 3488.80 examples/s]
+504.3s 720 Generating train split:  64%|██████▍   | 89164/138384 [00:53<00:14, 3488.80 examples/s]Generating train split:  66%|██████▌   | 91486/138384 [00:54<00:13, 3357.62 examples/s]Generating train split:  66%|██████▌   | 91486/138384 [00:54<00:13, 3357.62 examples/s]
+504.7s 721 Generating train split:  66%|██████▌   | 91486/138384 [00:54<00:13, 3357.62 examples/s]Generating train split:  67%|██████▋   | 92486/138384 [00:54<00:14, 3086.10 examples/s]Generating train split:  67%|██████▋   | 92486/138384 [00:54<00:14, 3086.10 examples/s]
+505.0s 722 Generating train split:  67%|██████▋   | 92486/138384 [00:54<00:14, 3086.10 examples/s]Generating train split:  68%|██████▊   | 93486/138384 [00:54<00:14, 3060.93 examples/s]Generating train split:  68%|██████▊   | 93486/138384 [00:54<00:14, 3060.93 examples/s]
+505.4s 723 Generating train split:  68%|██████▊   | 93486/138384 [00:54<00:14, 3060.93 examples/s]Generating train split:  68%|██████▊   | 94486/138384 [00:55<00:14, 2960.73 examples/s]Generating train split:  68%|██████▊   | 94486/138384 [00:55<00:14, 2960.73 examples/s]
+506.4s 724 Generating train split:  68%|██████▊   | 94486/138384 [00:55<00:14, 2960.73 examples/s]Generating train split:  70%|██████▉   | 96808/138384 [00:56<00:16, 2543.37 examples/s]Generating train split:  70%|██████▉   | 96808/138384 [00:56<00:16, 2543.37 examples/s]
+507.1s 725 Generating train split:  70%|██████▉   | 96808/138384 [00:56<00:16, 2543.37 examples/s]Generating train split:  71%|███████   | 97808/138384 [00:57<00:17, 2265.68 examples/s]Generating train split:  71%|███████   | 97808/138384 [00:57<00:17, 2265.68 examples/s]
+507.6s 726 Generating train split:  71%|███████   | 97808/138384 [00:57<00:17, 2265.68 examples/s]Generating train split:  71%|███████▏  | 98808/138384 [00:57<00:18, 2161.04 examples/s]Generating train split:  71%|███████▏  | 98808/138384 [00:57<00:18, 2161.04 examples/s]
+508.0s 727 Generating train split:  71%|███████▏  | 98808/138384 [00:57<00:18, 2161.04 examples/s]Generating train split:  72%|███████▏  | 99808/138384 [00:58<00:17, 2187.04 examples/s]Generating train split:  72%|███████▏  | 99808/138384 [00:58<00:17, 2187.04 examples/s]
+508.9s 728 Generating train split:  72%|███████▏  | 99808/138384 [00:58<00:17, 2187.04 examples/s]Generating train split:  74%|███████▍  | 102130/138384 [00:58<00:15, 2370.50 examples/s]Generating train split:  74%|███████▍  | 102130/138384 [00:58<00:15, 2370.50 examples/s]
+509.2s 729 Generating train split:  74%|███████▍  | 102130/138384 [00:58<00:15, 2370.50 examples/s]Generating train split:  75%|███████▍  | 103130/138384 [00:59<00:14, 2490.59 examples/s]Generating train split:  75%|███████▍  | 103130/138384 [00:59<00:14, 2490.59 examples/s]
+509.6s 730 Generating train split:  75%|███████▍  | 103130/138384 [00:59<00:14, 2490.59 examples/s]Generating train split:  75%|███████▌  | 104130/138384 [00:59<00:13, 2557.56 examples/s]Generating train split:  75%|███████▌  | 104130/138384 [00:59<00:13, 2557.56 examples/s]
+509.9s 731 Generating train split:  75%|███████▌  | 104130/138384 [00:59<00:13, 2557.56 examples/s]Generating train split:  76%|███████▌  | 105130/138384 [00:59<00:12, 2694.92 examples/s]Generating train split:  76%|███████▌  | 105130/138384 [00:59<00:12, 2694.92 examples/s]
+510.7s 732 Generating train split:  76%|███████▌  | 105130/138384 [00:59<00:12, 2694.92 examples/s]Generating train split:  78%|███████▊  | 107452/138384 [01:00<00:10, 2861.45 examples/s]Generating train split:  78%|███████▊  | 107452/138384 [01:00<00:10, 2861.45 examples/s]
+510.9s 733 Generating train split:  78%|███████▊  | 107452/138384 [01:00<00:10, 2861.45 examples/s]Generating train split:  78%|███████▊  | 108452/138384 [01:00<00:09, 3028.30 examples/s]Generating train split:  78%|███████▊  | 108452/138384 [01:00<00:09, 3028.30 examples/s]
+511.2s 734 Generating train split:  78%|███████▊  | 108452/138384 [01:00<00:09, 3028.30 examples/s]Generating train split:  79%|███████▉  | 109452/138384 [01:01<00:09, 3069.99 examples/s]Generating train split:  79%|███████▉  | 109452/138384 [01:01<00:09, 3069.99 examples/s]
+511.6s 735 Generating train split:  79%|███████▉  | 109452/138384 [01:01<00:09, 3069.99 examples/s]Generating train split:  80%|███████▉  | 110452/138384 [01:01<00:09, 3085.82 examples/s]Generating train split:  80%|███████▉  | 110452/138384 [01:01<00:09, 3085.82 examples/s]
+512.3s 736 Generating train split:  80%|███████▉  | 110452/138384 [01:01<00:09, 3085.82 examples/s]Generating train split:  81%|████████▏ | 112774/138384 [01:02<00:08, 3167.95 examples/s]Generating train split:  81%|████████▏ | 112774/138384 [01:02<00:08, 3167.95 examples/s]
+512.6s 737 Generating train split:  81%|████████▏ | 112774/138384 [01:02<00:08, 3167.95 examples/s]Generating train split:  82%|████████▏ | 113774/138384 [01:02<00:07, 3205.91 examples/s]Generating train split:  82%|████████▏ | 113774/138384 [01:02<00:07, 3205.91 examples/s]
+512.9s 738 Generating train split:  82%|████████▏ | 113774/138384 [01:02<00:07, 3205.91 examples/s]Generating train split:  83%|████████▎ | 114774/138384 [01:02<00:07, 3207.07 examples/s]Generating train split:  83%|████████▎ | 114774/138384 [01:02<00:07, 3207.07 examples/s]
+513.2s 739 Generating train split:  83%|████████▎ | 114774/138384 [01:02<00:07, 3207.07 examples/s]Generating train split:  84%|████████▎ | 115774/138384 [01:03<00:07, 3170.62 examples/s]Generating train split:  84%|████████▎ | 115774/138384 [01:03<00:07, 3170.62 examples/s]
+513.9s 740 Generating train split:  84%|████████▎ | 115774/138384 [01:03<00:07, 3170.62 examples/s]Generating train split:  85%|████████▌ | 118096/138384 [01:03<00:06, 3258.84 examples/s]Generating train split:  85%|████████▌ | 118096/138384 [01:03<00:06, 3258.84 examples/s]
+514.2s 741 Generating train split:  85%|████████▌ | 118096/138384 [01:03<00:06, 3258.84 examples/s]Generating train split:  86%|████████▌ | 119096/138384 [01:04<00:05, 3285.99 examples/s]Generating train split:  86%|████████▌ | 119096/138384 [01:04<00:05, 3285.99 examples/s]
+514.4s 742 Generating train split:  86%|████████▌ | 119096/138384 [01:04<00:05, 3285.99 examples/s]Generating train split:  87%|████████▋ | 120096/138384 [01:04<00:05, 3412.47 examples/s]Generating train split:  87%|████████▋ | 120096/138384 [01:04<00:05, 3412.47 examples/s]
+514.8s 743 Generating train split:  87%|████████▋ | 120096/138384 [01:04<00:05, 3412.47 examples/s]Generating train split:  88%|████████▊ | 121096/138384 [01:04<00:05, 3191.36 examples/s]Generating train split:  88%|████████▊ | 121096/138384 [01:04<00:05, 3191.36 examples/s]
+515.6s 744 Generating train split:  88%|████████▊ | 121096/138384 [01:04<00:05, 3191.36 examples/s]Generating train split:  89%|████████▉ | 123418/138384 [01:05<00:04, 3074.55 examples/s]Generating train split:  89%|████████▉ | 123418/138384 [01:05<00:04, 3074.55 examples/s]
+515.9s 745 Generating train split:  89%|████████▉ | 123418/138384 [01:05<00:04, 3074.55 examples/s]Generating train split:  90%|████████▉ | 124418/138384 [01:05<00:04, 3168.68 examples/s]Generating train split:  90%|████████▉ | 124418/138384 [01:05<00:04, 3168.68 examples/s]
+516.2s 746 Generating train split:  90%|████████▉ | 124418/138384 [01:05<00:04, 3168.68 examples/s]Generating train split:  91%|█████████ | 125418/138384 [01:06<00:03, 3245.92 examples/s]Generating train split:  91%|█████████ | 125418/138384 [01:06<00:03, 3245.92 examples/s]
+516.5s 747 Generating train split:  91%|█████████ | 125418/138384 [01:06<00:03, 3245.92 examples/s]Generating train split:  91%|█████████▏| 126418/138384 [01:06<00:03, 3277.64 examples/s]Generating train split:  91%|█████████▏| 126418/138384 [01:06<00:03, 3277.64 examples/s]
+517.2s 748 Generating train split:  91%|█████████▏| 126418/138384 [01:06<00:03, 3277.64 examples/s]Generating train split:  93%|█████████▎| 128740/138384 [01:07<00:03, 3190.61 examples/s]Generating train split:  93%|█████████▎| 128740/138384 [01:07<00:03, 3190.61 examples/s]
+517.5s 749 Generating train split:  93%|█████████▎| 128740/138384 [01:07<00:03, 3190.61 examples/s]Generating train split:  94%|█████████▍| 129740/138384 [01:07<00:02, 3190.78 examples/s]Generating train split:  94%|█████████▍| 129740/138384 [01:07<00:02, 3190.78 examples/s]
+517.8s 750 Generating train split:  94%|█████████▍| 129740/138384 [01:07<00:02, 3190.78 examples/s]Generating train split:  94%|█████████▍| 130740/138384 [01:07<00:02, 3178.20 examples/s]Generating train split:  94%|█████████▍| 130740/138384 [01:07<00:02, 3178.20 examples/s]
+518.2s 751 Generating train split:  94%|█████████▍| 130740/138384 [01:07<00:02, 3178.20 examples/s]Generating train split:  95%|█████████▌| 131740/138384 [01:08<00:02, 3060.23 examples/s]Generating train split:  95%|█████████▌| 131740/138384 [01:08<00:02, 3060.23 examples/s]
+518.8s 752 Generating train split:  95%|█████████▌| 131740/138384 [01:08<00:02, 3060.23 examples/s]Generating train split:  97%|█████████▋| 134062/138384 [01:08<00:01, 3404.14 examples/s]Generating train split:  97%|█████████▋| 134062/138384 [01:08<00:01, 3404.14 examples/s]
+519.1s 753 Generating train split:  97%|█████████▋| 134062/138384 [01:08<00:01, 3404.14 examples/s]Generating train split:  98%|█████████▊| 135062/138384 [01:09<00:00, 3362.70 examples/s]Generating train split:  98%|█████████▊| 135062/138384 [01:09<00:00, 3362.70 examples/s]
+519.5s 754 Generating train split:  98%|█████████▊| 135062/138384 [01:09<00:00, 3362.70 examples/s]Generating train split:  98%|█████████▊| 136062/138384 [01:09<00:00, 3137.44 examples/s]Generating train split:  98%|█████████▊| 136062/138384 [01:09<00:00, 3137.44 examples/s]
+519.8s 755 Generating train split:  98%|█████████▊| 136062/138384 [01:09<00:00, 3137.44 examples/s]Generating train split:  99%|█████████▉| 137062/138384 [01:09<00:00, 2989.62 examples/s]Generating train split: 100%|██████████| 138384/138384 [01:09<00:00, 1978.15 examples/s]
+519.9s 756 Generating validation split:   0%|          | 0/17944 [00:00<?, ? examples/s]Generating train split:  99%|█████████▉| 137062/138384 [01:09<00:00, 2989.62 examples/s]Generating train split: 100%|██████████| 138384/138384 [01:09<00:00, 1978.15 examples/s]
+519.9s 757 Generating validation split:   0%|          | 0/17944 [00:00<?, ? examples/s]
+519.9s 758 Generating train split:  99%|█████████▉| 137062/138384 [01:09<00:00, 2989.62 examples/s]Generating train split: 100%|██████████| 138384/138384 [01:09<00:00, 1978.15 examples/s]
+521.0s 759 Generating validation split:   0%|          | 0/17944 [00:00<?, ? examples/s]Generating validation split:   6%|▌         | 1000/17944 [00:01<00:17, 979.70 examples/s]Generating validation split:   6%|▌         | 1000/17944 [00:01<00:17, 979.70 examples/s]
+521.7s 760 Generating validation split:   6%|▌         | 1000/17944 [00:01<00:17, 979.70 examples/s]Generating validation split:  11%|█         | 2000/17944 [00:01<00:13, 1191.89 examples/s]Generating validation split:  11%|█         | 2000/17944 [00:01<00:13, 1191.89 examples/s]
+522.6s 761 Generating validation split:  11%|█         | 2000/17944 [00:01<00:13, 1191.89 examples/s]Generating validation split:  17%|█▋        | 3000/17944 [00:02<00:12, 1155.57 examples/s]Generating validation split:  17%|█▋        | 3000/17944 [00:02<00:12, 1155.57 examples/s]
+522.9s 762 Generating validation split:  17%|█▋        | 3000/17944 [00:02<00:12, 1155.57 examples/s]Generating validation split:  22%|██▏       | 4000/17944 [00:02<00:09, 1539.77 examples/s]Generating validation split:  22%|██▏       | 4000/17944 [00:02<00:09, 1539.77 examples/s]
+524.6s 763 Generating validation split:  22%|██▏       | 4000/17944 [00:02<00:09, 1539.77 examples/s]Generating validation split:  31%|███       | 5486/17944 [00:04<00:10, 1156.83 examples/s]Generating validation split:  31%|███       | 5486/17944 [00:04<00:10, 1156.83 examples/s]
+525.3s 764 Generating validation split:  31%|███       | 5486/17944 [00:04<00:10, 1156.83 examples/s]Generating validation split:  36%|███▌      | 6486/17944 [00:05<00:09, 1217.72 examples/s]Generating validation split:  36%|███▌      | 6486/17944 [00:05<00:09, 1217.72 examples/s]
+526.0s 765 Generating validation split:  36%|███▌      | 6486/17944 [00:05<00:09, 1217.72 examples/s]Generating validation split:  42%|████▏     | 7486/17944 [00:05<00:08, 1303.47 examples/s]Generating validation split:  47%|████▋     | 8486/17944 [00:06<00:05, 1709.26 examples/s]Generating validation split:  42%|████▏     | 7486/17944 [00:05<00:08, 1303.47 examples/s]Generating validation split:  47%|████▋     | 8486/17944 [00:06<00:05, 1709.26 examples/s]
+527.2s 766 Generating validation split:  42%|████▏     | 7486/17944 [00:05<00:08, 1303.47 examples/s]Generating validation split:  47%|████▋     | 8486/17944 [00:06<00:05, 1709.26 examples/s]Generating validation split:  56%|█████▌    | 9972/17944 [00:07<00:05, 1574.48 examples/s]Generating validation split:  56%|█████▌    | 9972/17944 [00:07<00:05, 1574.48 examples/s]
+527.4s 767 Generating validation split:  56%|█████▌    | 9972/17944 [00:07<00:05, 1574.48 examples/s]Generating validation split:  61%|██████    | 10972/17944 [00:07<00:03, 1904.22 examples/s]Generating validation split:  61%|██████    | 10972/17944 [00:07<00:03, 1904.22 examples/s]
+527.8s 768 Generating validation split:  61%|██████    | 10972/17944 [00:07<00:03, 1904.22 examples/s]Generating validation split:  67%|██████▋   | 11972/17944 [00:07<00:02, 2021.79 examples/s]Generating validation split:  72%|███████▏  | 12972/17944 [00:07<00:01, 2613.40 examples/s]Generating validation split:  67%|██████▋   | 11972/17944 [00:07<00:02, 2021.79 examples/s]Generating validation split:  72%|███████▏  | 12972/17944 [00:07<00:01, 2613.40 examples/s]
+528.6s 769 Generating validation split:  67%|██████▋   | 11972/17944 [00:07<00:02, 2021.79 examples/s]Generating validation split:  72%|███████▏  | 12972/17944 [00:07<00:01, 2613.40 examples/s]Generating validation split:  81%|████████  | 14458/17944 [00:08<00:01, 2433.62 examples/s]Generating validation split:  81%|████████  | 14458/17944 [00:08<00:01, 2433.62 examples/s]
+528.9s 770 Generating validation split:  81%|████████  | 14458/17944 [00:08<00:01, 2433.62 examples/s]Generating validation split:  86%|████████▌ | 15458/17944 [00:08<00:00, 2623.74 examples/s]Generating validation split:  86%|████████▌ | 15458/17944 [00:08<00:00, 2623.74 examples/s]
+529.2s 771 Generating validation split:  86%|████████▌ | 15458/17944 [00:08<00:00, 2623.74 examples/s]Generating validation split:  92%|█████████▏| 16458/17944 [00:09<00:00, 2777.79 examples/s]Generating validation split:  97%|█████████▋| 17458/17944 [00:09<00:00, 3376.47 examples/s]Generating validation split: 100%|██████████| 17944/17944 [00:09<00:00, 1909.23 examples/s]
+529.2s 772 Generating test split:   0%|          | 0/17210 [00:00<?, ? examples/s]Generating validation split:  92%|█████████▏| 16458/17944 [00:09<00:00, 2777.79 examples/s]Generating validation split:  97%|█████████▋| 17458/17944 [00:09<00:00, 3376.47 examples/s]Generating validation split: 100%|██████████| 17944/17944 [00:09<00:00, 1909.23 examples/s]
+529.2s 773 Generating test split:   0%|          | 0/17210 [00:00<?, ? examples/s]
+529.2s 774 Generating validation split:  92%|█████████▏| 16458/17944 [00:09<00:00, 2777.79 examples/s]Generating validation split:  97%|█████████▋| 17458/17944 [00:09<00:00, 3376.47 examples/s]Generating validation split: 100%|██████████| 17944/17944 [00:09<00:00, 1909.23 examples/s]
+530.4s 775 Generating test split:   0%|          | 0/17210 [00:00<?, ? examples/s]Generating test split:   6%|▌         | 1000/17210 [00:00<00:15, 1028.75 examples/s]Generating test split:   6%|▌         | 1000/17210 [00:00<00:15, 1028.75 examples/s]
+531.3s 776 Generating test split:   6%|▌         | 1000/17210 [00:00<00:15, 1028.75 examples/s]Generating test split:  12%|█▏        | 2000/17210 [00:01<00:14, 1063.91 examples/s]Generating test split:  12%|█▏        | 2000/17210 [00:01<00:14, 1063.91 examples/s]
+532.1s 777 Generating test split:  12%|█▏        | 2000/17210 [00:01<00:14, 1063.91 examples/s]Generating test split:  17%|█▋        | 3000/17210 [00:02<00:12, 1130.68 examples/s]Generating test split:  23%|██▎       | 4000/17210 [00:02<00:07, 1671.70 examples/s]Generating test split:  17%|█▋        | 3000/17210 [00:02<00:12, 1130.68 examples/s]Generating test split:  23%|██▎       | 4000/17210 [00:02<00:07, 1671.70 examples/s]
+533.4s 778 Generating test split:  17%|█▋        | 3000/17210 [00:02<00:12, 1130.68 examples/s]Generating test split:  23%|██▎       | 4000/17210 [00:02<00:07, 1671.70 examples/s]Generating test split:  31%|███       | 5303/17210 [00:04<00:08, 1362.30 examples/s]Generating test split:  31%|███       | 5303/17210 [00:04<00:08, 1362.30 examples/s]
+534.1s 779 Generating test split:  31%|███       | 5303/17210 [00:04<00:08, 1362.30 examples/s]Generating test split:  37%|███▋      | 6303/17210 [00:04<00:07, 1415.73 examples/s]Generating test split:  37%|███▋      | 6303/17210 [00:04<00:07, 1415.73 examples/s]
+534.6s 780 Generating test split:  37%|███▋      | 6303/17210 [00:04<00:07, 1415.73 examples/s]Generating test split:  42%|████▏     | 7303/17210 [00:05<00:06, 1554.64 examples/s]Generating test split:  42%|████▏     | 7303/17210 [00:05<00:06, 1554.64 examples/s]
+535.6s 781 Generating test split:  42%|████▏     | 7303/17210 [00:05<00:06, 1554.64 examples/s]Generating test split:  56%|█████▌    | 9606/17210 [00:06<00:04, 1865.13 examples/s]Generating test split:  56%|█████▌    | 9606/17210 [00:06<00:04, 1865.13 examples/s]
+535.9s 782 Generating test split:  56%|█████▌    | 9606/17210 [00:06<00:04, 1865.13 examples/s]Generating test split:  62%|██████▏   | 10606/17210 [00:06<00:03, 2117.95 examples/s]Generating test split:  62%|██████▏   | 10606/17210 [00:06<00:03, 2117.95 examples/s]
+536.3s 783 Generating test split:  62%|██████▏   | 10606/17210 [00:06<00:03, 2117.95 examples/s]Generating test split:  67%|██████▋   | 11606/17210 [00:06<00:02, 2199.56 examples/s]Generating test split:  67%|██████▋   | 11606/17210 [00:06<00:02, 2199.56 examples/s]
+536.9s 784 Generating test split:  67%|██████▋   | 11606/17210 [00:06<00:02, 2199.56 examples/s]Generating test split:  81%|████████  | 13908/17210 [00:07<00:01, 2618.26 examples/s]Generating test split:  81%|████████  | 13908/17210 [00:07<00:01, 2618.26 examples/s]
+537.3s 785 Generating test split:  81%|████████  | 13908/17210 [00:07<00:01, 2618.26 examples/s]Generating test split:  87%|████████▋ | 14908/17210 [00:07<00:00, 2733.78 examples/s]Generating test split:  87%|████████▋ | 14908/17210 [00:07<00:00, 2733.78 examples/s]
+537.4s 786 Generating test split:  87%|████████▋ | 14908/17210 [00:07<00:00, 2733.78 examples/s]Generating test split:  92%|█████████▏| 15908/17210 [00:08<00:00, 2878.00 examples/s]Generating test split: 100%|██████████| 17210/17210 [00:08<00:00, 3775.14 examples/s]Generating test split: 100%|██████████| 17210/17210 [00:08<00:00, 2082.86 examples/s]
+537.5s 787 Filter:   0%|          | 0/17944 [00:00<?, ? examples/s]Generating test split:  92%|█████████▏| 15908/17210 [00:08<00:00, 2878.00 examples/s]Generating test split: 100%|██████████| 17210/17210 [00:08<00:00, 3775.14 examples/s]Generating test split: 100%|██████████| 17210/17210 [00:08<00:00, 2082.86 examples/s]
+537.5s 788 Filter:   0%|          | 0/17944 [00:00<?, ? examples/s]
+537.5s 789 Generating test split:  92%|█████████▏| 15908/17210 [00:08<00:00, 2878.00 examples/s]Generating test split: 100%|██████████| 17210/17210 [00:08<00:00, 3775.14 examples/s]Generating test split: 100%|██████████| 17210/17210 [00:08<00:00, 2082.86 examples/s]
+538.5s 790 Filter:   0%|          | 0/17944 [00:00<?, ? examples/s]Filter:   6%|▌         | 1000/17944 [00:00<00:14, 1143.61 examples/s]Filter:   6%|▌         | 1000/17944 [00:00<00:14, 1143.61 examples/s]
+538.9s 791 Filter:   6%|▌         | 1000/17944 [00:00<00:14, 1143.61 examples/s]Filter:  11%|█         | 2000/17944 [00:01<00:09, 1697.84 examples/s]Filter:  11%|█         | 2000/17944 [00:01<00:09, 1697.84 examples/s]
+539.4s 792 Filter:  11%|█         | 2000/17944 [00:01<00:09, 1697.84 examples/s]Filter:  17%|█▋        | 3000/17944 [00:01<00:08, 1849.19 examples/s]Filter:  17%|█▋        | 3000/17944 [00:01<00:08, 1849.19 examples/s]
+540.2s 793 Filter:  17%|█▋        | 3000/17944 [00:01<00:08, 1849.19 examples/s]Filter:  22%|██▏       | 4000/17944 [00:02<00:08, 1605.30 examples/s]Filter:  22%|██▏       | 4000/17944 [00:02<00:08, 1605.30 examples/s]
+540.5s 794 Filter:  22%|██▏       | 4000/17944 [00:02<00:08, 1605.30 examples/s]Filter:  28%|██▊       | 5000/17944 [00:02<00:06, 1943.43 examples/s]Filter:  28%|██▊       | 5000/17944 [00:02<00:06, 1943.43 examples/s]
+540.8s 795 Filter:  28%|██▊       | 5000/17944 [00:02<00:06, 1943.43 examples/s]Filter:  33%|███▎      | 6000/17944 [00:03<00:05, 2265.95 examples/s]Filter:  33%|███▎      | 6000/17944 [00:03<00:05, 2265.95 examples/s]
+541.1s 796 Filter:  33%|███▎      | 6000/17944 [00:03<00:05, 2265.95 examples/s]Filter:  39%|███▉      | 7000/17944 [00:03<00:04, 2543.47 examples/s]Filter:  39%|███▉      | 7000/17944 [00:03<00:04, 2543.47 examples/s]
+541.4s 797 Filter:  39%|███▉      | 7000/17944 [00:03<00:04, 2543.47 examples/s]Filter:  45%|████▍     | 8000/17944 [00:03<00:03, 2664.17 examples/s]Filter:  45%|████▍     | 8000/17944 [00:03<00:03, 2664.17 examples/s]
+541.7s 798 Filter:  45%|████▍     | 8000/17944 [00:03<00:03, 2664.17 examples/s]Filter:  50%|█████     | 9000/17944 [00:04<00:03, 2836.08 examples/s]Filter:  50%|█████     | 9000/17944 [00:04<00:03, 2836.08 examples/s]
+542.0s 799 Filter:  50%|█████     | 9000/17944 [00:04<00:03, 2836.08 examples/s]Filter:  56%|█████▌    | 10000/17944 [00:04<00:02, 2928.92 examples/s]Filter:  61%|██████▏   | 11000/17944 [00:04<00:01, 3620.62 examples/s]Filter:  56%|█████▌    | 10000/17944 [00:04<00:02, 2928.92 examples/s]Filter:  61%|██████▏   | 11000/17944 [00:04<00:01, 3620.62 examples/s]
+542.3s 800 Filter:  56%|█████▌    | 10000/17944 [00:04<00:02, 2928.92 examples/s]Filter:  61%|██████▏   | 11000/17944 [00:04<00:01, 3620.62 examples/s]Filter:  67%|██████▋   | 12000/17944 [00:04<00:01, 4336.43 examples/s]Filter:  72%|███████▏  | 13000/17944 [00:04<00:00, 4950.21 examples/s]Filter:  67%|██████▋   | 12000/17944 [00:04<00:01, 4336.43 examples/s]Filter:  72%|███████▏  | 13000/17944 [00:04<00:00, 4950.21 examples/s]
+542.6s 801 Filter:  67%|██████▋   | 12000/17944 [00:04<00:01, 4336.43 examples/s]Filter:  72%|███████▏  | 13000/17944 [00:04<00:00, 4950.21 examples/s]Filter:  78%|███████▊  | 14000/17944 [00:04<00:00, 5422.09 examples/s]Filter:  78%|███████▊  | 14000/17944 [00:04<00:00, 5422.09 examples/s]
+542.9s 802 Filter:  78%|███████▊  | 14000/17944 [00:04<00:00, 5422.09 examples/s]Filter:  84%|████████▎ | 15000/17944 [00:05<00:00, 4666.78 examples/s]Filter:  89%|████████▉ | 16000/17944 [00:05<00:00, 5369.83 examples/s]Filter:  84%|████████▎ | 15000/17944 [00:05<00:00, 4666.78 examples/s]Filter:  89%|████████▉ | 16000/17944 [00:05<00:00, 5369.83 examples/s]
+543.0s 803 Filter:  84%|████████▎ | 15000/17944 [00:05<00:00, 4666.78 examples/s]Filter:  89%|████████▉ | 16000/17944 [00:05<00:00, 5369.83 examples/s]Filter:  95%|█████████▍| 17000/17944 [00:05<00:00, 5932.78 examples/s]Filter: 100%|██████████| 17944/17944 [00:05<00:00, 6399.05 examples/s]Filter: 100%|██████████| 17944/17944 [00:05<00:00, 3229.67 examples/s]
+543.1s 804 Filter:  95%|█████████▍| 17000/17944 [00:05<00:00, 5932.78 examples/s]Filter: 100%|██████████| 17944/17944 [00:05<00:00, 6399.05 examples/s]Filter: 100%|██████████| 17944/17944 [00:05<00:00, 3229.67 examples/s]
+543.1s 805 
+543.1s 806 Filter:  95%|█████████▍| 17000/17944 [00:05<00:00, 5932.78 examples/s]Filter: 100%|██████████| 17944/17944 [00:05<00:00, 6399.05 examples/s]Filter: 100%|██████████| 17944/17944 [00:05<00:00, 3229.67 examples/s]
+543.3s 807 ✓ Loaded 500 samples from triviaqa (eval_mode=oracle)
+543.3s 808 
+543.3s 809 [4/4] Running evaluation...
+543.5s 810 Evaluating:   0%|          | 0/500 [00:00<?, ?batch/s]We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+543.5s 811 ✓ Loaded 500 samples from triviaqa (eval_mode=oracle)
+543.5s 812 
+543.5s 813 [4/4] Running evaluation...
+543.5s 814 Evaluating:   0%|          | 0/500 [00:00<?, ?batch/s]We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+543.5s 815 
+543.5s 816 Evaluating:   0%|          | 0/500 [00:00<?, ?batch/s]We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+546.4s 817 Evaluating:   0%|          | 1/500 [00:02<24:02,  2.89s/batch]Evaluating:   1%|          | 3/500 [00:02<06:31,  1.27batch/s]Evaluating:   0%|          | 1/500 [00:02<24:02,  2.89s/batch]Evaluating:   1%|          | 3/500 [00:02<06:31,  1.27batch/s]
+546.6s 818 Evaluating:   0%|          | 1/500 [00:02<24:02,  2.89s/batch]Evaluating:   1%|          | 3/500 [00:02<06:31,  1.27batch/s]Evaluating:   1%|          | 6/500 [00:03<02:43,  3.01batch/s]Evaluating:   2%|▏         | 9/500 [00:03<01:36,  5.06batch/s]Evaluating:   1%|          | 6/500 [00:03<02:43,  3.01batch/s]Evaluating:   2%|▏         | 9/500 [00:03<01:36,  5.06batch/s]
+547.0s 819 Evaluating:   1%|          | 6/500 [00:03<02:43,  3.01batch/s]Evaluating:   2%|▏         | 9/500 [00:03<01:36,  5.06batch/s]Evaluating:   2%|▏         | 11/500 [00:03<01:27,  5.59batch/s]Evaluating:   3%|▎         | 14/500 [00:03<01:01,  7.93batch/s]Evaluating:   2%|▏         | 11/500 [00:03<01:27,  5.59batch/s]Evaluating:   3%|▎         | 14/500 [00:03<01:01,  7.93batch/s]
+547.3s 820 Evaluating:   2%|▏         | 11/500 [00:03<01:27,  5.59batch/s]Evaluating:   3%|▎         | 14/500 [00:03<01:01,  7.93batch/s]Evaluating:   3%|▎         | 17/500 [00:03<00:46, 10.34batch/s]Evaluating:   4%|▍         | 20/500 [00:03<00:38, 12.62batch/s]Evaluating:   3%|▎         | 17/500 [00:03<00:46, 10.34batch/s]Evaluating:   4%|▍         | 20/500 [00:03<00:38, 12.62batch/s]
+547.7s 821 Evaluating:   3%|▎         | 17/500 [00:03<00:46, 10.34batch/s]Evaluating:   4%|▍         | 20/500 [00:03<00:38, 12.62batch/s]Evaluating:   4%|▍         | 22/500 [00:04<00:44, 10.68batch/s]Evaluating:   5%|▌         | 25/500 [00:04<00:36, 13.01batch/s]Evaluating:   4%|▍         | 22/500 [00:04<00:44, 10.68batch/s]Evaluating:   5%|▌         | 25/500 [00:04<00:36, 13.01batch/s]
+548.0s 822 Evaluating:   4%|▍         | 22/500 [00:04<00:44, 10.68batch/s]Evaluating:   5%|▌         | 25/500 [00:04<00:36, 13.01batch/s]Evaluating:   6%|▌         | 28/500 [00:04<00:31, 15.16batch/s]Evaluating:   6%|▌         | 28/500 [00:04<00:31, 15.16batch/s]
+548.3s 823 Evaluating:   6%|▌         | 28/500 [00:04<00:31, 15.16batch/s]Evaluating:   6%|▌         | 31/500 [00:04<00:36, 12.89batch/s]Evaluating:   7%|▋         | 34/500 [00:04<00:31, 14.90batch/s]Evaluating:   6%|▌         | 31/500 [00:04<00:36, 12.89batch/s]Evaluating:   7%|▋         | 34/500 [00:04<00:31, 14.90batch/s]
+548.5s 824 Evaluating:   6%|▌         | 31/500 [00:04<00:36, 12.89batch/s]Evaluating:   7%|▋         | 34/500 [00:04<00:31, 14.90batch/s]Evaluating:   7%|▋         | 37/500 [00:05<00:27, 16.62batch/s]Evaluating:   8%|▊         | 40/500 [00:05<00:25, 18.19batch/s]Evaluating:   7%|▋         | 37/500 [00:05<00:27, 16.62batch/s]Evaluating:   8%|▊         | 40/500 [00:05<00:25, 18.19batch/s]
+548.8s 825 ⚠ Batch 0 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 826 ⚠ Batch 1 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 827 ⚠ Batch 2 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 828 ⚠ Batch 3 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 829 ⚠ Batch 4 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 830 ⚠ Batch 5 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 831 ⚠ Batch 6 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 832 ⚠ Batch 7 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 833 ⚠ Batch 8 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 834 ⚠ Batch 9 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 835 ⚠ Batch 10 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 836 ⚠ Batch 11 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 837 ⚠ Batch 12 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 838 ⚠ Batch 13 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 839 ⚠ Batch 14 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 840 ⚠ Batch 15 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 841 ⚠ Batch 16 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 842 ⚠ Batch 17 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 843 ⚠ Batch 18 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 844 ⚠ Batch 19 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 845 ⚠ Batch 20 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 846 ⚠ Batch 21 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 847 ⚠ Batch 22 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 848 ⚠ Batch 23 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 849 ⚠ Batch 24 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 850 ⚠ Batch 25 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 851 ⚠ Batch 26 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 852 ⚠ Batch 27 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 853 ⚠ Batch 28 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 854 ⚠ Batch 29 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 855 ⚠ Batch 30 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 856 ⚠ Batch 31 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 857 ⚠ Batch 32 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 858 ⚠ Batch 33 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 859 ⚠ Batch 34 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 860 ⚠ Batch 35 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 861 ⚠ Batch 36 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 862 ⚠ Batch 37 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 863 ⚠ Batch 38 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 864 ⚠ Batch 39 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 865 ⚠ Batch 40 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 866 ⚠ Batch 41 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+548.8s 867 ⚠ Batch 42 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 868 Evaluating:   7%|▋         | 37/500 [00:05<00:27, 16.62batch/s]Evaluating:   8%|▊         | 40/500 [00:05<00:25, 18.19batch/s]Evaluating:   9%|▊         | 43/500 [00:05<00:31, 14.36batch/s]Evaluating:   9%|▉         | 46/500 [00:05<00:27, 16.24batch/s]Evaluating:   9%|▊         | 43/500 [00:05<00:31, 14.36batch/s]Evaluating:   9%|▉         | 46/500 [00:05<00:27, 16.24batch/s]
+549.0s 869 ⚠ Batch 43 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)  ⚠ Batch 0 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 870 ⚠ Batch 1 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 871 ⚠ Batch 2 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 872 ⚠ Batch 3 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 873 ⚠ Batch 4 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 874 ⚠ Batch 5 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 875 ⚠ Batch 6 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 876 ⚠ Batch 7 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 877 ⚠ Batch 8 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 878 ⚠ Batch 9 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 879 ⚠ Batch 10 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 880 ⚠ Batch 11 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 881 ⚠ Batch 12 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 882 ⚠ Batch 13 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 883 ⚠ Batch 14 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 884 ⚠ Batch 15 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 885 ⚠ Batch 16 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 886 ⚠ Batch 17 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 887 ⚠ Batch 18 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 888 ⚠ Batch 19 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 889 ⚠ Batch 20 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 890 ⚠ Batch 21 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 891 ⚠ Batch 22 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 892 ⚠ Batch 23 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 893 ⚠ Batch 24 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 894 ⚠ Batch 25 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 895 ⚠ Batch 26 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 896 ⚠ Batch 27 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 897 ⚠ Batch 28 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 898 ⚠ Batch 29 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 899 ⚠ Batch 30 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 900 ⚠ Batch 31 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 901 ⚠ Batch 32 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 902 ⚠ Batch 33 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 903 ⚠ Batch 34 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 904 ⚠ Batch 35 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 905 ⚠ Batch 36 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 906 ⚠ Batch 37 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 907 ⚠ Batch 38 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 908 ⚠ Batch 39 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 909 ⚠ Batch 40 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 910 ⚠ Batch 41 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.0s 911 ⚠ Batch 42 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+549.2s 912 Evaluating:   9%|▊         | 43/500 [00:05<00:31, 14.36batch/s]Evaluating:   9%|▉         | 46/500 [00:05<00:27, 16.24batch/s]Evaluating:  10%|▉         | 49/500 [00:05<00:25, 17.85batch/s]Evaluating:  10%|▉         | 49/500 [00:05<00:25, 17.85batch/s]
+549.5s 913 Evaluating:  10%|▉         | 49/500 [00:05<00:25, 17.85batch/s]Evaluating:  10%|█         | 52/500 [00:06<00:31, 14.22batch/s]Evaluating:  11%|█         | 55/500 [00:06<00:27, 16.00batch/s]Evaluating:  10%|█         | 52/500 [00:06<00:31, 14.22batch/s]Evaluating:  11%|█         | 55/500 [00:06<00:27, 16.00batch/s]
+549.8s 914 Evaluating:  10%|█         | 52/500 [00:06<00:31, 14.22batch/s]Evaluating:  11%|█         | 55/500 [00:06<00:27, 16.00batch/s]Evaluating:  12%|█▏        | 58/500 [00:06<00:25, 17.64batch/s]Evaluating:  12%|█▏        | 58/500 [00:06<00:25, 17.64batch/s]
+550.1s 915 Evaluating:  12%|█▏        | 58/500 [00:06<00:25, 17.64batch/s]Evaluating:  12%|█▏        | 61/500 [00:06<00:30, 14.26batch/s]Evaluating:  13%|█▎        | 64/500 [00:06<00:27, 16.08batch/s]Evaluating:  12%|█▏        | 61/500 [00:06<00:30, 14.26batch/s]Evaluating:  13%|█▎        | 64/500 [00:06<00:27, 16.08batch/s]
+550.4s 916 Evaluating:  12%|█▏        | 61/500 [00:06<00:30, 14.26batch/s]Evaluating:  13%|█▎        | 64/500 [00:06<00:27, 16.08batch/s]Evaluating:  13%|█▎        | 67/500 [00:06<00:24, 17.81batch/s]Evaluating:  14%|█▍        | 70/500 [00:07<00:22, 19.33batch/s]Evaluating:  13%|█▎        | 67/500 [00:06<00:24, 17.81batch/s]Evaluating:  14%|█▍        | 70/500 [00:07<00:22, 19.33batch/s]
+550.8s 917 Evaluating:  13%|█▎        | 67/500 [00:06<00:24, 17.81batch/s]Evaluating:  14%|█▍        | 70/500 [00:07<00:22, 19.33batch/s]Evaluating:  15%|█▍        | 73/500 [00:07<00:28, 15.10batch/s]Evaluating:  15%|█▌        | 76/500 [00:07<00:25, 16.89batch/s]Evaluating:  15%|█▍        | 73/500 [00:07<00:28, 15.10batch/s]Evaluating:  15%|█▌        | 76/500 [00:07<00:25, 16.89batch/s]
+551.1s 918 Evaluating:  15%|█▍        | 73/500 [00:07<00:28, 15.10batch/s]Evaluating:  15%|█▌        | 76/500 [00:07<00:25, 16.89batch/s]Evaluating:  16%|█▌        | 79/500 [00:07<00:23, 18.12batch/s]Evaluating:  16%|█▌        | 79/500 [00:07<00:23, 18.12batch/s]
+551.4s 919 Evaluating:  16%|█▌        | 79/500 [00:07<00:23, 18.12batch/s]Evaluating:  16%|█▋        | 82/500 [00:07<00:30, 13.90batch/s]Evaluating:  17%|█▋        | 85/500 [00:08<00:26, 15.64batch/s]Evaluating:  16%|█▋        | 82/500 [00:07<00:30, 13.90batch/s]Evaluating:  17%|█▋        | 85/500 [00:08<00:26, 15.64batch/s]
+551.4s 920 ⚠ Batch 43 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 921 ⚠ Batch 44 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 922 ⚠ Batch 45 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 923 ⚠ Batch 46 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 924 ⚠ Batch 47 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 925 ⚠ Batch 48 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 926 ⚠ Batch 49 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 927 ⚠ Batch 50 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 928 ⚠ Batch 51 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 929 ⚠ Batch 52 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 930 ⚠ Batch 53 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 931 ⚠ Batch 54 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 932 ⚠ Batch 55 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 933 ⚠ Batch 56 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 934 ⚠ Batch 57 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 935 ⚠ Batch 58 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 936 ⚠ Batch 59 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 937 ⚠ Batch 60 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 938 ⚠ Batch 61 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 939 ⚠ Batch 62 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 940 ⚠ Batch 63 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 941 ⚠ Batch 64 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 942 ⚠ Batch 65 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 943 ⚠ Batch 66 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 944 ⚠ Batch 67 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 945 ⚠ Batch 68 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 946 ⚠ Batch 69 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 947 ⚠ Batch 70 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 948 ⚠ Batch 71 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 949 ⚠ Batch 72 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 950 ⚠ Batch 73 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 951 ⚠ Batch 74 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 952 ⚠ Batch 75 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 953 ⚠ Batch 76 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 954 ⚠ Batch 77 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 955 ⚠ Batch 78 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 956 ⚠ Batch 79 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 957 ⚠ Batch 80 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 958 ⚠ Batch 81 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 959 ⚠ Batch 82 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 960 ⚠ Batch 83 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 961 ⚠ Batch 84 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 962 ⚠ Batch 85 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.4s 963 ⚠ Batch 86 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 964 ⚠ Batch 87 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 965 ⚠ Batch 44 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 966 ⚠ Batch 45 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 967 ⚠ Batch 46 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 968 ⚠ Batch 47 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 969 ⚠ Batch 48 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 970 ⚠ Batch 49 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 971 ⚠ Batch 50 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 972 ⚠ Batch 51 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 973 ⚠ Batch 52 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 974 ⚠ Batch 53 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 975 ⚠ Batch 54 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 976 ⚠ Batch 55 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 977 ⚠ Batch 56 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 978 ⚠ Batch 57 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 979 ⚠ Batch 58 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 980 ⚠ Batch 59 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 981 ⚠ Batch 60 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 982 ⚠ Batch 61 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 983 ⚠ Batch 62 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 984 ⚠ Batch 63 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 985 ⚠ Batch 64 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 986 ⚠ Batch 65 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 987 ⚠ Batch 66 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 988 ⚠ Batch 67 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 989 ⚠ Batch 68 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 990 ⚠ Batch 69 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 991 ⚠ Batch 70 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 992 ⚠ Batch 71 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 993 ⚠ Batch 72 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 994 ⚠ Batch 73 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 995 ⚠ Batch 74 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 996 ⚠ Batch 75 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 997 ⚠ Batch 76 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 998 ⚠ Batch 77 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 999 ⚠ Batch 78 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1000 ⚠ Batch 79 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1001 ⚠ Batch 80 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1002 ⚠ Batch 81 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1003 ⚠ Batch 82 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1004 ⚠ Batch 83 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1005 ⚠ Batch 84 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1006 ⚠ Batch 85 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1007 ⚠ Batch 86 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+551.7s 1008 Evaluating:  16%|█▋        | 82/500 [00:07<00:30, 13.90batch/s]Evaluating:  17%|█▋        | 85/500 [00:08<00:26, 15.64batch/s]Evaluating:  18%|█▊        | 88/500 [00:08<00:23, 17.34batch/s]Evaluating:  18%|█▊        | 88/500 [00:08<00:23, 17.34batch/s]
+552.0s 1009 Evaluating:  18%|█▊        | 88/500 [00:08<00:23, 17.34batch/s]Evaluating:  18%|█▊        | 91/500 [00:08<00:28, 14.16batch/s]Evaluating:  19%|█▉        | 94/500 [00:08<00:25, 16.01batch/s]Evaluating:  18%|█▊        | 91/500 [00:08<00:28, 14.16batch/s]Evaluating:  19%|█▉        | 94/500 [00:08<00:25, 16.01batch/s]
+552.2s 1010 Evaluating:  18%|█▊        | 91/500 [00:08<00:28, 14.16batch/s]Evaluating:  19%|█▉        | 94/500 [00:08<00:25, 16.01batch/s]Evaluating:  19%|█▉        | 97/500 [00:08<00:22, 17.72batch/s]Evaluating:  20%|██        | 100/500 [00:08<00:20, 19.17batch/s]Evaluating:  19%|█▉        | 97/500 [00:08<00:22, 17.72batch/s]Evaluating:  20%|██        | 100/500 [00:08<00:20, 19.17batch/s]
+552.6s 1011 Evaluating:  19%|█▉        | 97/500 [00:08<00:22, 17.72batch/s]Evaluating:  20%|██        | 100/500 [00:08<00:20, 19.17batch/s]Evaluating:  21%|██        | 103/500 [00:09<00:26, 15.02batch/s]Evaluating:  21%|██        | 106/500 [00:09<00:23, 16.88batch/s]Evaluating:  21%|██        | 103/500 [00:09<00:26, 15.02batch/s]Evaluating:  21%|██        | 106/500 [00:09<00:23, 16.88batch/s]
+552.9s 1012 Evaluating:  21%|██        | 103/500 [00:09<00:26, 15.02batch/s]Evaluating:  21%|██        | 106/500 [00:09<00:23, 16.88batch/s]Evaluating:  22%|██▏       | 109/500 [00:09<00:21, 18.27batch/s]Evaluating:  22%|██▏       | 109/500 [00:09<00:21, 18.27batch/s]
+553.2s 1013 Evaluating:  22%|██▏       | 109/500 [00:09<00:21, 18.27batch/s]Evaluating:  22%|██▏       | 112/500 [00:09<00:27, 14.15batch/s]Evaluating:  23%|██▎       | 115/500 [00:09<00:23, 16.07batch/s]Evaluating:  22%|██▏       | 112/500 [00:09<00:27, 14.15batch/s]Evaluating:  23%|██▎       | 115/500 [00:09<00:23, 16.07batch/s]
+553.5s 1014 Evaluating:  22%|██▏       | 112/500 [00:09<00:27, 14.15batch/s]Evaluating:  23%|██▎       | 115/500 [00:09<00:23, 16.07batch/s]Evaluating:  24%|██▎       | 118/500 [00:10<00:21, 17.82batch/s]Evaluating:  24%|██▎       | 118/500 [00:10<00:21, 17.82batch/s]
+553.8s 1015 Evaluating:  24%|██▎       | 118/500 [00:10<00:21, 17.82batch/s]Evaluating:  24%|██▍       | 121/500 [00:10<00:26, 14.56batch/s]Evaluating:  25%|██▍       | 124/500 [00:10<00:23, 16.24batch/s]Evaluating:  24%|██▍       | 121/500 [00:10<00:26, 14.56batch/s]Evaluating:  25%|██▍       | 124/500 [00:10<00:23, 16.24batch/s]
+554.0s 1016 Evaluating:  24%|██▍       | 121/500 [00:10<00:26, 14.56batch/s]Evaluating:  25%|██▍       | 124/500 [00:10<00:23, 16.24batch/s]Evaluating:  25%|██▌       | 127/500 [00:10<00:20, 17.87batch/s]Evaluating:  26%|██▌       | 130/500 [00:10<00:19, 19.24batch/s]Evaluating:  25%|██▌       | 127/500 [00:10<00:20, 17.87batch/s]Evaluating:  26%|██▌       | 130/500 [00:10<00:19, 19.24batch/s]
+554.2s 1017 ⚠ Batch 87 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1018 ⚠ Batch 88 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1019 ⚠ Batch 89 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1020 ⚠ Batch 90 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1021 ⚠ Batch 91 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1022 ⚠ Batch 92 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1023 ⚠ Batch 93 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1024 ⚠ Batch 94 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1025 ⚠ Batch 95 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1026 ⚠ Batch 96 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.2s 1027 ⚠ Batch 97 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1028 ⚠ Batch 98 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checki
+554.4s 1029 ⚠ Batch 88 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1030 ⚠ Batch 89 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1031 ⚠ Batch 90 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1032 ⚠ Batch 91 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1033 ⚠ Batch 92 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1034 ⚠ Batch 93 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1035 ⚠ Batch 94 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1036 ⚠ Batch 95 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1037 ⚠ Batch 96 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.4s 1038 ⚠ Batch 97 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checking argument for argument mat2 in method wrapper_CUDA_bmm)
+554.5s 1039 Evaluating:  25%|██▌       | 127/500 [00:10<00:20, 17.87batch/s]Evaluating:  26%|██▌       | 130/500 [00:10<00:19, 19.24batch/s]Evaluating:  27%|██▋       | 133/500 [00:10<00:24, 14.96batch/s]Evaluating:  27%|██▋       | 136/500 [00:11<00:21, 16.81batch/s]Evaluating:  27%|██▋       | 133/500 [00:10<00:24, 14.96batch/s]Evaluating:  27%|██▋       | 136/500 [00:11<00:21, 16.81batch/s]
+554.7s 1040 Evaluating:  27%|██▋       | 133/500 [00:10<00:24, 14.96batch/s]Evaluating:  27%|██▋       | 136/500 [00:11<00:21, 16.81batch/s]Evaluating:  28%|██▊       | 139/500 [00:11<00:19, 18.10batch/s]Evaluating:  28%|██▊       | 139/500 [00:11<00:19, 18.10batch/s]
+555.0s 1041 Evaluating:  28%|██▊       | 139/500 [00:11<00:19, 18.10batch/s]Evaluating:  28%|██▊       | 142/500 [00:11<00:24, 14.34batch/s]Evaluating:  29%|██▉       | 145/500 [00:11<00:21, 16.28batch/s]Evaluating:  28%|██▊       | 142/500 [00:11<00:24, 14.34batch/s]Evaluating:  29%|██▉       | 145/500 [00:11<00:21, 16.28batch/s]
+555.3s 1042 Evaluating:  28%|██▊       | 142/500 [00:11<00:24, 14.34batch/s]Evaluating:  29%|██▉       | 145/500 [00:11<00:21, 16.28batch/s]Evaluating:  30%|██▉       | 148/500 [00:11<00:19, 17.98batch/s]Evaluating:  30%|██▉       | 148/500 [00:11<00:19, 17.98batch/s]
+555.6s 1043 Evaluating:  30%|██▉       | 148/500 [00:11<00:19, 17.98batch/s]Evaluating:  30%|███       | 151/500 [00:12<00:24, 14.51batch/s]Evaluating:  31%|███       | 154/500 [00:12<00:21, 16.30batch/s]Evaluating:  30%|███       | 151/500 [00:12<00:24, 14.51batch/s]Evaluating:  31%|███       | 154/500 [00:12<00:21, 16.30batch/s]
+555.9s 1044 Evaluating:  30%|███       | 151/500 [00:12<00:24, 14.51batch/s]Evaluating:  31%|███       | 154/500 [00:12<00:21, 16.30batch/s]Evaluating:  31%|███▏      | 157/500 [00:12<00:19, 17.78batch/s]Evaluating:  32%|███▏      | 160/500 [00:12<00:17, 19.02batch/s]Evaluating:  31%|███▏      | 157/500 [00:12<00:19, 17.78batch/s]Evaluating:  32%|███▏      | 160/500 [00:12<00:17, 19.02batch/s]
+556.3s 1045 Evaluating:  31%|███▏      | 157/500 [00:12<00:19, 17.78batch/s]Evaluating:  32%|███▏      | 160/500 [00:12<00:17, 19.02batch/s]Evaluating:  33%|███▎      | 163/500 [00:12<00:22, 14.88batch/s]Evaluating:  33%|███▎      | 166/500 [00:12<00:20, 16.61batch/s]Evaluating:  33%|███▎      | 163/500 [00:12<00:22, 14.88batch/s]Evaluating:  33%|███▎      | 166/500 [00:12<00:20, 16.61batch/s]
+556.6s 1046 Evaluating:  33%|███▎      | 163/500 [00:12<00:22, 14.88batch/s]Evaluating:  33%|███▎      | 166/500 [00:12<00:20, 16.61batch/s]Evaluating:  34%|███▍      | 169/500 [00:13<00:18, 18.16batch/s]Evaluating:  34%|███▍      | 169/500 [00:13<00:18, 18.16batch/s]
+556.9s 1047 Evaluating:  34%|███▍      | 169/500 [00:13<00:18, 18.16batch/s]Evaluating:  34%|███▍      | 172/500 [00:13<00:22, 14.48batch/s]Evaluating:  35%|███▌      | 175/500 [00:13<00:19, 16.34batch/s]Evaluating:  34%|███▍      | 172/500 [00:13<00:22, 14.48batch/s]Evaluating:  35%|███▌      | 175/500 [00:13<00:19, 16.34batch/s]
+557.1s 1048 Evaluating:  34%|███▍      | 172/500 [00:13<00:22, 14.48batch/s]Evaluating:  35%|███▌      | 175/500 [00:13<00:19, 16.34batch/s]Evaluating:  36%|███▌      | 178/500 [00:13<00:18, 17.81batch/s]Evaluating:  36%|███▌      | 178/500 [00:13<00:18, 17.81batch/s]
+557.4s 1049 Evaluating:  36%|███▌      | 178/500 [00:13<00:18, 17.81batch/s]Evaluating:  36%|███▌      | 181/500 [00:13<00:22, 14.31batch/s]Evaluating:  37%|███▋      | 184/500 [00:14<00:19, 15.98batch/s]Evaluating:  36%|███▌      | 181/500 [00:13<00:22, 14.31batch/s]Evaluating:  37%|███▋      | 184/500 [00:14<00:19, 15.98batch/s]
+557.7s 1050 Evaluating:  36%|███▌      | 181/500 [00:13<00:22, 14.31batch/s]Evaluating:  37%|███▋      | 184/500 [00:14<00:19, 15.98batch/s]Evaluating:  37%|███▋      | 187/500 [00:14<00:18, 17.35batch/s]Evaluating:  38%|███▊      | 190/500 [00:14<00:16, 18.57batch/s]Evaluating:  37%|███▋      | 187/500 [00:14<00:18, 17.35batch/s]Evaluating:  38%|███▊      | 190/500 [00:14<00:16, 18.57batch/s]
+558.1s 1051 Evaluating:  37%|███▋      | 187/500 [00:14<00:18, 17.35batch/s]Evaluating:  38%|███▊      | 190/500 [00:14<00:16, 18.57batch/s]Evaluating:  39%|███▊      | 193/500 [00:14<00:21, 14.54batch/s]Evaluating:  39%|███▉      | 196/500 [00:14<00:18, 16.45batch/s]Evaluating:  39%|███▊      | 193/500 [00:14<00:21, 14.54batch/s]Evaluating:  39%|███▉      | 196/500 [00:14<00:18, 16.45batch/s]
+558.4s 1052 Evaluating:  39%|███▊      | 193/500 [00:14<00:21, 14.54batch/s]Evaluating:  39%|███▉      | 196/500 [00:14<00:18, 16.45batch/s]Evaluating:  40%|███▉      | 199/500 [00:14<00:16, 18.08batch/s]Evaluating:  40%|███▉      | 199/500 [00:14<00:16, 18.08batch/s]
+558.7s 1053 Evaluating:  40%|███▉      | 199/500 [00:14<00:16, 18.08batch/s]Evaluating:  40%|████      | 202/500 [00:15<00:21, 14.19batch/s]Evaluating:  41%|████      | 205/500 [00:15<00:18, 15.89batch/s]Evaluating:  40%|████      | 202/500 [00:15<00:21, 14.19batch/s]Evaluating:  41%|████      | 205/500 [00:15<00:18, 15.89batch/s]
+559.0s 1054 Evaluating:  40%|████      | 202/500 [00:15<00:21, 14.19batch/s]Evaluating:  41%|████      | 205/500 [00:15<00:18, 15.89batch/s]Evaluating:  42%|████▏     | 208/500 [00:15<00:16, 17.43batch/s]Evaluating:  42%|████▏     | 208/500 [00:15<00:16, 17.43batch/s]
+559.3s 1055 Evaluating:  42%|████▏     | 208/500 [00:15<00:16, 17.43batch/s]Evaluating:  42%|████▏     | 211/500 [00:15<00:20, 14.01batch/s]Evaluating:  43%|████▎     | 214/500 [00:15<00:18, 15.77batch/s]Evaluating:  42%|████▏     | 211/500 [00:15<00:20, 14.01batch/s]Evaluating:  43%|████▎     | 214/500 [00:15<00:18, 15.77batch/s]
+559.6s 1056 Evaluating:  42%|████▏     | 211/500 [00:15<00:20, 14.01batch/s]Evaluating:  43%|████▎     | 214/500 [00:15<00:18, 15.77batch/s]Evaluating:  43%|████▎     | 217/500 [00:16<00:16, 17.49batch/s]Evaluating:  44%|████▍     | 220/500 [00:16<00:15, 18.54batch/s]Evaluating:  43%|████▎     | 217/500 [00:16<00:16, 17.49batch/s]Evaluating:  44%|████▍     | 220/500 [00:16<00:15, 18.54batch/s]
+560.0s 1057 Evaluating:  43%|████▎     | 217/500 [00:16<00:16, 17.49batch/s]Evaluating:  44%|████▍     | 220/500 [00:16<00:15, 18.54batch/s]Evaluating:  45%|████▍     | 223/500 [00:16<00:19, 14.52batch/s]Evaluating:  45%|████▌     | 226/500 [00:16<00:16, 16.41batch/s]Evaluating:  45%|████▍     | 223/500 [00:16<00:19, 14.52batch/s]Evaluating:  45%|████▌     | 226/500 [00:16<00:16, 16.41batch/s]
+560.3s 1058 Evaluating:  45%|████▍     | 223/500 [00:16<00:19, 14.52batch/s]Evaluating:  45%|████▌     | 226/500 [00:16<00:16, 16.41batch/s]Evaluating:  46%|████▌     | 229/500 [00:16<00:15, 17.96batch/s]Evaluating:  46%|████▌     | 229/500 [00:16<00:15, 17.96batch/s]
+560.6s 1059 Evaluating:  46%|████▌     | 229/500 [00:16<00:15, 17.96batch/s]Evaluating:  46%|████▋     | 232/500 [00:17<00:18, 14.58batch/s]Evaluating:  47%|████▋     | 235/500 [00:17<00:16, 16.48batch/s]Evaluating:  46%|████▋     | 232/500 [00:17<00:18, 14.58batch/s]Evaluating:  47%|████▋     | 235/500 [00:17<00:16, 16.48batch/s]
+560.8s 1060 Evaluating:  46%|████▋     | 232/500 [00:17<00:18, 14.58batch/s]Evaluating:  47%|████▋     | 235/500 [00:17<00:16, 16.48batch/s]Evaluating:  48%|████▊     | 238/500 [00:17<00:14, 18.13batch/s]Evaluating:  48%|████▊     | 238/500 [00:17<00:14, 18.13batch/s]
+561.1s 1061 Evaluating:  48%|████▊     | 238/500 [00:17<00:14, 18.13batch/s]Evaluating:  48%|████▊     | 241/500 [00:17<00:17, 14.42batch/s]Evaluating:  49%|████▊     | 243/500 [00:17<00:17, 15.05batch/s]Evaluating:  48%|████▊     | 241/500 [00:17<00:17, 14.42batch/s]Evaluating:  49%|████▊     | 243/500 [00:17<00:17, 15.05batch/s]
+561.4s 1062 Evaluating:  48%|████▊     | 241/500 [00:17<00:17, 14.42batch/s]Evaluating:  49%|████▊     | 243/500 [00:17<00:17, 15.05batch/s]Evaluating:  49%|████▉     | 246/500 [00:17<00:15, 16.65batch/s]Evaluating:  50%|████▉     | 249/500 [00:18<00:13, 18.41batch/s]Evaluating:  49%|████▉     | 246/500 [00:17<00:15, 16.65batch/s]Evaluating:  50%|████▉     | 249/500 [00:18<00:13, 18.41batch/s]
+561.8s 1063 Evaluating:  49%|████▉     | 246/500 [00:17<00:15, 16.65batch/s]Evaluating:  50%|████▉     | 249/500 [00:18<00:13, 18.41batch/s]Evaluating:  50%|█████     | 252/500 [00:18<00:17, 14.54batch/s]Evaluating:  51%|█████     | 255/500 [00:18<00:15, 16.29batch/s]Evaluating:  50%|█████     | 252/500 [00:18<00:17, 14.54batch/s]Evaluating:  51%|█████     | 255/500 [00:18<00:15, 16.29batch/s]
+562.1s 1064 Evaluating:  50%|█████     | 252/500 [00:18<00:17, 14.54batch/s]Evaluating:  51%|█████     | 255/500 [00:18<00:15, 16.29batch/s]Evaluating:  52%|█████▏    | 258/500 [00:18<00:13, 17.79batch/s]Evaluating:  52%|█████▏    | 258/500 [00:18<00:13, 17.79batch/s]
+562.4s 1065 Evaluating:  52%|█████▏    | 258/500 [00:18<00:13, 17.79batch/s]Evaluating:  52%|█████▏    | 261/500 [00:18<00:16, 14.37batch/s]Evaluating:  53%|█████▎    | 264/500 [00:19<00:14, 16.16batch/s]Evaluating:  52%|█████▏    | 261/500 [00:18<00:16, 14.37batch/s]Evaluating:  53%|█████▎    | 264/500 [00:19<00:14, 16.16batch/s]
+562.6s 1066 Evaluating:  52%|█████▏    | 261/500 [00:18<00:16, 14.37batch/s]Evaluating:  53%|█████▎    | 264/500 [00:19<00:14, 16.16batch/s]Evaluating:  53%|█████▎    | 267/500 [00:19<00:13, 17.85batch/s]Evaluating:  54%|█████▍    | 270/500 [00:19<00:12, 19.08batch/s]Evaluating:  53%|█████▎    | 267/500 [00:19<00:13, 17.85batch/s]Evaluating:  54%|█████▍    | 270/500 [00:19<00:12, 19.08batch/s]
+563.1s 1067 Evaluating:  53%|█████▎    | 267/500 [00:19<00:13, 17.85batch/s]Evaluating:  54%|█████▍    | 270/500 [00:19<00:12, 19.08batch/s]Evaluating:  55%|█████▍    | 273/500 [00:19<00:15, 14.60batch/s]Evaluating:  55%|█████▌    | 276/500 [00:19<00:13, 16.42batch/s]Evaluating:  55%|█████▍    | 273/500 [00:19<00:15, 14.60batch/s]Evaluating:  55%|█████▌    | 276/500 [00:19<00:13, 16.42batch/s]
+563.3s 1068 Evaluating:  55%|█████▍    | 273/500 [00:19<00:15, 14.60batch/s]Evaluating:  55%|█████▌    | 276/500 [00:19<00:13, 16.42batch/s]Evaluating:  56%|█████▌    | 279/500 [00:19<00:12, 17.94batch/s]Evaluating:  56%|█████▌    | 279/500 [00:19<00:12, 17.94batch/s]
+563.7s 1069 Evaluating:  56%|█████▌    | 279/500 [00:19<00:12, 17.94batch/s]Evaluating:  56%|█████▋    | 282/500 [00:20<00:15, 14.34batch/s]Evaluating:  57%|█████▋    | 285/500 [00:20<00:13, 16.22batch/s]Evaluating:  56%|█████▋    | 282/500 [00:20<00:15, 14.34batch/s]Evaluating:  57%|█████▋    | 285/500 [00:20<00:13, 16.22batch/s]
+563.9s 1070 Evaluating:  56%|█████▋    | 282/500 [00:20<00:15, 14.34batch/s]Evaluating:  57%|█████▋    | 285/500 [00:20<00:13, 16.22batch/s]Evaluating:  58%|█████▊    | 288/500 [00:20<00:11, 17.81batch/s]Evaluating:  58%|█████▊    | 288/500 [00:20<00:11, 17.81batch/s]
+564.2s 1071 Evaluating:  58%|█████▊    | 288/500 [00:20<00:11, 17.81batch/s]Evaluating:  58%|█████▊    | 291/500 [00:20<00:14, 14.46batch/s]Evaluating:  59%|█████▉    | 294/500 [00:20<00:12, 16.31batch/s]Evaluating:  58%|█████▊    | 291/500 [00:20<00:14, 14.46batch/s]Evaluating:  59%|█████▉    | 294/500 [00:20<00:12, 16.31batch/s]
+564.5s 1072 Evaluating:  58%|█████▊    | 291/500 [00:20<00:14, 14.46batch/s]Evaluating:  59%|█████▉    | 294/500 [00:20<00:12, 16.31batch/s]Evaluating:  59%|█████▉    | 297/500 [00:20<00:11, 17.95batch/s]Evaluating:  60%|██████    | 300/500 [00:21<00:10, 19.40batch/s]Evaluating:  59%|█████▉    | 297/500 [00:20<00:11, 17.95batch/s]Evaluating:  60%|██████    | 300/500 [00:21<00:10, 19.40batch/s]
+564.9s 1073 Evaluating:  59%|█████▉    | 297/500 [00:20<00:11, 17.95batch/s]Evaluating:  60%|██████    | 300/500 [00:21<00:10, 19.40batch/s]Evaluating:  61%|██████    | 303/500 [00:21<00:13, 15.05batch/s]Evaluating:  61%|██████    | 306/500 [00:21<00:11, 16.70batch/s]Evaluating:  61%|██████    | 303/500 [00:21<00:13, 15.05batch/s]Evaluating:  61%|██████    | 306/500 [00:21<00:11, 16.70batch/s]
+565.2s 1074 Evaluating:  61%|██████    | 303/500 [00:21<00:13, 15.05batch/s]Evaluating:  61%|██████    | 306/500 [00:21<00:11, 16.70batch/s]Evaluating:  62%|██████▏   | 309/500 [00:21<00:10, 18.11batch/s]Evaluating:  62%|██████▏   | 309/500 [00:21<00:10, 18.11batch/s]
+565.5s 1075 Evaluating:  62%|██████▏   | 309/500 [00:21<00:10, 18.11batch/s]Evaluating:  62%|██████▏   | 312/500 [00:21<00:12, 14.63batch/s]Evaluating:  63%|██████▎   | 315/500 [00:22<00:11, 16.58batch/s]Evaluating:  62%|██████▏   | 312/500 [00:21<00:12, 14.63batch/s]Evaluating:  63%|██████▎   | 315/500 [00:22<00:11, 16.58batch/s]
+565.7s 1076 Evaluating:  62%|██████▏   | 312/500 [00:21<00:12, 14.63batch/s]Evaluating:  63%|██████▎   | 315/500 [00:22<00:11, 16.58batch/s]Evaluating:  64%|██████▎   | 318/500 [00:22<00:09, 18.27batch/s]Evaluating:  64%|██████▎   | 318/500 [00:22<00:09, 18.27batch/s]
+566.0s 1077 Evaluating:  64%|██████▎   | 318/500 [00:22<00:09, 18.27batch/s]Evaluating:  64%|██████▍   | 321/500 [00:22<00:12, 14.10batch/s]Evaluating:  65%|██████▍   | 323/500 [00:22<00:12, 14.45batch/s]Evaluating:  64%|██████▍   | 321/500 [00:22<00:12, 14.10batch/s]Evaluating:  65%|██████▍   | 323/500 [00:22<00:12, 14.45batch/s]
+566.3s 1078 Evaluating:  64%|██████▍   | 321/500 [00:22<00:12, 14.10batch/s]Evaluating:  65%|██████▍   | 323/500 [00:22<00:12, 14.45batch/s]Evaluating:  65%|██████▌   | 325/500 [00:22<00:12, 14.21batch/s]Evaluating:  65%|██████▌   | 327/500 [00:22<00:11, 15.22batch/s]Evaluating:  65%|██████▌   | 325/500 [00:22<00:12, 14.21batch/s]Evaluating:  65%|██████▌   | 327/500 [00:22<00:11, 15.22batch/s]
+566.5s 1079 Evaluating:  65%|██████▌   | 325/500 [00:22<00:12, 14.21batch/s]Evaluating:  65%|██████▌   | 327/500 [00:22<00:11, 15.22batch/s]Evaluating:  66%|██████▌   | 330/500 [00:23<00:09, 17.24batch/s]Evaluating:  66%|██████▌   | 330/500 [00:23<00:09, 17.24batch/s]
+566.8s 1080 Evaluating:  66%|██████▌   | 330/500 [00:23<00:09, 17.24batch/s]Evaluating:  66%|██████▋   | 332/500 [00:23<00:12, 13.20batch/s]Evaluating:  67%|██████▋   | 335/500 [00:23<00:10, 15.57batch/s]Evaluating:  66%|██████▋   | 332/500 [00:23<00:12, 13.20batch/s]Evaluating:  67%|██████▋   | 335/500 [00:23<00:10, 15.57batch/s]
+567.1s 1081 Evaluating:  66%|██████▋   | 332/500 [00:23<00:12, 13.20batch/s]Evaluating:  67%|██████▋   | 335/500 [00:23<00:10, 15.57batch/s]Evaluating:  68%|██████▊   | 338/500 [00:23<00:09, 17.54batch/s]Evaluating:  68%|██████▊   | 338/500 [00:23<00:09, 17.54batch/s]
+567.4s 1082 Evaluating:  68%|██████▊   | 338/500 [00:23<00:09, 17.54batch/s]Evaluating:  68%|██████▊   | 341/500 [00:23<00:11, 14.17batch/s]Evaluating:  69%|██████▉   | 344/500 [00:24<00:09, 16.11batch/s]Evaluating:  68%|██████▊   | 341/500 [00:23<00:11, 14.17batch/s]Evaluating:  69%|██████▉   | 344/500 [00:24<00:09, 16.11batch/s]
+567.6s 1083 Evaluating:  68%|██████▊   | 341/500 [00:23<00:11, 14.17batch/s]Evaluating:  69%|██████▉   | 344/500 [00:24<00:09, 16.11batch/s]Evaluating:  69%|██████▉   | 347/500 [00:24<00:08, 17.95batch/s]Evaluating:  70%|███████   | 350/500 [00:24<00:07, 19.03batch/s]Evaluating:  69%|██████▉   | 347/500 [00:24<00:08, 17.95batch/s]Evaluating:  70%|███████   | 350/500 [00:24<00:07, 19.03batch/s]
+568.1s 1084 Evaluating:  69%|██████▉   | 347/500 [00:24<00:08, 17.95batch/s]Evaluating:  70%|███████   | 350/500 [00:24<00:07, 19.03batch/s]Evaluating:  71%|███████   | 353/500 [00:24<00:09, 14.82batch/s]Evaluating:  71%|███████   | 356/500 [00:24<00:08, 16.72batch/s]Evaluating:  71%|███████   | 353/500 [00:24<00:09, 14.82batch/s]Evaluating:  71%|███████   | 356/500 [00:24<00:08, 16.72batch/s]
+568.3s 1085 Evaluating:  71%|███████   | 353/500 [00:24<00:09, 14.82batch/s]Evaluating:  71%|███████   | 356/500 [00:24<00:08, 16.72batch/s]Evaluating:  72%|███████▏  | 359/500 [00:24<00:07, 18.27batch/s]Evaluating:  72%|███████▏  | 359/500 [00:24<00:07, 18.27batch/s]
+568.6s 1086 Evaluating:  72%|███████▏  | 359/500 [00:24<00:07, 18.27batch/s]Evaluating:  72%|███████▏  | 362/500 [00:25<00:09, 14.59batch/s]Evaluating:  73%|███████▎  | 365/500 [00:25<00:08, 16.50batch/s]Evaluating:  72%|███████▏  | 362/500 [00:25<00:09, 14.59batch/s]Evaluating:  73%|███████▎  | 365/500 [00:25<00:08, 16.50batch/s]
+568.9s 1087 Evaluating:  72%|███████▏  | 362/500 [00:25<00:09, 14.59batch/s]Evaluating:  73%|███████▎  | 365/500 [00:25<00:08, 16.50batch/s]Evaluating:  74%|███████▎  | 368/500 [00:25<00:07, 18.14batch/s]Evaluating:  74%|███████▎  | 368/500 [00:25<00:07, 18.14batch/s]
+569.2s 1088 Evaluating:  74%|███████▎  | 368/500 [00:25<00:07, 18.14batch/s]Evaluating:  74%|███████▍  | 371/500 [00:25<00:08, 14.57batch/s]Evaluating:  75%|███████▍  | 374/500 [00:25<00:07, 16.33batch/s]Evaluating:  74%|███████▍  | 371/500 [00:25<00:08, 14.57batch/s]Evaluating:  75%|███████▍  | 374/500 [00:25<00:07, 16.33batch/s]
+569.4s 1089 Evaluating:  74%|███████▍  | 371/500 [00:25<00:08, 14.57batch/s]Evaluating:  75%|███████▍  | 374/500 [00:25<00:07, 16.33batch/s]Evaluating:  75%|███████▌  | 377/500 [00:25<00:06, 17.83batch/s]Evaluating:  76%|███████▌  | 380/500 [00:26<00:06, 18.64batch/s]Evaluating:  75%|███████▌  | 377/500 [00:25<00:06, 17.83batch/s]Evaluating:  76%|███████▌  | 380/500 [00:26<00:06, 18.64batch/s]
+569.9s 1090 Evaluating:  75%|███████▌  | 377/500 [00:25<00:06, 17.83batch/s]Evaluating:  76%|███████▌  | 380/500 [00:26<00:06, 18.64batch/s]Evaluating:  77%|███████▋  | 383/500 [00:26<00:08, 14.27batch/s]Evaluating:  77%|███████▋  | 386/500 [00:26<00:07, 15.86batch/s]Evaluating:  77%|███████▋  | 383/500 [00:26<00:08, 14.27batch/s]Evaluating:  77%|███████▋  | 386/500 [00:26<00:07, 15.86batch/s]
+570.2s 1091 Evaluating:  77%|███████▋  | 383/500 [00:26<00:08, 14.27batch/s]Evaluating:  77%|███████▋  | 386/500 [00:26<00:07, 15.86batch/s]Evaluating:  78%|███████▊  | 389/500 [00:26<00:06, 17.07batch/s]Evaluating:  78%|███████▊  | 389/500 [00:26<00:06, 17.07batch/s]
+570.5s 1092 Evaluating:  78%|███████▊  | 389/500 [00:26<00:06, 17.07batch/s]Evaluating:  78%|███████▊  | 391/500 [00:26<00:08, 12.96batch/s]Evaluating:  79%|███████▊  | 393/500 [00:27<00:07, 14.10batch/s]Evaluating:  78%|███████▊  | 391/500 [00:26<00:08, 12.96batch/s]Evaluating:  79%|███████▊  | 393/500 [00:27<00:07, 14.10batch/s]
+583.6s 1093 Evaluating:  78%|███████▊  | 391/500 [00:26<00:08, 12.96batch/s]Evaluating:  79%|███████▊  | 393/500 [00:27<00:07, 14.10batch/s]Evaluating:  79%|███████▊  | 393/500 [00:40<00:07, 14.10batch/s]Evaluating:  79%|███████▊  | 393/500 [00:40<00:07, 14.10batch/s]
+21945.8s 1094 Evaluating:  79%|███████▊  | 393/500 [00:40<00:07, 14.10batch/s]
+21945.8s 1095 ⚠ Batch 98 error: Expected all tensors to be on the same device, but found at least two devices, cpu and cuda:0! (when checki
