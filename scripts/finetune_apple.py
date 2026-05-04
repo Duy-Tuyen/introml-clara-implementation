@@ -15,7 +15,7 @@ Environment variables (set by the notebook):
     CLARA_FT_LR          : Learning rate (default: 5e-6)
     CLARA_FT_EPOCHS      : Number of epochs (default: 1)
     CLARA_FT_GRAD_ACC    : Gradient accumulation steps (default: 8)
-    CLARA_FT_MAX_DEC_LEN : Max decoder sequence length (default: 256)
+    CLARA_FT_MAX_DEC_LEN : Max decoder sequence length (default: 128)
     CLARA_OUTPUT_DIR      : Where to save fine-tuned checkpoint
     CLARA_MODEL_VERSION   : Version string for logging
 """
@@ -364,12 +364,12 @@ def main():
     ckpt_path     = os.environ.get('CLARA_CKPT_PATH',
                                    '/kaggle/input/datasets/tokiggle/clara-7b-e2e-4q')
     dataset_name  = os.environ.get('CLARA_DATASET', 'squad')
-    n_train       = int(os.environ.get('CLARA_N_TRAIN', '2000'))
+    n_train       = int(os.environ.get('CLARA_N_TRAIN', '800'))
     n_val         = int(os.environ.get('CLARA_N_VAL', '200'))
     lr            = float(os.environ.get('CLARA_FT_LR', '5e-6'))
     num_epochs    = int(os.environ.get('CLARA_FT_EPOCHS', '1'))
     grad_accum    = int(os.environ.get('CLARA_FT_GRAD_ACC', '8'))
-    max_dec_len   = int(os.environ.get('CLARA_FT_MAX_DEC_LEN', '256'))
+    max_dec_len   = int(os.environ.get('CLARA_FT_MAX_DEC_LEN', '128'))
     output_dir    = os.environ.get('CLARA_OUTPUT_DIR',
                                    f'/kaggle/working/clara-ft-{dataset_name}')
     model_version = os.environ.get('CLARA_MODEL_VERSION',
@@ -502,9 +502,9 @@ def main():
                     print(f"  [timing] Batch prepared, starting forward..."); sys.stdout.flush()
                     _t0 = _time.time()
 
-                # Mixed precision: float16 (T4 is Turing arch, no bfloat16 HW)
-                with torch.autocast(device_type='cuda', dtype=torch.float16):
-                    loss, info = model(batch=batch)
+                # No autocast — model is already 4-bit quantized with
+                # float32 LoRA. Adding autocast creates redundant casts.
+                loss, info = model(batch=batch)
 
                 if step == 0:
                     print(f"  [timing] Forward done in {_time.time()-_t0:.1f}s, backward..."); sys.stdout.flush()
@@ -545,11 +545,19 @@ def main():
                 optimizer.zero_grad()
                 global_step += 1
 
-                if global_step % 25 == 0:
+                if global_step % 5 == 0 or global_step == 1:
                     avg_loss = epoch_loss / max(epoch_samples, 1)
                     print(f"  Ep{epoch+1} step{global_step:4d}/{total_steps} | "
                           f"loss {avg_loss:.4f} | "
                           f"lr {scheduler.get_last_lr()[0]:.1e} | {_vram()}")
+                    sys.stdout.flush()
+
+                if global_step % 20 == 0:
+                    print(f"  [Auto-Save] Saving mid-epoch checkpoint at step {global_step}...")
+                    sys.stdout.flush()
+                    avg_loss = epoch_loss / max(epoch_samples, 1)
+                    save_finetuned_checkpoint(
+                        model, ckpt_path, output_dir, epoch + 1, avg_loss)
 
             # VRAM management
             if (step + 1) % grad_accum == 0:
