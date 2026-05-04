@@ -169,6 +169,7 @@ def load_finetune_dataset(dataset_name: str, split: str, n_samples: int) -> List
         raise ValueError(f"Unsupported dataset: {dataset_name}")
 
     print(f"  ✓ Loaded {len(samples)} {split} samples from {dataset_name}")
+    import sys; sys.stdout.flush()
     return samples
 
 
@@ -474,7 +475,9 @@ def main():
           f"Total: {total_steps}  Warmup: {warmup_steps}")
 
     # ── Step 5: Training loop ─────────────────────────────────────────────────
+    import sys, time as _time
     print(f"\n[5/5] Training for {num_epochs} epoch(s)...\n")
+    sys.stdout.flush()
 
     best_val = float('inf')
     global_step = 0
@@ -495,10 +498,16 @@ def main():
                 torch.cuda.empty_cache()
 
                 batch = prepare_batch(model, sample, max_dec_len)
+                if step == 0:
+                    print(f"  [timing] Batch prepared, starting forward..."); sys.stdout.flush()
+                    _t0 = _time.time()
 
                 # Mixed precision for VRAM savings (replaces grad checkpointing)
                 with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
                     loss, info = model(batch=batch)
+
+                if step == 0:
+                    print(f"  [timing] Forward done in {_time.time()-_t0:.1f}s, backward..."); sys.stdout.flush()
 
                 loss = loss / grad_accum
                 loss.backward()
